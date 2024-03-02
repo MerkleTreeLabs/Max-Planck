@@ -1,0 +1,27 @@
+{
+  "name": "zond-faucet",
+  "version": "0.0.1",
+  "description": "Zond testnet faucet bot for Discord",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fr1t2/zond-faucet.git"
+  },
+  "keywords": [
+    "Zond",
+    "QRL",
+    "Faucet"
+  ],
+  "author": "fr1t2",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/fr1t2/zond-faucet/issues"
+  },
+  "homepage": "https://github.com/fr1t2/zond-faucet#readme",
+  "devDependencies": {
+    "eslint": "^8.57.0"
+  }
+}

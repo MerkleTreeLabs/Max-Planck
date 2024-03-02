@@ -60,16 +60,28 @@ const rest = new REST().setToken(token);
 			Routes.applicationCommands(clientId),
 			{ body: commands },
 		);
-
-		const adminData = await rest.put(
-			Routes.applicationGuildCommands(clientId, guildId),
-			{ body: adminCommands },
-		);
-
-		console.log(`Successfully reloaded ${data.length} application and ${adminData.length} (/) commands `);
+		console.log(`Successfully reloaded ${data.length} application (/) commands `);
 	}
 	catch (error) {
 		// And of course, make sure you catch and log any errors!
 		console.error(error);
 	}
+
+})();
+(async () => {
+	try {
+		console.log(`Started refreshing ${adminCommands.length} application (/) commands.`);
+
+		// The put method is used to fully refresh all commands in the guild with the current set
+		const adminData = await rest.put(
+			Routes.applicationGuildCommands(clientId, guildId),
+			{ body: adminCommands },
+		);
+		console.log(`Successfully reloaded admin ${adminData.length} application (/) commands `);
+	}
+	catch (error) {
+		// And of course, make sure you catch and log any errors!
+		console.error(error);
+	}
+
 })();

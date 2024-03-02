@@ -15,10 +15,6 @@ for (const folder of commandFolders) {
 	const commandsPath = path.join(foldersPath, folder);
 	const commandFiles = fs.readdirSync(commandsPath).filter(file => file.endsWith('.js'));
 	for (const file of commandFiles) {
-		if (!commandsPath.includes('admin')) {
-			console.log(commandsPath, file);
-		}
-
 		const filePath = path.join(commandsPath, file);
 		const command = require(filePath);
 		if ('data' in command && 'execute' in command) {
@@ -26,6 +22,26 @@ for (const folder of commandFolders) {
 		}
 		else {
 			console.log(`[WARNING] The command at ${filePath} is missing a required "data" or "execute" property.`);
+		}
+	}
+}
+
+client.adminComands = new Collection();
+
+const adminFoldersPath = path.join(__dirname, 'admin');
+const adminCommandFolders = fs.readdirSync(adminFoldersPath);
+
+for (const adminFolder of adminCommandFolders) {
+	const adminCommandsPath = path.join(adminFoldersPath, adminFolder);
+	const adminCommandFiles = fs.readdirSync(adminCommandsPath).filter(adminFile => adminFile.endsWith('.js'));
+	for (const adminFile of adminCommandFiles) {
+		const adminFilePath = path.join(adminCommandFiles, adminFile);
+		const adminCommand = require(adminFilePath);
+		if ('data' in adminCommand && 'execute' in adminCommand) {
+			client.adminComands.set(adminCommand.data.name, adminCommand);
+		}
+		else {
+			console.log(`[WARNING] The admin command at ${adminFilePath} is missing a required "data" or "execute" property.`);
 		}
 	}
 }

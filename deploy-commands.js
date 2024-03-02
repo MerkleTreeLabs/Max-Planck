@@ -63,7 +63,7 @@ const rest = new REST().setToken(token);
 
 		const adminData = await rest.put(
 			Routes.applicationGuildCommands(clientId, guildId),
-			{ body: commands },
+			{ body: adminCommands },
 		);
 
 		console.log(`Successfully reloaded ${data.length} application and ${adminData.length} (/) commands `);

@@ -35,7 +35,7 @@ for (const adminFolder of adminCommandFolders) {
 	const adminCommandsPath = path.join(adminFoldersPath, adminFolder);
 	const adminCommandFiles = fs.readdirSync(adminCommandsPath).filter(adminFile => adminFile.endsWith('.js'));
 	for (const adminFile of adminCommandFiles) {
-		const adminFilePath = path.join(adminCommandFiles, adminFile);
+		const adminFilePath = path.join(adminCommandsPath, adminFile);
 		const adminCommand = require(adminFilePath);
 		if ('data' in adminCommand && 'execute' in adminCommand) {
 			client.adminComands.set(adminCommand.data.name, adminCommand);

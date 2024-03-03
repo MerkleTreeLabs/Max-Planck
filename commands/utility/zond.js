@@ -74,8 +74,6 @@ module.exports = {
 				await interaction.reply('Looks like I\'m struggleing to complete that right now...');
 			}
 
-
-			await interaction.reply('balance');
 		}
 		else if (interaction.options.getSubcommand() === 'transaction') {
 			console.log('transaction');

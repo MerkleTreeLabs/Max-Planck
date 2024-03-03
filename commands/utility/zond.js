@@ -88,7 +88,7 @@ module.exports = {
 				const validationResults = await helper.validateTxHash(userTxHash);
 				if (validationResults.isValid) {
 					const txHashData = await getTransaction(validationResults.hash);
-					await interaction.reply(`Transaction Data:\n\`\`\`json\n${JSON.stringify(txHashData, null, 4)}\n\`\`\``, ephemeral: true );
+					await interaction.reply({ content: `Transaction Data:\n\`\`\`json\n${JSON.stringify(txHashData, null, 4)}\n\`\`\``, ephemeral: true });
 				}
 				else {
 					await interaction.reply(`Invalid txHash:\t${validationResults.error}`);

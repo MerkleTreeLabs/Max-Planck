@@ -62,7 +62,7 @@ module.exports = {
 					// grab the balance and return to the user
 					const userBalance = await balance(validationResults.address);
 					// return the address balance to the user
-					await interaction.reply(`Balance info:\nAddress:\t${userAddress}\nBalance:\t${userBalance}`);
+					await interaction.reply(`Balance info:\nAddress:\t\`${userAddress}\`\nBalance:\t\`${userBalance}\``);
 				}
 				else {
 					// invalid address given

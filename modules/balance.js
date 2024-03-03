@@ -29,7 +29,7 @@ async function balance(address, denomination) {
 
 		console.log(`balance:\t${result.toFixed()}`);
 
-		return result;
+		return result.toFixed();
 	}
 	catch (error)	{
 		throw new Error('Error occurred:', error);

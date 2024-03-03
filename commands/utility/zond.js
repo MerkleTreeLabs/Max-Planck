@@ -1,12 +1,12 @@
-const getBlock = require('../../modules/block');
-const getBalance = require('../../modules/balance');
-const getTransaction = require('../../modules/transaction');
+const getBalance = require('../../modules/api/balance');
+const getTransaction = require('../../modules/api/transaction');
 const helper = require('../../modules/helpers');
+const fs = require('fs');
 const timestamp = new Date().getTime();
 
 const { SlashCommandBuilder } = require('discord.js');
 // const wait = require('node:timers/promises').setTimeout;
-
+const userFile = '../../userlog.json';
 module.exports = {
 	cooldown: 3,
 	data: new SlashCommandBuilder()
@@ -51,16 +51,10 @@ module.exports = {
 		if (!interaction.isCommand()) return;
 
 		// subcommand "block" entered
+
 		if (interaction.options.getSubcommand() === 'block') {
-			// get the block data
-			const blockNumber = await getBlock();
-			// return the block number
-			if (blockNumber) {
-				await interaction.reply(`Latest Block:\t${blockNumber}`);
-			}
-			else {
-				await interaction.reply(`'Cannot retrieve the BlockNumber at this time...\n${blockNumber}'`);
-			}
+			const blockLookup = require('../../modules/zondBlock');
+			blockLookup(interaction);
 		}
 
 		// balance subcommand given
@@ -111,13 +105,72 @@ module.exports = {
 
 			const userAddress = interaction.options.getString('address');
 			const userAmount = interaction.options.getNumber('amount');
-			let address;
 			try {
 				const validationResults = await helper.validateAddress(userAddress);
 				if (validationResults.isValid) {
-					address = validationResults.address;
-					console.log(`address:\t${JSON.stringify(validationResults)}`)
-					return address;
+					const address = validationResults.address;
+					
+
+					const amountShor = await helper.quantaToSor(userAmount);
+					console.log(`amountShor:\t${amountShor}`);
+
+					const userInfo = {
+						discord_id: interaction.user.id,
+						discord_name: interaction.user.username,
+						last_seen: timestamp,
+						amount: amountShor
+					};
+
+					const userData = fs.readFileSync(userFile);
+					const parsedData = JSON.parse(userData);
+					// Find user information by discord_id
+					const userIndex = parsedData.users.findIndex(user => user.discord_id === userInfo.discord_id);
+					if (userIndex !== -1) {
+						// user found
+						const { last_seen, amount } = parsedData.users[userIndex];
+						const existingAmount = new BigNumber(amount);
+						const timeDifference = timestamp - parseInt(last_seen);
+
+						if (timeDifference > config.timeout) {
+							// proceed with adding user data to file. overwrite the array entry that matches discord_id
+						}
+						else {
+							if (existingAmount.isLessThanOrEqualTo(config.maxDrip)) {
+								// still some left to give 
+								const combinedAmount = existingAmount.plus(amountShor).toFixed();
+								if (combinedAmount.isLessThanOrEqualTo(config.maxDrip)) {
+									// total request and existing is less or equal to allowed
+									userInfo.amount = combinedAmount
+									// leave the timestamp alone resetting sooner
+									userInfo.last_seen = last_seen
+								}
+								else {
+									await interaction.reply(`Requested amount exceeds maximum allowed drip ${helper.shorToQuanta(combinedAmount)}`);
+									return;
+								}
+							}
+							else {
+								await interaction.reply(`User's existing amount exceeds maximum allowed drip ${helper.shorToQuanta(existingAmount)}`);
+								return;
+							}
+						}
+
+
+
+
+
+						await interaction.reply(`Last Seen: ${last_seen}, Amount: ${amount}`);
+					} else {
+						// If user not found, add user details to the JSON array
+						parsedData.users.push(userInfo);
+
+						// Write the updated JSON data back to the file
+						fs.writeFileSync(userFile, JSON.stringify(parsedData, null, 2));
+
+						await interaction.reply('User details added to the database.');
+					}
+					
+
 				}
 				else {
 					await interaction.reply(`Invalid address given:\t${validationResults.error}`);
@@ -127,22 +180,9 @@ module.exports = {
 				console.error('An error occurred during address validation:', error);
 				await interaction.reply('Looks like I\'m struggling to complete that right now...');
 			}
-			const amountShor = await helper.quantaToSor(userAmount);
-			console.log(`amountShor:\t${amountShor}`)
-			const userInfo = { discord_id: interaction.user.id, discord_name: interaction.user.username, last_seen: timestamp, amount: amountShor };
 
 			console.log(JSON.stringify(userInfo));
-			// convert quanta amount to wei
 
-			// validate user has not withdrawn in last config.timeout
-
-			// validate the user has not withdrew more than allowed in config.maxDistrobution
-
-			// send tx
-
-			// record user details into mongodb
-
-			//
 
 			await interaction.reply('faucet');
 		}

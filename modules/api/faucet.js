@@ -1,5 +1,5 @@
 const axios = require('axios');
-const config = require('./config.json');
+const config = require('../../config.json');
 
 async function faucet(address, amount) {
 	try {

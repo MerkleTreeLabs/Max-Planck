@@ -16,16 +16,17 @@ module.exports = {
 				.setDescription('ping user')),
 
 	async execute(interaction) {
-		console.log(interaction.options._subcommand);
-
-		// if each subcommand then process its stuff...
-		if (interaction.options._subcommand === 'ping') {
-			console.log('if');
-		}
-		else {
-			console.log('else');
-		}
-		await interaction.reply(`This server is ${interaction.guild.name} and has ${interaction.guild.memberCount} members.`);
+		await interaction
+			.then((response) => {
+				console.log(response.options._subcommand);
+				// if each subcommand then process its stuff...
+				if (response.options._subcommand === 'ping') {
+					console.log('if');
+				}
+				else {
+					console.log('else');
+				}
+			});
 	},
 
 };

@@ -5,7 +5,13 @@ module.exports = {
 	cooldown: 30,
 	data: new SlashCommandBuilder()
 		.setName('ping')
-		.setDescription('Replies with Pong!'),
+		.setDescription('Replies with Pong!')
+		.addStringOption(option =>
+			option.setName('input')
+				.setDescription('The input to echo back'))
+		.addChannelOption(option =>
+			option.setName('channel')
+				.setDescription('The channel to echo into')),
 	async execute(interaction) {
 // allows an immediate reply
 //		await interaction.reply('Pong!');

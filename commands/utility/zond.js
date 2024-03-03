@@ -60,11 +60,12 @@ module.exports = {
 				if (validationResults.isValid) {
 					console.log('Address is valid:', validationResults.address);
 					// grab the balance and return to the user
+					let userBalance;
 					if (!interaction.options.getBoolean()) {
-						const userBalance = await balance(validationResults.address, 'quanta');
+						userBalance = await balance(validationResults.address, 'quanta');
 					}
 					else {
-						const userBalance = await balance(validationResults.address, 'wei');
+						userBalance = await balance(validationResults.address, 'wei');
 					}
 					// return the address balance to the user
 					await interaction.reply(`Balance info:\nAddress:\t\`${userAddress}\`\nBalance:\t\`${userBalance}\``);

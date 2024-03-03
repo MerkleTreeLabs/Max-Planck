@@ -28,12 +28,12 @@ module.exports = {
 		)
 
 		// tx takes a transaction hash and returns some information to the user 0xc50e891a34eacedf2b3e6e7f4b245da2a2c6f5128f5de7419da41e1c54134040
-        .addSubcommand(subcommand =>
-            subcommand
-                .setName('transaction')
-                .setDescription('Zond transaction Lookup')
-                .addStringOption(option => option.setName('hash').setDescription('Zond transaction hash').setRequired(true).setMaxLength(66).setMinLength(66)),
-        )
+		.addSubcommand(subcommand =>
+			subcommand
+				.setName('transaction')
+				.setDescription('Zond transaction Lookup')
+				.addStringOption(option => option.setName('hash').setDescription('Zond transaction hash').setRequired(true).setMaxLength(66).setMinLength(66)),
+		)
 
 
 		// faucet gives the requested amount to user
@@ -89,7 +89,7 @@ module.exports = {
 				const validationResults = await helper.validateTxHash(userTxHash);
 				if (validationResults.isValid) {
 					const txHashData = await getTransaction(validationResults.hash);
-					console.log(txHashData)
+					console.log(JSON.Stringify(txHashData));
 					await interaction.reply(`Transaction Data:\n${txHashData}`);
 				}
 				else {

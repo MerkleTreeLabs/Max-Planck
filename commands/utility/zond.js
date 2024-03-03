@@ -32,7 +32,7 @@ module.exports = {
 			subcommand
 				.setName('transaction')
 				.setDescription('Zond transaction Lookup')
-				.addStringOption(option => option.setName('txHash').setDescription('Zond transaction hash').setRequired(true).setMaxLength(66).setMinLength(66)),
+				.addStringOption(option => option.setName('txHash').setDescription('Zond transaction hash').setRequired(true).setMaxLength(66).setMinLength(66))
 		)
 
 

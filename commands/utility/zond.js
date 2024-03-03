@@ -1,4 +1,3 @@
-const getBalance = require('../../modules/api/balance');
 const getTransaction = require('../../modules/api/transaction');
 const helper = require('../../modules/helpers');
 const fs = require('fs');
@@ -49,37 +48,15 @@ module.exports = {
 
 	async execute(interaction) {
 		if (!interaction.isCommand()) return;
-
 		// subcommand "block" entered
-
 		if (interaction.options.getSubcommand() === 'block') {
 			const blockLookup = require('../../modules/zond/zondBlock');
-			blockLookup.getBlockSub(interaction);
+			blockLookup(interaction);
 		}
-
 		// balance subcommand given
 		else if (interaction.options.getSubcommand() === 'balance') {
-			const userAddress = interaction.options.getString('address');
-			try {
-				const validationResults = await helper.validateAddress(userAddress);
-				if (validationResults.isValid) {
-					let userBalance;
-					if (interaction.options.getString('denomination') === 'wei') {
-						userBalance = await getBalance(validationResults.address, 'wei');
-					}
-					else {
-						userBalance = await getBalance(validationResults.address, 'quanta');
-					}
-					await interaction.reply(`Balance info:\nAddress:\t\`${userAddress}\`\nBalance:\t\`${userBalance}\``);
-				}
-				else {
-					await interaction.reply(`Invalid address given:\t${validationResults.error}`);
-				}
-			}
-			catch (error) {
-				console.error('An error occurred during balance retrieval:', error);
-				await interaction.reply('Looks like I\'m struggling to complete that right now...');
-			}
+			const balanceLookup = require('../../modules/zond/zondBlock');
+			balanceLookup(interaction);
 		}
 		else if (interaction.options.getSubcommand() === 'transaction') {
 			const userTxHash = interaction.options.getString('hash');

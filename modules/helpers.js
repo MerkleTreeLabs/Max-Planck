@@ -41,14 +41,14 @@ function hexToDec(value, denomination) {
 
 
 function quantaToShor(number) {
-    const bigNumber = new BigNumber(number);
-    const multiplied = bigNumber.multipliedBy('1e18');
-    const resultString = multiplied.toFixed();
-    const result = resultString.replace('.', '');
-    return result;
+	const bigNumber = new BigNumber(number);
+	const multiplied = bigNumber.multipliedBy('1e18');
+	const resultString = multiplied.toFixed();
+	const result = resultString.replace('.', '');
+	return result;
 }
 
-export.quantaToShor = quantaToShor;
+exports.quantaToShor = quantaToShor;
 exports.validateAddress = validateAddress;
-exports.validateTxHash = validateTxHash
+exports.validateTxHash = validateTxHash;
 exports.hexToDec = hexToDec;

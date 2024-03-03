@@ -21,8 +21,10 @@ module.exports = {
 				.setName('balance')
 				.setDescription('Zond address balance')
 				.addStringOption(option => option.setName('address').setDescription('Zond dilithium address (0x)').setRequired(true).setMaxLength(42).setMinLength(42))
-				.addBooleanOption(option => option.setName('currency').setDescription('Whether or not the balance should be in quanta or Wei (default quanta)')))
-
+				.addStringOption(option => option.setName('denomination').setDescription('Whether or not the balance should be in quanta or Wei (default quanta)')
+					.addChoices({ name: 'Wei', value: 'wei' }, { name: 'quanta', value: 'quanta' }),
+				),
+		)
 
 		// tx takes a transaction hash and returns some information to the user
 		.addSubcommand(subcommand =>
@@ -61,11 +63,11 @@ module.exports = {
 					console.log('Address is valid:', validationResults.address);
 					// grab the balance and return to the user
 					let userBalance;
-					if (!interaction.options.getBoolean()) {
-						userBalance = await balance(validationResults.address, 'quanta');
+					if (interaction.options.getstring('denomination' === 'wei')) {
+						userBalance = await balance(validationResults.address, 'wei');
 					}
 					else {
-						userBalance = await balance(validationResults.address, 'wei');
+						userBalance = await balance(validationResults.address, 'quanta');
 					}
 					// return the address balance to the user
 					await interaction.reply(`Balance info:\nAddress:\t\`${userAddress}\`\nBalance:\t\`${userBalance}\``);
@@ -79,7 +81,6 @@ module.exports = {
 				console.error('An error occurred during balance retrieval:', error);
 				await interaction.reply('Looks like I\'m struggleing to complete that right now...');
 			}
-
 		}
 		else if (interaction.options.getSubcommand() === 'transaction') {
 			console.log('transaction');

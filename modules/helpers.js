@@ -20,9 +20,11 @@ function validateAddress(address) {
 }
 
 function validateTxHash(hash) {
-	const zondTxHashRegex = /^(0x)?[0-9a-f]{66}$/i;
+	console.log(hash)
+	const zondTxHashRegex = /^(0x)?[0-9a-f]{64}$/i;
 	const sanitizedTxHash = sanitizeAddress(hash);
 	const lowercaseTxHash = sanitizedTxHash.toLowerCase();
+	console.log(lowercaseTxHash)
 	if (lowercaseTxHash.match(zondTxHashRegex)) {
 		return { isValid: true, hash: lowercaseTxHash };
 	}

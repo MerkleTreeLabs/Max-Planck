@@ -16,7 +16,7 @@ module.exports = {
 				.setDescription('ping user')),
 
 	async execute(interaction) {
-		console.log(interaction);
+		console.log(interaction.options._subcommand);
 
 		// if each subcommand then process its stuff...
 		if (interaction.options._subcommand.text.includes('ping')) {

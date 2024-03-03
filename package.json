@@ -3,7 +3,6 @@
   "version": "0.0.1",
   "description": "Zond testnet faucet bot for Discord",
   "main": "index.js",
-  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

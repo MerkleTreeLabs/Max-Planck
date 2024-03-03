@@ -2,7 +2,7 @@ const block = require('../../modules/block');
 const balance = require('../../modules/balance');
 const helper = require('../../modules/helpers');
 const { SlashCommandBuilder } = require('discord.js');
-const wait = require('node:timers/promises').setTimeout;
+// const wait = require('node:timers/promises').setTimeout;
 
 module.exports = {
 	cooldown: 3,
@@ -55,12 +55,10 @@ module.exports = {
 
 		// balance subcommand given
 		else if (interaction.options.getSubcommand() === 'balance') {
-			console.log('balance');
 			const userAddress = interaction.options.getString('address');
 			try {
 				const validationResults = await helper.validate(userAddress);
 				if (validationResults.isValid) {
-					console.log('Address is valid:', validationResults.address);
 					// grab the balance and return to the user
 					let userBalance;
 					if (interaction.options.getString('denomination') === 'wei') {
@@ -89,19 +87,6 @@ module.exports = {
 		else if (interaction.options.getSubcommand() === 'faucet') {
 			console.log('faucet');
 			await interaction.reply('faucet');
-		}
-
-		const response = await interaction;
-		console.log(response.options.getSubcommand());
-		// if each subcommand then process its stuff...
-		if (response.options._subcommand === 'ping') {
-			console.log('if');
-			response.deferReply({ ephemeral: true });
-			await wait(2000);
-			await interaction.editReply('Pong called!!');
-		}
-		else {
-			console.log('else');
 		}
 	},
 

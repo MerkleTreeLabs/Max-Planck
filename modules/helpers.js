@@ -1,7 +1,8 @@
 function sanitizeAddress(address) {
-    // Remove any characters that are not hexadecimal
-    return address.replace(/[^0-9a-fA-F]/g, '');
+    // Remove any characters that are not hexadecimal, except the '0x' prefix
+    return address.replace(/^0x/i, '').replace(/[^0-9a-fA-F]/g, '');
 }
+
 
 function validateAddress(address) {
 	console.log(`address given:\t${address}`)

@@ -7,7 +7,7 @@ module.exports = {
 		.setName('ping')
 		.setDescription('Replies with Pong!')
 		.addStringOption(option =>
-			option.setName('zondAddress')
+			option.setName('input')
 				.setDescription('Zond dilithium address')
 				// Ensure the text will fit in an embed description, if the user chooses that option
 				.setMaxLength(2_000)

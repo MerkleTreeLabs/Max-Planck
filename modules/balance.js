@@ -27,7 +27,7 @@ async function balance(address, denomination) {
 			throw new Error('Invalid denomination. Please provide "quanta" or "wei".');
 		}
 
-		console.log(`balance:\t${result.toString()}`);
+		console.log(`balance:\t${result.toFixed()}`);
 
 		return result;
 	}

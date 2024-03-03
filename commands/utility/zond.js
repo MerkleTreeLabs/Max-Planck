@@ -2,6 +2,8 @@ const getBlock = require('../../modules/block');
 const getBalance = require('../../modules/balance');
 const getTransaction = require('../../modules/transaction');
 const helper = require('../../modules/helpers');
+const timestamp = new Date().getTime();
+
 const { SlashCommandBuilder } = require('discord.js');
 // const wait = require('node:timers/promises').setTimeout;
 
@@ -40,7 +42,10 @@ module.exports = {
 		.addSubcommand(subcommand =>
 			subcommand
 				.setName('faucet')
-				.setDescription('Zond address balance')),
+				.setDescription('Zond transaction Lookup')
+				.addStringOption(option => option.setName('address').setDescription('Zond dilithium address').setRequired(true).setMaxLength(42).setMinLength(42))
+				.addNumberOption(option => option.setName('amount').setDescription('Amount of testnet quanta to receive').setRequired(true).setMaxValue(100)),
+		),
 
 	async execute(interaction) {
 		if (!interaction.isCommand()) return;
@@ -99,8 +104,44 @@ module.exports = {
 				await interaction.reply('Looks like I\'m struggling to complete that right now...');
 			}
 		}
+
+		// faucet called
 		else if (interaction.options.getSubcommand() === 'faucet') {
 			console.log('faucet');
+			const userAddress = interaction.options.getString('address');
+			const userAmount = interaction.options.getNumber('amount');
+			let address;
+			try {
+				const validationResults = await helper.validateAddress(userAddress);
+				if (validationResults.isValid) {
+					address = validationResults.address;
+					return address;
+				}
+				else {
+					await interaction.reply(`Invalid address given:\t${validationResults.error}`);
+				}
+			}
+			catch (error) {
+				console.error('An error occurred during address validation:', error);
+				await interaction.reply('Looks like I\'m struggling to complete that right now...');
+			}
+			const amountShor = await helper.quantaToSor(userAmount);
+
+			const userInfo = { discord_id: interaction.user.id, discord_name: interaction.user.username, last_seen: timestamp, amount: amountShor };
+
+			console.log(JSON.stringify(userInfo));
+			// convert quanta amount to wei
+
+			// validate user has not withdrawn in last config.timeout
+
+			// validate the user has not withdrew more than allowed in config.maxDistrobution
+
+			// send tx
+
+			// record user details into mongodb
+
+			//
+
 			await interaction.reply('faucet');
 		}
 	},

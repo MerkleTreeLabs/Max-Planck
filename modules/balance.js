@@ -15,7 +15,7 @@ async function balance(address, denomination) {
 		});
 		// format the balance to human readable
 		const hexString = response.data.result;
-		return await helper.hexToDec(hexString);
+		return await helper.hexToDec(hexString, denomination);
 	}
 	catch (error)	{
 		throw new Error('Error occurred:', error);

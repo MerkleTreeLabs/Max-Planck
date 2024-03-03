@@ -1,4 +1,5 @@
 const { SlashCommandBuilder } = require('discord.js');
+const wait = require('node:timers/promises').setTimeout;
 
 module.exports = {
 	cooldown: 3,
@@ -21,6 +22,9 @@ module.exports = {
 		// if each subcommand then process its stuff...
 		if (response.options._subcommand === 'ping') {
 			console.log('if');
+			response.deferReply({ ephemeral: true });
+			await wait(4000);
+			await interaction.editReply('Pong!');
 		}
 		else {
 			console.log('else');

@@ -10,11 +10,11 @@ module.exports = {
 			option.setName('input')
 				.setDescription('The input to echo back')
 				// Ensure the text will fit in an embed description, if the user chooses that option
-				.setMaxLength(2_000))
-				.setRequired(true));
+				.setMaxLength(2_000)
+				.setRequired(true))
 		.addBooleanOption(option =>
 			option.setName('embed')
-				.setDescription('Whether or not the echo should be embedded'));
+				.setDescription('Whether or not the echo should be embedded')),
 
 	async execute(interaction) {
 // allows an immediate reply

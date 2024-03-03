@@ -116,7 +116,7 @@ module.exports = {
 				const validationResults = await helper.validateAddress(userAddress);
 				if (validationResults.isValid) {
 					address = validationResults.address;
-					console.log`address:\t${address}`
+					console.log(`address:\t${validationResults}`)
 					return address;
 				}
 				else {

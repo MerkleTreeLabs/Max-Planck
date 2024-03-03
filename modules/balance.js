@@ -21,7 +21,7 @@ async function balance(address, denomination) {
 			result = hexNumber.dividedBy('1e18');
 		}
 		else if (denomination === 'wei') {
-			result = hexNumber;
+			result = new BigNumber(hexNumber, 16);
 		}
 		else {
 			throw new Error('Invalid denomination. Please provide "quanta" or "wei".');

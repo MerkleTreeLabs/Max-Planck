@@ -51,12 +51,12 @@ module.exports = {
 		// subcommand "block" entered
 		if (interaction.options.getSubcommand() === 'block') {
 			const blockLookup = require('../../modules/zond/zondBlock');
-			blockLookup(interaction);
+			blockLookup.getBlockSub(interaction);
 		}
 		// balance subcommand given
 		else if (interaction.options.getSubcommand() === 'balance') {
 			const balanceLookup = require('../../modules/zond/zondBlock');
-			balanceLookup(interaction);
+			balanceLookup.getBalanceSub(interaction);
 		}
 		else if (interaction.options.getSubcommand() === 'transaction') {
 			const userTxHash = interaction.options.getString('hash');

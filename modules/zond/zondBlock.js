@@ -13,4 +13,4 @@ async function getBlockSub(interaction) {
 	}
 }
 
-module.exports = getBlockSub;
+module.exports.getBlockSub = getBlockSub;

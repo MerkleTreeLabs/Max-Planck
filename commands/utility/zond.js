@@ -1,4 +1,6 @@
 const block = require('../../modules/block');
+const balance = require('../../modules/balance');
+const helper = require('../../modules/helpers');
 const { SlashCommandBuilder } = require('discord.js');
 const wait = require('node:timers/promises').setTimeout;
 
@@ -12,12 +14,16 @@ module.exports = {
 		.addSubcommand(subcommand =>
 			subcommand
 				.setName('block')
-				.setDescription('Get current block number'))
+				.setDescription('Get the current Zond block number'))
 		// balance takes zond address and returns the balance in ephemeral response
 		.addSubcommand(subcommand =>
 			subcommand
 				.setName('balance')
-				.setDescription('Zond address balance'))
+				.setDescription('Zond address balance')
+				.addStringOption(option => option.setName('address').setDescription('Zond dilithium address (0x)').setRequired(true).setMaxLength(42).setMinLength(42))
+				.addBooleanOption(option => option.setName('currency').setDescription('Whether or not the balance should be in quanta or Wei (default quanta)')))
+
+
 		// tx takes a transaction hash and returns some information to the user
 		.addSubcommand(subcommand =>
 			subcommand
@@ -30,23 +36,45 @@ module.exports = {
 				.setDescription('Zond address balance')),
 
 	async execute(interaction) {
+		if (!interaction.isCommand()) return;
+
+		// subcommand "block" entered
 		if (interaction.options.getSubcommand() === 'block') {
 			// get the block data
-
 			const blockNumber = await block();
-			const user = interaction.options.getUser('target');
 			// return the block number
 			if (blockNumber) {
 				await interaction.reply(`Latest Block:\t${blockNumber}`);
-				console.log(user);
 			}
 			else {
-				await interaction.reply(`Your username: ${interaction.user.username}\nYour ID: ${interaction.user.id}`);
+				await interaction.reply(`'Cannot retrieve the BlockNumber at this time...\n${blockNumber}'`);
 			}
 		}
 
+		// balance subcommand given
 		else if (interaction.options.getSubcommand() === 'balance') {
 			console.log('balance');
+			const userAddress = interaction.options.getString('address');
+			try {
+				const validationResults = await helper.validate(userAddress);
+				if (validationResults.isValid) {
+					console.log('Address is valid:', validationResults.address);
+					// grab the balance and return to the user
+					const userBalance = await balance(validationResults.address);
+					// return the address balance to the user
+					await interaction.reply(`Balance info:\nAddress:\t${userAddress}\nBalance:\t${userBalance}`);
+				}
+				else {
+					// invalid address given
+					await interaction.reply(`Invalid address given:\t${validationResults.error}`);
+				}
+			}
+			catch (error) {
+				console.error('An error occurred during balance retrieval:', error);
+				await interaction.reply('Looks like I\'m struggleing to complete that right now...');
+			}
+
+
 			await interaction.reply('balance');
 		}
 		else if (interaction.options.getSubcommand() === 'transaction') {

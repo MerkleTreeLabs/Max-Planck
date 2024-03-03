@@ -29,6 +29,7 @@
     "eslint-plugin-promise": "^6.1.1"
   },
   "dependencies": {
+    "@keyv/mongo": "^2.2.8",
     "axios": "^1.6.7",
     "bignumber.js": "^9.1.2",
     "discord.js": "^14.14.1"

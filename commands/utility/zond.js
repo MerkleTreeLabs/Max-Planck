@@ -16,17 +16,15 @@ module.exports = {
 				.setDescription('ping user')),
 
 	async execute(interaction) {
-		await interaction
-			.then((response) => {
-				console.log(response.options._subcommand);
-				// if each subcommand then process its stuff...
-				if (response.options._subcommand === 'ping') {
-					console.log('if');
-				}
-				else {
-					console.log('else');
-				}
-			});
+		const response = await interaction;
+		console.log(response.options._subcommand);
+		// if each subcommand then process its stuff...
+		if (response.options._subcommand === 'ping') {
+			console.log('if');
+		}
+		else {
+			console.log('else');
+		}
 	},
 
 };

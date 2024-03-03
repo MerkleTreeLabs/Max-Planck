@@ -12,8 +12,7 @@ module.exports = {
 		.addSubcommand(subcommand =>
 			subcommand
 				.setName('block')
-				.setDescription('Get current block number')
-				.addUserOption(option => option.setName('target').setDescription('The user')))
+				.setDescription('Get current block number'))
 		// balance takes zond address and returns the balance in ephemeral response
 		.addSubcommand(subcommand =>
 			subcommand

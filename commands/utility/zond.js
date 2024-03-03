@@ -1,3 +1,4 @@
+const block = require('../../modules/block');
 const { SlashCommandBuilder } = require('discord.js');
 const wait = require('node:timers/promises').setTimeout;
 
@@ -32,11 +33,12 @@ module.exports = {
 	async execute(interaction) {
 		if (interaction.options.getSubcommand() === 'block') {
 			// get the block data
-			// const block = ''
+
+			const blockNumber = await block();
 			const user = interaction.options.getUser('target');
 			// return the block number
-			if (user) {
-				await interaction.reply(`Username: ${user.username}\nID: ${user.id}`);
+			if (blockNumber) {
+				await interaction.reply(`Latest Block:\t${blockNumber}`);
 				console.log(user);
 			}
 			else {

@@ -8,7 +8,7 @@ function sanitizeAddress(address) {
 }
 
 function validateAddress(address) {
-	const zondAddressRegex = /^(0x)?[0-9a-f]{40}$/i;
+	const zondAddressRegex = /^(0x)?[0-9a-f]{66}$/i;
 	const sanitizedAddress = sanitizeAddress(address);
 	const lowercaseAddress = sanitizedAddress.toLowerCase();
 	if (lowercaseAddress.match(zondAddressRegex)) {
@@ -16,6 +16,18 @@ function validateAddress(address) {
 	}
 	else {
 		return { isValid: false, error: 'Invalid address' };
+	}
+}
+
+function validateTxHash(hash) {
+	const zondTxHashRegex = /^(0x)?[0-9a-f]{40}$/i;
+	const sanitizedTxHash = sanitizeAddress(hash);
+	const lowercaseTxHash = sanitizedTxHash.toLowerCase();
+	if (lowercaseTxHash.match(zondTxHashRegex)) {
+		return { isValid: true, hash: lowercaseTxHash };
+	}
+	else {
+		return { isValid: false, error: 'Invalid TX Hash' };
 	}
 }
 
@@ -28,5 +40,6 @@ function hexToDec(value, denomination) {
 }
 
 
-exports.validate = validateAddress;
+exports.validateAddress = validateAddress;
+exports.validateTxHash = validateTxHash
 exports.hexToDec = hexToDec;

@@ -18,7 +18,7 @@ async function balance(address, denomination) {
 		return await helper.hexToDec(hexString, denomination);
 	}
 	catch (error)	{
-		throw new Error('Error occurred:', error);
+        throw new Error(`Error occurred: ${error.message}`);
 	}
 }
 

@@ -15,13 +15,13 @@ async function balance(address, denomination) {
 		});
 		// format the balance to human readable
 		const hexString = response.data.result;
-		const hexNumber = new BigNumber(hexString);
+		const hexNumber = new BigNumber(hexString, 16);
 		let result;
 		if (denomination === 'quanta') {
 			result = hexNumber.dividedBy('1e18');
 		}
 		else if (denomination === 'wei') {
-			result = new BigNumber(hexNumber, 16);
+			result = hexNumber;
 		}
 		else {
 			throw new Error('Invalid denomination. Please provide "quanta" or "wei".');

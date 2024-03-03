@@ -1,5 +1,6 @@
-const block = require('../../modules/block');
-const balance = require('../../modules/balance');
+const getBlock = require('../../modules/block');
+const getBalance = require('../../modules/balance');
+const getTransaction = require('../../modules/transaction');
 const helper = require('../../modules/helpers');
 const { SlashCommandBuilder } = require('discord.js');
 // const wait = require('node:timers/promises').setTimeout;
@@ -26,11 +27,15 @@ module.exports = {
 				),
 		)
 
-		// tx takes a transaction hash and returns some information to the user
+		// tx takes a transaction hash and returns some information to the user 0xc50e891a34eacedf2b3e6e7f4b245da2a2c6f5128f5de7419da41e1c54134040
 		.addSubcommand(subcommand =>
 			subcommand
 				.setName('transaction')
-				.setDescription('Zond address balance'))
+				.setDescription('Zond transaction Lookup')
+				.addStringOption(option => option.setName('txHash').setDescription('Zond transaction hash').setRequired(true).setMaxLength(66).setMinLength(66)),
+		)
+
+
 		// faucet gives the requested amount to user
 		.addSubcommand(subcommand =>
 			subcommand
@@ -43,7 +48,7 @@ module.exports = {
 		// subcommand "block" entered
 		if (interaction.options.getSubcommand() === 'block') {
 			// get the block data
-			const blockNumber = await block();
+			const blockNumber = await getBlock();
 			// return the block number
 			if (blockNumber) {
 				await interaction.reply(`Latest Block:\t${blockNumber}`);
@@ -57,32 +62,43 @@ module.exports = {
 		else if (interaction.options.getSubcommand() === 'balance') {
 			const userAddress = interaction.options.getString('address');
 			try {
-				const validationResults = await helper.validate(userAddress);
+				const validationResults = await helper.validateAddress(userAddress);
 				if (validationResults.isValid) {
-					// grab the balance and return to the user
 					let userBalance;
 					if (interaction.options.getString('denomination') === 'wei') {
-						userBalance = await balance(validationResults.address, 'wei');
+						userBalance = await getBalance(validationResults.address, 'wei');
 					}
 					else {
-						userBalance = await balance(validationResults.address, 'quanta');
+						userBalance = await getBalance(validationResults.address, 'quanta');
 					}
-					// return the address balance to the user
 					await interaction.reply(`Balance info:\nAddress:\t\`${userAddress}\`\nBalance:\t\`${userBalance}\``);
 				}
 				else {
-					// invalid address given
 					await interaction.reply(`Invalid address given:\t${validationResults.error}`);
 				}
 			}
 			catch (error) {
 				console.error('An error occurred during balance retrieval:', error);
-				await interaction.reply('Looks like I\'m struggleing to complete that right now...');
+				await interaction.reply('Looks like I\'m struggling to complete that right now...');
 			}
 		}
 		else if (interaction.options.getSubcommand() === 'transaction') {
 			console.log('transaction');
-			await interaction.reply('transaction');
+			const userTxHash = interaction.options.getString('txHash');
+			try {
+				const validationResults = await helper.validateTxHash(userTxHash);
+				if (validationResults.isValid) {
+					const txHashData = await getTransaction(validationResults.hash);
+					await interaction.reply(`Transaction Data:\n${txHashData}`);
+				}
+				else {
+					await interaction.reply(`Invalid txHash:\t${validationResults.error}`);
+				}
+			}
+			catch (error) {
+				console.error('An error occurred during Transaction retrieval:', error);
+				await interaction.reply('Looks like I\'m struggling to complete that right now...');
+			}
 		}
 		else if (interaction.options.getSubcommand() === 'faucet') {
 			console.log('faucet');

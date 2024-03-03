@@ -17,7 +17,7 @@ async function balance(address) {
 		const hexString = response.data.result
 		const hexWithoutPrefix = hexString.slice(2);
 		const decimalNumber = new BigNumber(hexWithoutPrefix, 16);
-
+		console.log(`balance:\t${decimalNumber}`)
 		return decimalNumber;
 	}
 	catch (error)	{

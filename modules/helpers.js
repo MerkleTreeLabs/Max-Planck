@@ -8,7 +8,7 @@ function sanitizeAddress(address) {
 }
 
 function validateAddress(address) {
-	const zondAddressRegex = /^(0x)?[0-9a-f]{66}$/i;
+	const zondAddressRegex = /^(0x)?[0-9a-f]{40}$/i;
 	const sanitizedAddress = sanitizeAddress(address);
 	const lowercaseAddress = sanitizedAddress.toLowerCase();
 	if (lowercaseAddress.match(zondAddressRegex)) {
@@ -20,11 +20,9 @@ function validateAddress(address) {
 }
 
 function validateTxHash(hash) {
-	console.log(hash);
-	const zondTxHashRegex = /^(0x)?[0-9a-f]{40}$/i;
+	const zondTxHashRegex = /^(0x)?[0-9a-f]{66}$/i;
 	const sanitizedTxHash = sanitizeAddress(hash);
 	const lowercaseTxHash = sanitizedTxHash.toLowerCase();
-	console.log(lowercaseTxHash);
 	if (lowercaseTxHash.match(zondTxHashRegex)) {
 		return { isValid: true, hash: lowercaseTxHash };
 	}

@@ -26,4 +26,4 @@ async function getBalanceSub(interaction) {
 	}
 }
 
-module.exports.getBalanceSub = getBalanceSub;
+module.exports = getBalanceSub;

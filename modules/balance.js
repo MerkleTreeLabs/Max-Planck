@@ -1,5 +1,5 @@
 const axios = require('axios');
-const helper = require('../../modules/helpers');
+const helper = require('./modules/helpers');
 
 async function balance(address, denomination) {
 	try {

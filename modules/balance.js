@@ -14,11 +14,11 @@ async function balance(address) {
 			},
 		});
 		// format the balance to human readable
-		const hexString = response.data.result
-		const hexWithoutPrefix = hexString.slice(2);
-		console.log(`hexWithoutPrefix:\t${hexWithoutPrefix}`)
-		const decimalNumber = new BigNumber(hexWithoutPrefix, 18);
-		console.log(`balance:\t${decimalNumber}`)
+		const hexString = response.data.result;
+		const hexNumber = new BigNumber(hexString);
+		const decimalNumber = hexNumber.dividedBy('1e18');
+
+		console.log(`balance:\t${decimalNumber.toString()}`);
 		return decimalNumber;
 	}
 	catch (error)	{

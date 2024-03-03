@@ -16,7 +16,8 @@ async function balance(address) {
 		// format the balance to human readable
 		const hexString = response.data.result
 		const hexWithoutPrefix = hexString.slice(2);
-		const decimalNumber = new BigNumber(hexWithoutPrefix, 16);
+		console.log(`hexWithoutPrefix:\t${hexWithoutPrefix}`)
+		const decimalNumber = new BigNumber(hexWithoutPrefix, 18);
 		console.log(`balance:\t${decimalNumber}`)
 		return decimalNumber;
 	}

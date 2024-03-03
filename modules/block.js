@@ -13,8 +13,7 @@ async function block() {
 			},
 		});
 		// format the block to human readable
-		console.log("response.data.result:\t" + response.data.result)
-		return response.data.result;
+		return parseInt(response.data.result, 16);
 	}
 	catch (error)	{
 		throw new Error('Error occurred:', error);

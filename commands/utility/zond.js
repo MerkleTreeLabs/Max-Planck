@@ -89,6 +89,7 @@ module.exports = {
 				const validationResults = await helper.validateTxHash(userTxHash);
 				if (validationResults.isValid) {
 					const txHashData = await getTransaction(validationResults.hash);
+					console.log(txHashData)
 					await interaction.reply(`Transaction Data:\n${txHashData}`);
 				}
 				else {

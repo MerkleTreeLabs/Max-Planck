@@ -63,7 +63,7 @@ module.exports = {
 					console.log('Address is valid:', validationResults.address);
 					// grab the balance and return to the user
 					let userBalance;
-					if (interaction.options.getString('denomination' === 'wei')) {
+					if (interaction.options.getString('denomination') === 'wei') {
 						userBalance = await balance(validationResults.address, 'wei');
 					}
 					else {

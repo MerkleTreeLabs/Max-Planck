@@ -55,7 +55,7 @@ module.exports = {
 		}
 		// balance subcommand given
 		else if (interaction.options.getSubcommand() === 'balance') {
-			const balanceLookup = require('../../modules/zond/zondBlock');
+			const balanceLookup = require('../../modules/zond/zondBalance');
 			balanceLookup(interaction);
 		}
 		else if (interaction.options.getSubcommand() === 'transaction') {

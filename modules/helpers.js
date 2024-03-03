@@ -1,3 +1,6 @@
+const BigNumber = require('bignumber.js');
+
+
 function sanitizeAddress(address) {
 	const withoutPrefix = address.startsWith('0x') ? address.slice(2) : address;
 	const sanitized = withoutPrefix.replace(/[^0-9a-fA-F]/g, '');
@@ -16,4 +19,14 @@ function validateAddress(address) {
 	}
 }
 
+function hexToDec(value, denomination) {
+	const hexNumber = new BigNumber(value, 16);
+	if (!['quanta', 'wei'].includes(denomination)) {
+		throw new Error('Invalid denomination. Please provide "quanta" or "wei".');
+	}
+	return denomination === 'quanta' ? hexNumber.dividedBy('1e18').toFixed() : hexNumber.toFixed();
+}
+
+
 exports.validate = validateAddress;
+exports.hexToDec = hexToDec;

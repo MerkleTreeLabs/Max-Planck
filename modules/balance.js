@@ -1,5 +1,5 @@
 const axios = require('axios');
-const BigNumber = require('bignumber.js');
+const helper = require('../../modules/helpers');
 
 async function balance(address, denomination) {
 	try {
@@ -15,19 +15,7 @@ async function balance(address, denomination) {
 		});
 		// format the balance to human readable
 		const hexString = response.data.result;
-		const hexNumber = new BigNumber(hexString, 16);
-		let result;
-		if (denomination === 'quanta') {
-			result = hexNumber.dividedBy('1e18');
-		}
-		else if (denomination === 'wei') {
-			result = hexNumber;
-		}
-		else {
-			throw new Error('Invalid denomination. Please provide "quanta" or "wei".');
-		}
-
-		return result.toFixed();
+		return await helper.hexToDec(hexString);
 	}
 	catch (error)	{
 		throw new Error('Error occurred:', error);

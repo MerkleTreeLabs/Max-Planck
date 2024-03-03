@@ -1,7 +1,7 @@
 const axios = require('axios');
 const BigNumber = require('bignumber.js');
 
-async function balance(address) {
+async function balance(address, denomination) {
 	try {
 		const response = await axios.post('http://127.0.0.1:8545', {
 			jsonrpc: '2.0',
@@ -16,10 +16,24 @@ async function balance(address) {
 		// format the balance to human readable
 		const hexString = response.data.result;
 		const hexNumber = new BigNumber(hexString);
-		const decimalNumber = hexNumber.dividedBy('1e18');
+		let result;
+		if (denomination === 'quanta') {
+			const result = hexNumber.dividedBy('1e18');
+		}
+		else if (denomination === 'wei') {
+            result = hexNumber;
 
-		console.log(`balance:\t${decimalNumber.toString()}`);
-		return decimalNumber;
+		}
+		else {
+            throw new Error('Invalid denomination. Please provide "quanta" or "wei".');
+        }
+
+		console.log(`balance:\t${result.toString()}`);
+
+
+
+
+		return result;
 	}
 	catch (error)	{
 		throw new Error('Error occurred:', error);

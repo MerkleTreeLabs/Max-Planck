@@ -83,14 +83,12 @@ module.exports = {
 			}
 		}
 		else if (interaction.options.getSubcommand() === 'transaction') {
-			console.log('transaction');
 			const userTxHash = interaction.options.getString('hash');
 			try {
 				const validationResults = await helper.validateTxHash(userTxHash);
 				if (validationResults.isValid) {
 					const txHashData = await getTransaction(validationResults.hash);
-					console.log(JSON.stringify(txHashData));
-					await interaction.reply(`Transaction Data:\n${txHashData}`);
+					await interaction.reply(`Transaction Data:\n\`\`\`\n${JSON.stringify(txHashData)}\n\`\`\``);
 				}
 				else {
 					await interaction.reply(`Invalid txHash:\t${validationResults.error}`);

@@ -54,7 +54,7 @@ module.exports = {
 
 		if (interaction.options.getSubcommand() === 'block') {
 			const blockLookup = require('../../modules/zond/zondBlock');
-			blockLookup(interaction);
+			blockLookup.getBlockSub(interaction);
 		}
 
 		// balance subcommand given

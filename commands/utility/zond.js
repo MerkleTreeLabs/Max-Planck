@@ -19,7 +19,7 @@ module.exports = {
 		console.log(interaction.options._subcommand);
 
 		// if each subcommand then process its stuff...
-		if (interaction.options._subcommand.text.includes('ping')) {
+		if (interaction.options._subcommand === 'ping') {
 			console.log('if');
 		}
 		else {

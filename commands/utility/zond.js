@@ -3,22 +3,28 @@ const { SlashCommandBuilder } = require('discord.js');
 module.exports = {
 	cooldown: 3,
 	data: new SlashCommandBuilder()
-		.setName('info')
+		.setName('zond')
 		.setDescription('Zond testnet info!')
+		// add sub-commands for various zond things here.
 		.addSubcommand(subcommand =>
 			subcommand
-				.setName('user')
-				.setDescription('Info about a user')
-				.addUserOption(option => option.setName('target').setDescription('The user')))
+				.setName('block')
+				.setDescription('Get current block number'))
 		.addSubcommand(subcommand =>
 			subcommand
-				.setName('server')
-				.setDescription('Info about the server')),
-
+				.setName('ping')
+				.setDescription('ping user')),
 
 	async execute(interaction) {
-		// interaction.guild is the object representing the Guild in which the command was run
 		console.log(interaction);
+
+		// if each subcommand then process its stuff...
+		if (interaction.options._subcommand.text.includes('ping')) {
+			console.log('if');
+		}
+		else {
+			console.log('else');
+		}
 		await interaction.reply(`This server is ${interaction.guild.name} and has ${interaction.guild.memberCount} members.`);
 	},
 

@@ -108,6 +108,7 @@ module.exports = {
 		// faucet called
 		else if (interaction.options.getSubcommand() === 'faucet') {
 			console.log('faucet');
+
 			const userAddress = interaction.options.getString('address');
 			const userAmount = interaction.options.getNumber('amount');
 			let address;
@@ -115,6 +116,7 @@ module.exports = {
 				const validationResults = await helper.validateAddress(userAddress);
 				if (validationResults.isValid) {
 					address = validationResults.address;
+					console.log`address:\t${address}`
 					return address;
 				}
 				else {
@@ -126,7 +128,7 @@ module.exports = {
 				await interaction.reply('Looks like I\'m struggling to complete that right now...');
 			}
 			const amountShor = await helper.quantaToSor(userAmount);
-
+			console.log(`amountShor:\t${amountShor}`)
 			const userInfo = { discord_id: interaction.user.id, discord_name: interaction.user.username, last_seen: timestamp, amount: amountShor };
 
 			console.log(JSON.stringify(userInfo));

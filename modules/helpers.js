@@ -11,6 +11,7 @@ function validateAddress(address) {
 	const zondAddressRegex = /^(0x)?[0-9a-f]{40}$/i;
 	const sanitizedAddress = sanitizeAddress(address);
 	const lowercaseAddress = sanitizedAddress.toLowerCase();
+	console.log(lowercaseAddress);
 	if (lowercaseAddress.match(zondAddressRegex)) {
 		return { isValid: true, address: lowercaseAddress };
 	}
@@ -45,6 +46,7 @@ function quantaToShor(number) {
 	const multiplied = bigNumber.multipliedBy('1e18');
 	const resultString = multiplied.toFixed();
 	const result = resultString.replace('.', '');
+	console.log(result);
 	return result;
 }
 

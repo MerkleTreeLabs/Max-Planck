@@ -11,7 +11,7 @@ function validateAddress(address) {
 	const zondAddressRegex = /^(0x)?[0-9a-f]{40}$/i;
 	const sanitizedAddress = sanitizeAddress(address);
 	const lowercaseAddress = sanitizedAddress.toLowerCase();
-	console.log(lowercaseAddress);
+	console.log(`validateAddress:\t${lowercaseAddress}`);
 	if (lowercaseAddress.match(zondAddressRegex)) {
 		return { isValid: true, address: lowercaseAddress };
 	}

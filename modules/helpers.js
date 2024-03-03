@@ -1,6 +1,5 @@
 const BigNumber = require('bignumber.js');
 
-
 function sanitizeAddress(address) {
 	const withoutPrefix = address.startsWith('0x') ? address.slice(2) : address;
 	const sanitized = withoutPrefix.replace(/[^0-9a-fA-F]/g, '');
@@ -50,6 +49,16 @@ function quantaToShor(number) {
 	return result;
 }
 
+
+function shorToQuanta(number) {
+    const bigNumber = new BigNumber(number);
+    const divided = bigNumber.dividedBy('1e18');
+    const result = divided.toFixed();
+    console.log(result);
+    return result;
+}
+
+exports.shorToQuanta = shorToQuanta;
 exports.quantaToShor = quantaToShor;
 exports.validateAddress = validateAddress;
 exports.validateTxHash = validateTxHash;

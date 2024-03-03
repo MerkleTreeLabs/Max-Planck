@@ -2,5 +2,7 @@
 	"token": "your-token-goes-here",
 	"clientId": "your-application-id-goes-here", // discord application id found https://discord.com/developers/applications/
 	"guildId": "your-server-id-goes-here", // found in discord as server ID
-	"faucet_address": "Faucet public address 0x"
+	"faucetAddress": "Faucet public address 0x",
+	"faucetTimeout": "",
+	"maxDrip": ""
 }

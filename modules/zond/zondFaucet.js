@@ -31,6 +31,8 @@ async function getFaucetSub(interaction) {
 				// check if faucet timeout has passed
 				const now = new Date().getTime();
 				const timeElapsed = now - userDiscovery.lastSeen;
+				console.log(userDiscovery.lastSeen)
+				console.log(now)
 				console.log(faucetTimeout)
 				console.log(timeElapsed)
 

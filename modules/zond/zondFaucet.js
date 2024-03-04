@@ -31,10 +31,10 @@ async function getFaucetSub(interaction) {
 			if (userDiscovery.isFound) {
 				// check if faucet timeout has passed
 				const now = new Date().getTime();
-				const timeElapsed = now - userDiscovery.lastSeen;
+				const timeElapsed = now - userDiscovery.data.lastSeen;
 
 				console.log(typeof now)
-				console.log(typeof userDiscovery.lastSeen)
+				console.log(typeof userDiscovery.data.lastSeen)
 				console.log(typeof parseInt(faucetTimeout))
 				console.log(typeof timeElapsed)
 
@@ -50,7 +50,7 @@ async function getFaucetSub(interaction) {
 				}
 				else {
 					// time is not up yet, is there any available funds left to give?
-					const dripAmountBalance = maxDrip - userDiscovery.dripAmount;
+					const dripAmountBalance = maxDrip - userDiscovery.data.dripAmount;
 					if (dripAmountBalance > 0) {
 						// there is available balance to send
 						if (dripAmountBalance >= amountShor) {
@@ -64,7 +64,7 @@ async function getFaucetSub(interaction) {
 							txDetails = { dripAllowed: true, address: validatedAddress, amount: dripAmountBalance, reason: 'The amount requested is more than the available drip amount. I\'ve given all I can at this time.' };
 							// update userInfo
 							userInfo.lastSeen = now;
-							userInfo.dripAmount = userDiscovery.dripAmount + dripAmountBalance;
+							userInfo.dripAmount = userDiscovery.data.dripAmount + dripAmountBalance;
 						}
 					}
 					else {

@@ -50,7 +50,9 @@ async function getFaucetSub(interaction) {
 				}
 				else {
 					// time is not up yet, is there any available funds left to give?
-					const dripAmountBalance = parseInt(maxDrip) - userDiscovery.data.dripAmount;
+					const maxDripShor = helper.quantaToShor(parseInt(maxDrip))
+					const dripAmountBalance = maxDripShor - userDiscovery.data.dripAmount;
+					
 					console.log(`dripAmountBalance:\t ${dripAmountBalance}`)
 					if (dripAmountBalance > 0) {
 						// there is available balance to send

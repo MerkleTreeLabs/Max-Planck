@@ -112,7 +112,7 @@ function userLookup(userInfo) {
 		// read and parse the userlog.json file
 		const userData = fs.readFileSync(userFile);
 		const parsedData = JSON.parse(userData);
-		console.log(`parsedData:\t ${parsedData}`)
+		console.log(`parsedData:\t ${JSON.stringify(parsedData)}`)
 		// Find user information by discord_id.
 		const foundUserIndex = parsedData.users.findIndex(user => user.discordId === userInfo.discordId);
 		console.log(`foundUserIndex:\t ${foundUserIndex}`)

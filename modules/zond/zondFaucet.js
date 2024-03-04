@@ -32,7 +32,7 @@ async function getFaucetSub(interaction) {
 				const now = new Date().getTime();
 				const timeElapsed = now - userDiscovery.lastSeen;
 
-				if (timeElapsed >= faucetTimeout) {
+				if (timeElapsed >= parseInt(faucetTimeout)) {
 					// timeout has occurred, they can have more
 					// send tx details and pass
 					userInfo.lastSeen = now;

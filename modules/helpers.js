@@ -117,7 +117,8 @@ function userLookup(userInfo) {
         const foundUserIndex = parsedData.users.findIndex(user => String(user.discordId).trim() === String(userInfo.discordId).trim());
 		console.log(typeof foundUserIndex); // Log the type of foundUserIndex
 		console.log(`foundUserIndex:\t ${foundUserIndex}`)
-		if (foundUserIndex !== -1) {
+
+		if (foundUserIndex === 0) {
 		console.log(`FOUND!\nData: \t ${JSON.parse(parsedData.users[foundUserIndex])}`)
 			// user is found
 			return { isFound: true, data: parsedData.users[foundUserIndex] };

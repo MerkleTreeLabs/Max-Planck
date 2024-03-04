@@ -31,7 +31,7 @@ async function getFaucetSub(interaction) {
 				// check if faucet timeout has passed
 				const now = new Date().getTime();
 				const timeElapsed = now - userDiscovery.lastSeen;
-
+				console.log(faucetTimeout)
 				if (timeElapsed >= parseInt(faucetTimeout)) {
 					// timeout has occurred, they can have more
 					// send tx details and pass

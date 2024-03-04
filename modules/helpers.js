@@ -114,7 +114,7 @@ function userLookup(userInfo) {
 		const parsedData = JSON.parse(userData);
 		console.log(`parsedData:\t ${JSON.stringify(parsedData)}`)
 		// Find user information by discord_id.
-		const foundUserIndex = parsedData.users.findIndex(user => user.discordId === String(userInfo.discordId));
+        const foundUserIndex = parsedData.users.findIndex(user => user.discordId.trim() === String(userInfo.discordId).trim());
 		console.log(`foundUserIndex:\t ${foundUserIndex}`)
 		if (foundUserIndex !== -1) {
 		console.log(`FOUND!\nData: \t ${JSON.parse(parsedData.users[foundUserIndex])}`)

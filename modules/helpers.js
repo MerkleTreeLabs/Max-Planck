@@ -135,7 +135,7 @@ function userLookup(userInfo) {
 
 
 function formatTime(milliseconds) {
-	console.log('formatTime')
+	console.log(`formatTime:\t${milliseconds}`)
 	// Convert milliseconds to seconds
 	const totalSeconds = Math.floor(milliseconds / 1000);
 

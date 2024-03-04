@@ -107,7 +107,7 @@ function shorToQuanta(number) {
 
 
 function userLookup(userInfo) {
-	consol.log('userLookup')
+	console.log('userLookup')
 	try {
 		// read and parse the userlog.json file
 		const userData = fs.readFileSync(userFile);
@@ -115,12 +115,12 @@ function userLookup(userInfo) {
 		// Find user information by discord_id.
 		const foundUserIndex = parsedData.users.findIndex(user => user.discordId === userInfo.discordId);
 		if (foundUserIndex !== -1) {
-		consol.log('FOUND!')
+		console.log('FOUND!')
 			// user is found
 			return { isFound: true, data: parsedData.users[foundUserIndex] };
 		}
 		else {
-			consol.log('NOT FOUND!')
+			console.log('NOT FOUND!')
 			// not found, return error
 			return { isFound: false, error: 'User not found' };
 		}
@@ -133,7 +133,7 @@ function userLookup(userInfo) {
 
 
 function formatTime(milliseconds) {
-	consol.log('formatTime')
+	console.log('formatTime')
 	// Convert milliseconds to seconds
 	const totalSeconds = Math.floor(milliseconds / 1000);
 
@@ -157,7 +157,7 @@ function formatTime(milliseconds) {
 
 
 function writeUserData(newData) {
-	consol.log('writeUserData')	
+	console.log('writeUserData')	
 	try {
 		// Read the userlog.json file
         if (!fs.existsSync(userFile)) {

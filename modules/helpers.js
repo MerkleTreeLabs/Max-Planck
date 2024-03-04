@@ -107,33 +107,31 @@ function shorToQuanta(number) {
 
 
 function userLookup(userInfo) {
-	console.log(`userLookup:\t${JSON.stringify(userInfo)}`)
-	try {
-		// read and parse the userlog.json file
-		const userData = fs.readFileSync(userFile);
-		const parsedData = JSON.parse(userData);
-		console.log(`parsedData:\t ${JSON.stringify(parsedData)}`)
-		// Find user information by discord_id.
-        const foundUserIndex = parsedData.users.findIndex(user => user.discordId.trim() === String(userInfo.discordId).trim());
-		console.log(typeof foundUserIndex); // Log the type of foundUserIndex
-		console.log(`foundUserIndex:\t ${foundUserIndex}`)
-		console.log(JSON.parse(parsedData.users[foundUserIndex]))
-		if (foundUserIndex === 0) {
-		console.log('FOUND!')
-			// user is found
-			return { isFound: true, data: parsedData.users[foundUserIndex] };
-		}
-		else {
-			console.log('NOT FOUND!')
-			// not found, return error
-			return { isFound: false, error: 'User not found' };
-		}
-	}
-	catch (error) {
-		// handle errors
-		return { isFound: false, error: error.message };
-	}
+    console.log(`userLookup:\t${JSON.stringify(userInfo)}`);
+    try {
+        // read and parse the userlog.json file
+        const userData = fs.readFileSync(userFile);
+        const parsedData = JSON.parse(userData);
+        console.log(`parsedData:\t ${JSON.stringify(parsedData)}`);
+
+        // Find user information by discord_id.
+        const foundUser = parsedData.users.find(user => user.discordId.trim() === String(userInfo.discordId).trim());
+
+        if (foundUser) {
+            console.log('FOUND!');
+            // User is found
+            return { isFound: true, data: foundUser };
+        } else {
+            console.log('NOT FOUND!');
+            // User not found, return error
+            return { isFound: false, error: 'User not found' };
+        }
+    } catch (error) {
+        // Handle errors
+        return { isFound: false, error: error.message };
+    }
 }
+
 
 
 function formatTime(milliseconds) {

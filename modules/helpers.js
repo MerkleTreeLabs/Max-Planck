@@ -107,7 +107,7 @@ function shorToQuanta(number) {
 
 
 function userLookup(userInfo) {
-	console.log(`userLookup:\t${userInfo}`)
+	console.log(`userLookup:\t${JSON.stringify(userInfo)}`)
 	try {
 		// read and parse the userlog.json file
 		const userData = fs.readFileSync(userFile);

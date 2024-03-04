@@ -11,7 +11,7 @@ async function getFaucetSub(interaction) {
 	try {
 		const validationResults = await helper.validateAddress(userAddress);
 		if (validationResults.isValid) {
-			const amountShor = await helper.quantaToSor(userAmount);
+			const amountShor = await helper.quantaToShor(userAmount);
 			const validatedAddress = validationResults.address;
 			// console.log(`amountShor:\t${amountShor}`);
 

@@ -1,6 +1,8 @@
 const BigNumber = require('bignumber.js');
 const fs = require('fs');
-const userFile = '../userlog.json';
+const path = require('path');
+
+const userFile = path.resolve(__dirname, '../userlog.json');
 
 
 function sanitizeAddress(address) {
@@ -153,6 +155,9 @@ function formatTime(milliseconds) {
 function writeUserData(newData) {
 	try {
 		// Read the userlog.json file
+        if (!fs.existsSync(userFile)) {
+	        throw new Error(`File not found: ${filePath}`);
+        }
 		const userData = fs.readFileSync(userFile);
 		const parsedData = JSON.parse(userData);
 

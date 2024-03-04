@@ -1,7 +1,7 @@
 const axios = require('axios');
 const config = require('../../config.json');
 
-async function faucet(address, amount) {
+async function sendFaucetTx(address, amount) {
 	try {
 		const response = await axios.post('http://127.0.0.1:8545', {
 			jsonrpc: '2.0',
@@ -21,4 +21,4 @@ async function faucet(address, amount) {
 	}
 }
 
-module.exports = faucet;
+module.exports = sendFaucetTx;

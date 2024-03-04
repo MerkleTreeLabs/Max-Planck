@@ -1,10 +1,10 @@
 {
     "users": [
         {
-            "discord_id": "328611434177101835",
-            "discord_name": "fr1t2",
-            "last_seen": "1095379200",
-            "amount": "10000000000"
+            "discordId": "328611434177101835",
+            "discordName": "fr1t2",
+            "lastSeen": "1095379200",
+            "dripAmount": "10000000000"
         }
     ]
 }

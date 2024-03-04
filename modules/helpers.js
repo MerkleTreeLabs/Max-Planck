@@ -115,7 +115,7 @@ function userLookup(userInfo) {
 		// Find user information by discord_id.
 		const foundUserIndex = parsedData.users.findIndex(user => user.discordId === userInfo.discordId);
 		if (foundUserIndex !== -1) {
-		console.log('FOUND!')
+		console.log(`FOUND!\nData: \t ${parsedData.users[foundUserIndex]}`)
 			// user is found
 			return { isFound: true, data: parsedData.users[foundUserIndex] };
 		}

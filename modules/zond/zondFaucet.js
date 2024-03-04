@@ -27,6 +27,7 @@ async function getFaucetSub(interaction) {
 			let txDetails;
 
 			const userDiscovery = helper.userLookup(userInfo);
+			console.log(JSON.stringify(userDiscovery))
 			if (userDiscovery.isFound) {
 				// check if faucet timeout has passed
 				const now = new Date().getTime();
@@ -34,7 +35,7 @@ async function getFaucetSub(interaction) {
 
 				console.log(typeof now)
 				console.log(typeof userDiscovery.lastSeen)
-				console.log(typeof faucetTimeout)
+				console.log(typeof parseInt(faucetTimeout))
 				console.log(typeof timeElapsed)
 
 
@@ -43,7 +44,7 @@ async function getFaucetSub(interaction) {
 					// send tx details and pass
 					userInfo.lastSeen = now;
 					userInfo.dripAmount = amountShor;
-					const timeLeft = helper.formatTime(faucetTimeout);
+					const timeLeft = helper.formatTime(parseInt(faucetTimeout));
 					console.log(`timeLeft:\t${timeLeft}`)
 					txDetails = { dripAllowed: true, address: validatedAddress, amount: amountShor, reason: `Enough time has passes since the last time you asked, next timeout expires in ${timeLeft}.`, userInfo };
 				}
@@ -55,7 +56,7 @@ async function getFaucetSub(interaction) {
 						if (dripAmountBalance >= amountShor) {
 							userInfo.lastSeen = now;
 							userInfo.dripAmount = amountShor;
-							const timeLeft = helper.formatTime(faucetTimeout);
+							const timeLeft = helper.formatTime(parseInt(faucetTimeout));
 							txDetails = { dripAllowed: true, address: validatedAddress, amount: amountShor, reason: `Amount requested is available now. The next timeout expires in ${timeLeft}.` };
 						}
 						else {
@@ -68,7 +69,7 @@ async function getFaucetSub(interaction) {
 					}
 					else {
 						// no funds left to give till the time is up again
-						const timeLeft = helper.formatTime(faucetTimeout - timeElapsed);
+						const timeLeft = helper.formatTime(parseInt(faucetTimeout) - timeElapsed);
 						txDetails = { dripAllowed: false, reason: `You need to wait until the timeout is up in ${timeLeft}.\nIf you have an immediate need please email info@theqrl.org with your request and it will be responded to...` };
 					}
 				}

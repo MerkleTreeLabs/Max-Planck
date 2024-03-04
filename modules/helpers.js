@@ -135,28 +135,27 @@ function userLookup(userInfo) {
 
 
 function formatTime(milliseconds) {
-	console.log(`formatTime:\t${milliseconds}`)
-	// Convert milliseconds to seconds
-	const totalSeconds = Math.floor(milliseconds / 1000);
+    console.log(`formatTime:\t${milliseconds}`);
+    // Convert milliseconds to seconds
+    const totalSeconds = Math.floor(milliseconds / 1000);
 
-	// Calculate hours, minutes, and seconds
-	const hours = Math.floor(totalSeconds / 3600);
-	const minutes = Math.floor((totalSeconds % 3600) / 60);
-	const seconds = totalSeconds % 60;
+    // Calculate hours, minutes, and seconds
+    const hours = Math.floor(totalSeconds / 3600);
+    const minutes = Math.floor((totalSeconds % 3600) / 60);
+    const seconds = totalSeconds % 60;
 
-	// Build the formatted time string
-	let formattedTime = '';
-	if (hours > 0) {
-		formattedTime += `${hours} hour${hours > 1 ? 's' : ''} `;
-	}
-	if (minutes > 0 || hours > 0) {
-		formattedTime += `${minutes} min `;
-	}
-	formattedTime += `${seconds} sec{seconds !== 1 ? 's' : ''}`;
+    // Build the formatted time string
+    let formattedTime = '';
+    if (hours > 0) {
+        formattedTime += `${hours} hour${hours > 1 ? 's' : ''} `;
+    }
+    if (minutes > 0 || hours > 0) {
+        formattedTime += `${minutes} min `;
+    }
+    formattedTime += `${seconds} sec${seconds !== 1 ? 's' : ''}`;
 
-	return formattedTime;
+    return formattedTime;
 }
-
 
 function writeUserData(newData) {
 	console.log('writeUserData')	

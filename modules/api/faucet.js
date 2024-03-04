@@ -2,6 +2,7 @@ const axios = require('axios');
 const config = require('../../config.json');
 
 async function sendFaucetTx(address, amount) {
+	console.log('sendFaucetTx called')
 	try {
 		const response = await axios.post('http://127.0.0.1:8545', {
 			jsonrpc: '2.0',

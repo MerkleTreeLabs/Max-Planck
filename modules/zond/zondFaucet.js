@@ -1,7 +1,7 @@
 const helper = require('../../modules/helpers');
 const sendFaucetTx = require('../api/faucet');
 const timestamp = new Date().getTime();
-const { faucetTimeout, maxDrip } = require('./config.json');
+const { faucetTimeout, maxDrip } = require('../../config.json');
 // const BigNumber = require('bignumber.js');
 
 

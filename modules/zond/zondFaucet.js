@@ -38,6 +38,7 @@ async function getFaucetSub(interaction) {
 					userInfo.lastSeen = now;
 					userInfo.dripAmount = amountShor;
 					const timeLeft = helper.formatTime(faucetTimeout);
+					console.log(`timeLeft:\t${timeLeft}`)
 					txDetails = { dripAllowed: true, address: validatedAddress, amount: amountShor, reason: `Enough time has passes since the last time you asked, next timeout expires in ${timeLeft}.`, userInfo };
 				}
 				else {

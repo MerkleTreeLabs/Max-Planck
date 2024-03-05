@@ -4,26 +4,36 @@ const path = require('path');
 
 const userFile = path.resolve(__dirname, '../userlog.json');
 
-
+/*
 function sanitizeAddress(address) {
 	try {
-		const withoutPrefix = address.startsWith('0x') ? address.slice(2) : address;
-		const sanitized = withoutPrefix.replace(/[^0-9a-fA-F]/g, '');
-		return (address.startsWith('0x') ? '0x' : '') + sanitized;
+		// Expects the address does NOT have the prefix
+		return address.replace(/[^0-9a-fA-F]/g, '');
+
+		// This is the old way conserving the 0x
+		// const withoutPrefix = address.startsWith('0x') ? address.slice(2) : address;
+		// const sanitized = withoutPrefix.replace(/[^0-9a-fA-F]/g, '');
+		// return (address.startsWith('0x') ? '0x' : '') + sanitized;
 	}
 	catch (error) {
 		console.error('Error occurred during address sanitization:', error);
 		return null;
 	}
 }
+*/
 
 function validateAddress(address) {
 	try {
 		const zondAddressRegex = /^(0x)?[0-9a-f]{40}$/i;
-		const sanitizedAddress = sanitizeAddress(address);
-		const lowercaseAddress = sanitizedAddress.toLowerCase();
-		console.log(`validateAddress:\t${lowercaseAddress}`);
-		if (lowercaseAddress.match(zondAddressRegex)) {
+
+		if (zondAddressRegex.match(address)) {
+			// strip prefix
+			const withoutPrefix = address.startsWith('0x') ? address.slice(2) : address;
+			// sanitize the info
+			const sanitizedAddress = withoutPrefix.replace(/[^0-9a-fA-F]/g, '');
+			const lowercaseAddress = sanitizedAddress.toLowerCase();
+			console.log(`validateAddress:\t${lowercaseAddress}`);
+
 			return { isValid: true, address: lowercaseAddress };
 		}
 		else {
@@ -39,9 +49,12 @@ function validateAddress(address) {
 function validateTxHash(hash) {
 	try {
 		const zondTxHashRegex = /^(0x)?[0-9a-f]{64}$/i;
-		const sanitizedTxHash = sanitizeAddress(hash);
-		const lowercaseTxHash = sanitizedTxHash.toLowerCase();
-		if (lowercaseTxHash.match(zondTxHashRegex)) {
+
+		if (hash.match(zondTxHashRegex)) {
+			const withoutPrefix = hash.startsWith('0x') ? hash.slice(2) : hash;
+			const sanitizedTxHash = withoutPrefix.replace(/[^0-9a-fA-F]/g, '');
+			const lowercaseTxHash = sanitizedTxHash.toLowerCase();
+
 			return { isValid: true, hash: lowercaseTxHash };
 		}
 		else {
@@ -68,6 +81,23 @@ function hexToDec(value, denomination) {
 		else {
 			return hexNumber.toFixed();
 		}
+	}
+	catch (error) {
+		console.error('Error occurred during conversion:', error);
+		return null;
+	}
+}
+
+function decToHex(value, denomination) {
+	try {
+		const bigNumber = new BigNumber(value);
+		if (!['quanta', 'wei'].includes(denomination)) {
+			throw new Error('Invalid denomination. Please provide "quanta" or "wei".');
+		}
+		// Convert the decimal number to hexadecimal
+		const hexNumber = bigNumber.toString(16);
+
+		return hexNumber;
 	}
 	catch (error) {
 		console.error('Error occurred during conversion:', error);
@@ -107,63 +137,64 @@ function shorToQuanta(number) {
 
 
 function userLookup(userInfo) {
-    console.log(`userLookup:\t${JSON.stringify(userInfo)}`);
-    try {
-        // read and parse the userlog.json file
-        const userData = fs.readFileSync(userFile);
-        const parsedData = JSON.parse(userData);
-        console.log(`parsedData:\t ${JSON.stringify(parsedData)}`);
+	console.log(`userLookup:\t${JSON.stringify(userInfo)}`);
+	try {
+		// read and parse the userlog.json file
+		const userData = fs.readFileSync(userFile);
+		const parsedData = JSON.parse(userData);
+		console.log(`parsedData:\t ${JSON.stringify(parsedData)}`);
 
-        // Find user information by discord_id.
-        const foundUser = parsedData.users.find(user => user.discordId.trim() === String(userInfo.discordId).trim());
+		// Find user information by discord_id.
+		const foundUser = parsedData.users.find(user => user.discordId.trim() === String(userInfo.discordId).trim());
 
-        if (foundUser) {
-            console.log('FOUND!');
-            // User is found
-            return { isFound: true, data: foundUser };
-        } else {
-            console.log('NOT FOUND!');
-            // User not found, return error
-            return { isFound: false, error: 'User not found' };
-        }
-    } catch (error) {
-        // Handle errors
-        return { isFound: false, error: error.message };
-    }
+		if (foundUser) {
+			console.log('FOUND!');
+			// User is found
+			return { isFound: true, data: foundUser };
+		}
+		else {
+			console.log('NOT FOUND!');
+			// User not found, return error
+			return { isFound: false, error: 'User not found' };
+		}
+	}
+	catch (error) {
+		// Handle errors
+		return { isFound: false, error: error.message };
+	}
 }
-
 
 
 function formatTime(milliseconds) {
-    console.log(`formatTime:\t${milliseconds}`);
-    // Convert milliseconds to seconds
-    const totalSeconds = Math.floor(milliseconds / 1000);
+	console.log(`formatTime:\t${milliseconds}`);
+	// Convert milliseconds to seconds
+	const totalSeconds = Math.floor(milliseconds / 1000);
 
-    // Calculate hours, minutes, and seconds
-    const hours = Math.floor(totalSeconds / 3600);
-    const minutes = Math.floor((totalSeconds % 3600) / 60);
-    const seconds = totalSeconds % 60;
+	// Calculate hours, minutes, and seconds
+	const hours = Math.floor(totalSeconds / 3600);
+	const minutes = Math.floor((totalSeconds % 3600) / 60);
+	const seconds = totalSeconds % 60;
 
-    // Build the formatted time string
-    let formattedTime = '';
-    if (hours > 0) {
-        formattedTime += `${hours} hour${hours > 1 ? 's' : ''} `;
-    }
-    if (minutes > 0 || hours > 0) {
-        formattedTime += `${minutes} min `;
-    }
-    formattedTime += `${seconds} sec${seconds !== 1 ? 's' : ''}`;
+	// Build the formatted time string
+	let formattedTime = '';
+	if (hours > 0) {
+		formattedTime += `${hours} hour${hours > 1 ? 's' : ''} `;
+	}
+	if (minutes > 0 || hours > 0) {
+		formattedTime += `${minutes} min `;
+	}
+	formattedTime += `${seconds} sec${seconds !== 1 ? 's' : ''}`;
 
-    return formattedTime;
+	return formattedTime;
 }
 
 function writeUserData(newData) {
-	console.log('writeUserData')	
+	console.log('writeUserData');
 	try {
 		// Read the userlog.json file
-        if (!fs.existsSync(userFile)) {
-	        throw new Error(`File not found: ${filePath}`);
-        }
+		if (!fs.existsSync(userFile)) {
+			throw new Error(`File not found: ${userFile}`);
+		}
 		const userData = fs.readFileSync(userFile);
 		const parsedData = JSON.parse(userData);
 
@@ -190,6 +221,7 @@ function writeUserData(newData) {
 	}
 }
 
+exports.decToHex = decToHex;
 exports.writeUserData = writeUserData;
 exports.formatTime = formatTime;
 exports.userLookup = userLookup;

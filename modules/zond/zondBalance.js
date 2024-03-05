@@ -1,4 +1,4 @@
-const getBalance = require('../api/balance');
+const getBalance = require('../api/balanceLookup');
 const helper = require('../helpers');
 
 

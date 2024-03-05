@@ -4,5 +4,7 @@
 	"guildId": "your-server-id-goes-here", // found in discord as server ID
 	"faucetAddress": "Faucet public address 0x",
 	"faucetTimeout": "",
-	"maxDrip": ""
+	"maxDrip": "",
+	"clientId": "", // client ID of the application
+	"guildId": "" 
 }

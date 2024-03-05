@@ -6,7 +6,7 @@ async function balance(address, denomination) {
 		const response = await axios.post('http://127.0.0.1:8545', {
 			jsonrpc: '2.0',
 			method: 'zond_getBalance',
-			params: [address, 'latest'],
+			params: [`0x${address}`, 'latest'],
 			id: 1,
 		}, {
 			headers: {

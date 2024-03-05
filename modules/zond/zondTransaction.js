@@ -1,5 +1,5 @@
 const helper = require('../helpers');
-const getTransaction = require('../api/transaction');
+const getTransaction = require('../api/transactionLookup');
 
 async function getTransactionSub(interaction) {
 	const userTxHash = interaction.options.getString('hash');

@@ -5,7 +5,7 @@ async function getTransaction(txHash) {
 		const response = await axios.post('http://127.0.0.1:8545', {
 			jsonrpc: '2.0',
 			method: 'zond_getTransactionReceipt',
-			params: [txHash],
+			params: [`0x${txHash}`],
 			id: 1,
 		}, {
 			headers: {

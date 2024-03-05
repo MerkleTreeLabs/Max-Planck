@@ -25,8 +25,8 @@ function sanitizeAddress(address) {
 function validateAddress(address) {
 	try {
 		const zondAddressRegex = /^(0x)?[0-9a-f]{40}$/i;
-		const zondAddressRegexMatched = zondAddressRegex.match(address)
-		if (zondAddressRegexMatched) {
+
+		if (zondAddressRegex.test(address)) {
 			// strip prefix
 			const withoutPrefix = address.startsWith('0x') ? address.slice(2) : address;
 			// sanitize the info

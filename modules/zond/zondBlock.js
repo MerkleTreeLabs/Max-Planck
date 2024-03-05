@@ -1,4 +1,4 @@
-const getBlock = require('../api/block');
+const getBlock = require('../api/blockLookup');
 
 
 async function getBlockSub(interaction) {

@@ -8,7 +8,7 @@ async function sendFaucetTx(toAddress, amount) {
 	console.log('sendFaucetTx called');
 	try {
 		const transferAmount = helper.decToHex(amount);
-		const nonce = await axios.post(`http://${config.zondPubAPI}`, {
+		let nonce = await axios.post(`http://${config.zondPubAPI}`, {
 			jsonrpc: '2.0',
 			method: 'zond_getTransactionCount',
 			params: [`0x${toAddress}`, 'latest'],
@@ -18,8 +18,9 @@ async function sendFaucetTx(toAddress, amount) {
 				'Content-Type': 'application/json',
 			},
 		});
+		nonce = nonce.data.result;
 
-		console.log(`nonce:\t${helper.hexToDec(nonce.data.result, 'wei')}\n${JSON.stringify(nonce.data.result)}`);
+		console.log(`nonce:\t${helper.hexToDec(nonce, 'wei')}:\t${nonce)}`);
 
 
 		const chainId = (await axios.get(`${config.zondPubAPI}/chainID`)).data.result;

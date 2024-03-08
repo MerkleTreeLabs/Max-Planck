@@ -1,11 +1,10 @@
 const axios = require('axios');
 const web3 = require('@theqrl/web3');
-console.log(web3.version)
 const config = require('../../config.json');
 const helper = require('../helpers');
 const getNonce = require('./nonceLookup');
 const getChainId = require('./chainIdLookup');
-const getPendingBaseFee = require('./pendingBaseFeeLookup');
+// const getPendingBaseFee = require('./pendingBaseFeeLookup');
 
 async function sendFaucetTx(toAddress, amount) {
 	console.log('sendFaucetTx called');
@@ -19,6 +18,7 @@ async function sendFaucetTx(toAddress, amount) {
 
 		const pendingBaseFee = await web3.zond.getBlock('latest');
 		console.log(`pendingBaseFee:\t${pendingBaseFee}`);
+
 		// const pendingBaseFee = await getPendingBaseFee();
 		// const pendingBaseFee = (await axios.get(`${config.zondPubAPI}/pendingBaseFee`)).data.result;
 
@@ -31,12 +31,12 @@ async function sendFaucetTx(toAddress, amount) {
 			type: '0x2',
 			value: `0x${transferAmount}`,
 			chainId,
-			nonce: nonce,
+			nonce,
 		};
 
-		console.log(`txData:\n${txData}\n`)
+		console.log(`txData:\n${txData}\n`);
 		const estimatedGas = (await axios.post(`${config.zondPubAPI}/estimateGas`, txData)).data;
-		console.log(`estimatedGas:\t${estimatedGas}`)
+		console.log(`estimatedGas:\t${estimatedGas}`);
 
 		txData.gas = estimatedGas.result;
 		txData.maxPriorityFeePerGas = `0x${tip.toString(16)}`;

@@ -1,8 +1,9 @@
 const axios = require('axios');
+const config = require('../../config.json');
 
 async function getTransaction(txHash) {
 	try {
-		const response = await axios.post('http://127.0.0.1:8545', {
+		const response = await axios.post(`http://${config.zondPubAPI}`, {
 			jsonrpc: '2.0',
 			method: 'zond_getTransactionReceipt',
 			params: [`0x${txHash}`],

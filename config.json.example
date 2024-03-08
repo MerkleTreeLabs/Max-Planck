@@ -2,9 +2,8 @@
 	"token": "your-token-goes-here",
 	"clientId": "your-application-id-goes-here", // discord application id found https://discord.com/developers/applications/
 	"guildId": "your-server-id-goes-here", // found in discord as server ID
-	"faucetAddress": "Faucet public address 0x",
-	"faucetTimeout": "",
-	"maxDrip": "",
-	"clientId": "", // client ID of the application
-	"guildId": "" 
+	"faucetAddress": "Faucet public address 0x", // public address for the faucet controlled funds. (must be imported into node)
+	"faucetTimeout": "", // Time between withdraws (in Milliseconds)
+	"maxDrip": "", // max allowed drip for given time. (in quanta)
+	"zondPubAPI": "" // zond api {IP:PORT}
 }

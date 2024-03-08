@@ -8,3 +8,7 @@ More info in the chat
 
 ## [Join the Discord](https://theqrl.org/discord)
 
+---
+# Dependencies
+
+install 

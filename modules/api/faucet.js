@@ -20,7 +20,7 @@ async function sendFaucetTx(toAddress, amount) {
 		});
 		nonce = nonce.data.result;
 
-		console.log(`nonce:\t${helper.hexToDec(nonce, 'wei')}:\t${nonce)}`);
+		console.log(`nonce:\t${helper.hexToDec(nonce, 'wei')}:\t${nonce}`);
 
 
 		const chainId = (await axios.get(`${config.zondPubAPI}/chainID`)).data.result;

@@ -8,15 +8,30 @@ async function sendFaucetTx(toAddress, amount) {
 	console.log('sendFaucetTx called');
 	try {
 		const transferAmount = helper.decToHex(amount);
-		console.log(`transferAmount:\t${transferAmount}`);
+		// console.log(`transferAmount:\t${transferAmount}`);
 		// get nonce from address on chain
-		console.log(`nonce constructor:\nconfig.zondPubAPI:\t${config.zondPubAPI}\nconfig.faucetAddress:\t${config.faucetAddress}\n\nhttp://${config.zondPubAPI}/nonce?address=${config.faucetAddress}`);
+		// console.log(`nonce constructor:\nconfig.zondPubAPI:\t${config.zondPubAPI}\nconfig.faucetAddress:\t${config.faucetAddress}\n\nhttp://${config.zondPubAPI}/nonce?address=${config.faucetAddress}`);
 
 		// const { nonce } = (await axios.get(`${config.zondPubAPI}/nonce?address=${config.faucetAddress}`)).data;
-		const noncLookup = (await axios.get(`http://${config.zondPubAPI}/zond_nonce?address=${config.faucetAddress}`)).data;
+		// const noncLookup = (await axios.get(`http://${config.zondPubAPI}/nonce?address=${config.faucetAddress}`));
 
 
-		console.log(`nonce:\t${noncLookup}`);
+
+		const nonce = await axios.post(`https://${config.zondPubAPI}`, {
+			jsonrpc: '2.0',
+			method: 'zond_nonce',
+			params: [`0x${toAddress}`, 'latest'],
+			id: 1,
+		}, {
+			headers: {
+				'Content-Type': 'application/json',
+			},
+		});
+
+
+		console.log(`nonce:\t${nonce}`);
+
+
 		const chainId = (await axios.get(`${config.zondPubAPI}/chainID`)).data.result;
 
 		const pendingBaseFee = (await axios.get(`${config.zondPubAPI}/pendingBaseFee`)).data.result;
@@ -29,7 +44,7 @@ async function sendFaucetTx(toAddress, amount) {
 			type: '0x2',
 			value: `0x${transferAmount}`,
 			chainId,
-			nonce: noncLookup.nonce,
+			nonce: nonce,
 		};
 
 		const estimatedGas = (await axios.post(`${config.zondPubAPI}/estimateGas`, txData)).data;

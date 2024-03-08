@@ -16,8 +16,10 @@ async function sendFaucetTx(toAddress, amount) {
 		const chainId = await getChainId();
 		console.log(`chainId:\t${chainId}`);
 
-		const pendingBaseFee = await getPendingBaseFee();
+
+		const pendingBaseFee = web3.zond.getBlock('latest');
 		console.log(`pendingBaseFee:\t${pendingBaseFee}`);
+		// const pendingBaseFee = await getPendingBaseFee();
 		// const pendingBaseFee = (await axios.get(`${config.zondPubAPI}/pendingBaseFee`)).data.result;
 
 		// around 100 Shor

@@ -1,7 +1,8 @@
 const axios = require('axios');
 const Web3 = require('@theqrl/web3');
 
-const web3 = new Web3("ws://localhost:8545");
+// const web3 = new Web3("ws://localhost:8545");
+const web3 = new Web3(Web3.givenProvider || "ws://localhost:8545");
 
 const config = require('../../config.json');
 const helper = require('../helpers');

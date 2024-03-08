@@ -1,6 +1,6 @@
 const axios = require('axios');
 const web3 = require('@theqrl/web3');
-console.lgo(web3)
+console.log(web3)
 const config = require('../../config.json');
 const helper = require('../helpers');
 const getNonce = require('./nonceLookup');
@@ -11,7 +11,7 @@ async function sendFaucetTx(toAddress, amount) {
 	console.log('sendFaucetTx called');
 	try {
 		const transferAmount = helper.decToHex(amount);
-		nonce = await getNonce(toAddress);
+		const nonce = await getNonce(toAddress);
 		console.log(`nonce:\t${nonce}`);
 		const chainId = await getChainId();
 		console.log(`chainId:\t${chainId}`);

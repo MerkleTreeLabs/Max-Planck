@@ -10,16 +10,15 @@ async function sendFaucetTx(toAddress, amount) {
 	console.log('sendFaucetTx called');
 	try {
 		const transferAmount = helper.decToHex(amount);
+		nonce = await getNonce(toAddress);
+		console.log(`nonce:\t${nonce}`);
+		const chainId = await getChainId();
+		console.log(`chainId:\t${chainId}`);
 
-		nonce = await getNonce(toAddress)
-		console.log(`nonce:\t${nonce}`)
+		const pendingBaseFee = await getPendingBaseFee();
+		console.log(`pendingBaseFee:\t${pendingBaseFee}`);
+		// const pendingBaseFee = (await axios.get(`${config.zondPubAPI}/pendingBaseFee`)).data.result;
 
-		// const chainId = (await axios.get(`${config.zondPubAPI}/chainID`)).data.result;
-		const chainId = await getChainId()
-		console.log(`chainId:\t${chainId}`)
-
-
-		const pendingBaseFee = (await axios.get(`${config.zondPubAPI}/pendingBaseFee`)).data.result;
 		// around 100 Shor
 		const tip = 0x174876eabc;
 		const txData = {

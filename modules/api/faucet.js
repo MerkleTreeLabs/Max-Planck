@@ -4,7 +4,7 @@ const web3 = require('@theqrl/web3');
 const config = require('../../config.json');
 const helper = require('../helpers');
 const getNonce = require('./nonceLookup');
-const getChainId = require('./getchainId');
+const getChainId = require('./chainIdLookup');
 
 async function sendFaucetTx(toAddress, amount) {
 	console.log('sendFaucetTx called');

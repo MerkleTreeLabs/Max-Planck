@@ -21,7 +21,7 @@ async function getPendingBaseFee() {
 	}
 }
 
-module.exports = pendingBaseFee;
+module.exports = getPendingBaseFee;
 
 
 // const pendingBaseFee = (await axios.get(`${config.zondPubAPI}/pendingBaseFee`)).data.result;

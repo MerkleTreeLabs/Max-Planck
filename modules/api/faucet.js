@@ -11,8 +11,11 @@ async function sendFaucetTx(toAddress, amount) {
 		console.log(`transferAmount:\t${transferAmount}`);
 		// get nonce from address on chain
 		console.log(`nonce constructor:\nconfig.zondPubAPI:\t${config.zondPubAPI}\nconfig.faucetAddress:\t${config.faucetAddress}\n\nhttp://${config.zondPubAPI}/nonce?address=${config.faucetAddress}`);
+
 		// const { nonce } = (await axios.get(`${config.zondPubAPI}/nonce?address=${config.faucetAddress}`)).data;
-		const noncLookup = (await axios.get(`http://${config.zondPubAPI}/nonce?address=${config.faucetAddress}`));
+		const noncLookup = (await axios.get(`http://${config.zondPubAPI}/zond_nonce?address=${config.faucetAddress}`)).data;
+
+
 		console.log(`nonce:\t${noncLookup}`);
 		const chainId = (await axios.get(`${config.zondPubAPI}/chainID`)).data.result;
 

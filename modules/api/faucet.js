@@ -1,6 +1,6 @@
 const axios = require('axios');
 const web3 = require('@theqrl/web3');
-console.log(web3)
+console.log(web3.version)
 const config = require('../../config.json');
 const helper = require('../helpers');
 const getNonce = require('./nonceLookup');

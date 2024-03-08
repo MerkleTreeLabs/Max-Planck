@@ -29,7 +29,7 @@ async function sendFaucetTx(toAddress, amount) {
 		});
 
 
-		console.log(`nonce:\t${nonce}\n${JSON.stringify(nonce.data)}`);
+		console.log(`nonce:\t${helper.hexToDec(nonce.data.result)}\n${JSON.stringify(nonce.data)}`);
 
 
 		const chainId = (await axios.get(`${config.zondPubAPI}/chainID`)).data.result;

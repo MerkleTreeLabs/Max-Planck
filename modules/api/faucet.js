@@ -5,6 +5,7 @@ const config = require('../../config.json');
 const helper = require('../helpers');
 const getNonce = require('./nonceLookup');
 const getChainId = require('./chainIdLookup');
+const getPendingBaseFee = require('./pendingBaseFeeLookup');
 
 async function sendFaucetTx(toAddress, amount) {
 	console.log('sendFaucetTx called');

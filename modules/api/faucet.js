@@ -34,7 +34,9 @@ async function sendFaucetTx(toAddress, amount) {
 			nonce: nonce,
 		};
 
+		console.log(`txData:\n${txData}\n`)
 		const estimatedGas = (await axios.post(`${config.zondPubAPI}/estimateGas`, txData)).data;
+		console.log(`estimatedGas:\t${estimatedGas}`)
 
 		txData.gas = estimatedGas.result;
 		txData.maxPriorityFeePerGas = `0x${tip.toString(16)}`;

@@ -14,7 +14,7 @@ async function sendFaucetTx(toAddress, amount) {
 
 		// const { nonce } = (await axios.get(`${config.zondPubAPI}/nonce?address=${config.faucetAddress}`)).data;
 		// const noncLookup = (await axios.get(`http://${config.zondPubAPI}/nonce?address=${config.faucetAddress}`));
-
+		console.log(`axios.post(\`http://${config.zondPubAPI}\``);
 
 
 		const nonce = await axios.post(`http://${config.zondPubAPI}`, {

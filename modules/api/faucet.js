@@ -17,7 +17,7 @@ async function sendFaucetTx(toAddress, amount) {
 
 
 
-		const nonce = await axios.post(`https://${config.zondPubAPI}`, {
+		const nonce = await axios.post(`http://${config.zondPubAPI}`, {
 			jsonrpc: '2.0',
 			method: 'zond_nonce',
 			params: [`0x${toAddress}`, 'latest'],

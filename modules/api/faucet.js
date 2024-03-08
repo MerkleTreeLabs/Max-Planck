@@ -3,14 +3,14 @@ const web3 = require('@theqrl/web3');
 
 const config = require('../../config.json');
 const helper = require('../helpers');
-const nonceLookup = require('./nonceLookup');
+const getNonce = require('./nonceLookup');
 
 async function sendFaucetTx(toAddress, amount) {
 	console.log('sendFaucetTx called');
 	try {
 		const transferAmount = helper.decToHex(amount);
 
-		nonce = await nonceLookup.getNonce(toAddress)
+		nonce = await getNonce(toAddress)
 		console.log(nonce)
 
 		const chainId = (await axios.get(`${config.zondPubAPI}/chainID`)).data.result;

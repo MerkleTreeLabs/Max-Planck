@@ -6,7 +6,7 @@ async function getPendingBaseFee() {
 	try {
 		const pendingBaseFee = await axios.post(`http://${config.zondPubAPI}`, {
 			jsonrpc: '2.0',
-			method: 'zond_getMaxPriorityFeePerGas',
+			method: 'zond_getBlock',
 			params: [],
 			id: 1,
 		}, {
@@ -14,8 +14,8 @@ async function getPendingBaseFee() {
 				'Content-Type': 'application/json',
 			},
 		});
-		console.log(pendingBaseFee);
-		return pendingBaseFee.data.result;
+		console.log(JSON.stringify(pendingBaseFee));
+		return pendingBaseFee.data.baseFeePerGas;
 	}
 	catch (error) {
 		console.log(`error caught: ${error}`);

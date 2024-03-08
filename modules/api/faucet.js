@@ -15,7 +15,7 @@ async function sendFaucetTx(toAddress, amount) {
 		console.log(`nonce:\t${nonce}`)
 
 		// const chainId = (await axios.get(`${config.zondPubAPI}/chainID`)).data.result;
-		const chainId = getChainId()
+		const chainId = await getChainId()
 		console.log(`chainId:\t${chainId}`)
 
 

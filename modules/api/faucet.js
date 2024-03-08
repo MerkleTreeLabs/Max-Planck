@@ -8,6 +8,7 @@ async function sendFaucetTx(toAddress, amount) {
 	console.log('sendFaucetTx called');
 	try {
 		const transferAmount = helper.decToHex(amount);
+		console.log(`transferAmount:\t${transferAmount}`)
 		// get nonce from address on chain
 		const { nonce } = (await axios.get(`${config.zondPubAPI}/nonce?address=0x${config.faucetAddress}`)).data;
 		console.log(`nonce:\t${nonce}`);

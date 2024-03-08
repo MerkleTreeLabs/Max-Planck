@@ -4,6 +4,7 @@ const web3 = require('@theqrl/web3');
 const config = require('../../config.json');
 const helper = require('../helpers');
 const getNonce = require('./nonceLookup');
+const getChainId = require('./getchainId');
 
 async function sendFaucetTx(toAddress, amount) {
 	console.log('sendFaucetTx called');
@@ -11,9 +12,12 @@ async function sendFaucetTx(toAddress, amount) {
 		const transferAmount = helper.decToHex(amount);
 
 		nonce = await getNonce(toAddress)
-		console.log(nonce)
+		console.log(`nonce:\t${nonce}`)
 
-		const chainId = (await axios.get(`${config.zondPubAPI}/chainID`)).data.result;
+		// const chainId = (await axios.get(`${config.zondPubAPI}/chainID`)).data.result;
+		const chainId = getChainId()
+		console.log(`chainId:\t${chainId}`)
+
 
 		const pendingBaseFee = (await axios.get(`${config.zondPubAPI}/pendingBaseFee`)).data.result;
 		// around 100 Shor

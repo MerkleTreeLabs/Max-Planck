@@ -88,12 +88,10 @@ function hexToDec(value, denomination) {
 	}
 }
 
-function decToHex(value, denomination) {
+function decToHex(value) {
 	try {
 		const bigNumber = new BigNumber(value);
-		if (!['quanta', 'wei'].includes(denomination)) {
-			throw new Error('Invalid denomination. Please provide "quanta" or "wei".');
-		}
+
 		// Convert the decimal number to hexadecimal
 		const hexNumber = bigNumber.toString(16);
 

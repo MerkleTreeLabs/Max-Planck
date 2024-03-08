@@ -14,7 +14,7 @@ async function getPendingBaseFee() {
 				'Content-Type': 'application/json',
 			},
 		});
-		console.log(JSON.stringify(pendingBaseFee));
+		console.log(pendingBaseFee.data);
 		return pendingBaseFee.data.baseFeePerGas;
 	}
 	catch (error) {

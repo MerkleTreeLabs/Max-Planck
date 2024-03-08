@@ -7,7 +7,7 @@ async function getPendingBaseFee() {
 		const pendingBaseFee = await axios.post(`http://${config.zondPubAPI}`, {
 			jsonrpc: '2.0',
 			method: 'zond_getBlock',
-			params: [],
+			params: ['latest'],
 			id: 1,
 		}, {
 			headers: {

@@ -1,8 +1,9 @@
+const config = require('../../config.json');
 const axios = require('axios');
 
 async function block() {
 	try {
-		const response = await axios.post('http://127.0.0.1:8545', {
+		const response = await axios.post(`http://${config.zondPubAPI}`, {
 			jsonrpc: '2.0',
 			method: 'zond_blockNumber',
 			params: [],

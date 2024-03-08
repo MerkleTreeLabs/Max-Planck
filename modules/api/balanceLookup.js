@@ -1,9 +1,11 @@
 const axios = require('axios');
 const helper = require('../helpers');
+const config = require('../../config.json');
 
 async function balance(address, denomination) {
 	try {
-		const response = await axios.post('http://127.0.0.1:8545', {
+
+		const response = await axios.post(`http://${config.zondPubAPI}`, {
 			jsonrpc: '2.0',
 			method: 'zond_getBalance',
 			params: [`0x${address}`, 'latest'],

@@ -7,6 +7,23 @@ async function getTransactionSub(interaction) {
 		const validationResults = await helper.validateTxHash(userTxHash);
 		if (validationResults.isValid) {
 			const txHashData = await getTransaction(validationResults.hash);
+			const keysToConvert = [
+				'blockNumber',
+				'cumulativeGasUsed',
+				'effectiveGasPrice',
+				'gasUsed',
+				'status',
+				'transactionIndex',
+				'type',
+			];
+
+			keysToConvert.forEach(key => {
+				if (Object.prototype.hasOwnProperty.call(txHashData, key)) {
+					txHashData[key] = helper.hexToDec(txHashData[key]);
+				}
+			});
+
+
 			await interaction.reply({ content: `Transaction Data:\n\`\`\`json\n${JSON.stringify(txHashData, null, 4)}\n\`\`\``, ephemeral: true });
 		}
 		else {

@@ -2,7 +2,7 @@ const axios = require('axios');
 const helper = require('../helpers');
 const config = require('../../config.json');
 
-async function balance(address, denomination) {
+async function balance(address) {
 	try {
 		const response = await axios.post(`http://${config.zondPubAPI}`, {
 			jsonrpc: '2.0',
@@ -16,7 +16,7 @@ async function balance(address, denomination) {
 		});
 		// format the balance to human readable
 		const hexString = response.data.result;
-		return await helper.hexToDec(hexString, denomination);
+		return await helper.hexToDec(hexString);
 	}
 	catch (error)	{
 		const errorMessage = `Error occurred in BalanceLookup: ${error.message}`;

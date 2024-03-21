@@ -9,10 +9,12 @@ async function getBalanceSub(interaction) {
 		if (validationResults.isValid) {
 			let userBalance;
 			if (interaction.options.getString('denomination') === 'wei') {
-				userBalance = await getBalance(validationResults.address, 'wei');
+				userBalance = await getBalance(validationResults.address);
 			}
 			else {
-				userBalance = await getBalance(validationResults.address, 'quanta');
+				userBalance = await getBalance(validationResults.address);
+				userBalance = userBalance.dividedBy('1e18').toFixed();
+
 			}
 			await interaction.reply(`Balance info:\nAddress:\t\`${userAddress}\`\nBalance:\t\`${userBalance}\``);
 		}

@@ -48,20 +48,10 @@ function validateTxHash(hash) {
 	}
 }
 
-function hexToDec(value, denomination) {
+function hexToDec(value) {
 	try {
 		const hexNumber = new BigNumber(value, 16);
-		if (!['quanta', 'wei'].includes(denomination)) {
-			throw new Error('Invalid denomination. Please provide "quanta" or "wei".');
-		}
-		// this is working but not easy to understand
-		// return denomination === 'quanta' ? hexNumber.dividedBy('1e18').toFixed() : hexNumber.toFixed();
-		if (denomination === 'quanta') {
-			return hexNumber.dividedBy('1e18').toFixed();
-		}
-		else {
-			return hexNumber.toFixed();
-		}
+		return hexNumber.toFixed();
 	}
 	catch (error) {
 		console.error('Error occurred during conversion:', error);

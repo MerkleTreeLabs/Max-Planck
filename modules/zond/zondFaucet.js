@@ -61,7 +61,7 @@ async function getFaucetSub(interaction) {
 			// user has not been seen
 			txDetails = { amount: amountShor };
 		}
-		console.lgo(`txDetails:\t${txDetails}`);
+		console.log(`txDetails:\t${txDetails}`);
 
 		// if found and not allowed error with message
 		if (txDetails.userInTimeout) {

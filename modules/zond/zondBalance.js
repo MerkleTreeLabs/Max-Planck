@@ -13,7 +13,8 @@ async function getBalanceSub(interaction) {
 			}
 			else {
 				userBalance = await getBalance(validationResults.address);
-				userBalance = userBalance.dividedBy('1e18').toFixed();
+
+				userBalance = parseInt(userBalance).dividedBy('1e18').toFixed();
 
 			}
 			await interaction.reply(`Balance info:\nAddress:\t\`${userAddress}\`\nBalance:\t\`${userBalance}\``);

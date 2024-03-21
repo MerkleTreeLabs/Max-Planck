@@ -13,7 +13,7 @@ async function getBalanceSub(interaction) {
 			}
 			else {
 				userBalance = await getBalance(validationResults.address);
-
+				console.log(userBalance);
 				userBalance = parseInt(userBalance).dividedBy('1e18').toFixed();
 
 			}

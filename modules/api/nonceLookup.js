@@ -15,7 +15,7 @@ async function getNonce(address) {
 				'Content-Type': 'application/json',
 			},
 		});
-		const nonce = parseInt(helper.hexToDec(nonceCount.data.result, 'wei'));
+		const nonce = parseInt(helper.hexToDec(nonceCount.data.result));
 		// get a count of any pending transactions in the que
 		const pendingTxns = await axios.post(`http://${config.zondPubAPI}`, {
 			jsonrpc: '2.0',

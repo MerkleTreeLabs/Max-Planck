@@ -1,3 +1,4 @@
+const BigNumber = require('bignumber.js');
 const getBalance = require('../api/balanceLookup');
 const helper = require('../helpers');
 
@@ -12,7 +13,7 @@ async function getBalanceSub(interaction) {
 				userBalance = await getBalance(validationResults.address);
 			}
 			else {
-				userBalance = (await getBalance(validationResults.address)).dividedBy('1e18').toFixed();
+				userBalance = await getBalance(validationResults.address);
 				console.log(userBalance);
 				// userBalance = userBalance.dividedBy('1e18').toFixed();
 			}

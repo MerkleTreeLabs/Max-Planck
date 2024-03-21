@@ -17,8 +17,10 @@ async function getTransaction(txHash) {
 		return response.data.result;
 	}
 	catch (error) {
-		throw new Error(`Error occurred: ${error.message}`);
+		const errorMessage = `Error occurred while fetching the transactionLookup: ${error.message}`;
+		console.error(errorMessage);
+		return new Error(errorMessage);
 	}
 }
 
-module.exports= getTransaction;
+module.exports = getTransaction;

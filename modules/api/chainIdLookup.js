@@ -16,7 +16,9 @@ async function getChainId() {
 		return chainId.data.result;
 	}
 	catch (error) {
-		console.log(`error caught: ${error}`);
+		const errorMessage = `Error caught trying the chainIdLookup: ${error.message}`;
+		console.error(errorMessage);
+		return new Error(errorMessage);
 	}
 }
 

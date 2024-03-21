@@ -6,8 +6,8 @@ async function getPendingBaseFee() {
 	try {
 		const pendingBaseFee = await axios.post(`http://${config.zondPubAPI}`, {
 			jsonrpc: '2.0',
-			method: 'zond_getBlock',
-			params: ['latest'],
+			method: 'zond_getBlockByNumber',
+			params: ['pending', true],
 			id: 1,
 		}, {
 			headers: {
@@ -15,14 +15,13 @@ async function getPendingBaseFee() {
 			},
 		});
 		console.log(pendingBaseFee.data);
-		return pendingBaseFee.data.baseFeePerGas;
+		return pendingBaseFee.data.result.baseFeePerGas;
 	}
 	catch (error) {
-		console.log(`error caught: ${error}`);
+		const errorMessage = `Error occurred while fetching the pendingBaseFeeLookup: ${error.message}`;
+		console.error(errorMessage);
+		return new Error(errorMessage);
 	}
 }
 
 module.exports = getPendingBaseFee;
-
-
-// const pendingBaseFee = (await axios.get(`${config.zondPubAPI}/pendingBaseFee`)).data.result;

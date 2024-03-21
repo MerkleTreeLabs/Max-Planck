@@ -4,36 +4,16 @@ const path = require('path');
 
 const userFile = path.resolve(__dirname, '../userlog.json');
 
-/*
-function sanitizeAddress(address) {
-	try {
-		// Expects the address does NOT have the prefix
-		return address.replace(/[^0-9a-fA-F]/g, '');
-
-		// This is the old way conserving the 0x
-		// const withoutPrefix = address.startsWith('0x') ? address.slice(2) : address;
-		// const sanitized = withoutPrefix.replace(/[^0-9a-fA-F]/g, '');
-		// return (address.startsWith('0x') ? '0x' : '') + sanitized;
-	}
-	catch (error) {
-		console.error('Error occurred during address sanitization:', error);
-		return null;
-	}
-}
-*/
-
 function validateAddress(address) {
 	try {
 		const zondAddressRegex = /^(0x)?[0-9a-f]{40}$/i;
-
 		if (zondAddressRegex.test(address)) {
 			// strip prefix
 			const withoutPrefix = address.startsWith('0x') ? address.slice(2) : address;
 			// sanitize the info
 			const sanitizedAddress = withoutPrefix.replace(/[^0-9a-fA-F]/g, '');
 			const lowercaseAddress = sanitizedAddress.toLowerCase();
-			console.log(`validateAddress:\t${lowercaseAddress}`);
-
+			// console.log(`validateAddress:\t${lowercaseAddress}`);
 			return { isValid: true, address: lowercaseAddress };
 		}
 		else {
@@ -41,8 +21,9 @@ function validateAddress(address) {
 		}
 	}
 	catch (error) {
-		console.error('Error occurred during validation:', error);
-		return { isValid: false, error: 'Error validating given address' };
+		const errorMessage = `Error occurred while fetching the latest block: ${error.message}`;
+		console.log(errorMessage);
+		return { isValid: false, error: `Error validating given address: ${errorMessage}` };
 	}
 }
 
@@ -134,8 +115,8 @@ function shorToQuanta(number) {
 }
 
 
-function userLookup(userInfo) {
-	console.log(`userLookup:\t${JSON.stringify(userInfo)}`);
+function userLookup(discordId) {
+	console.log(`userLookup:\t${JSON.stringify(discordId)}`);
 	try {
 		// read and parse the userlog.json file
 		const userData = fs.readFileSync(userFile);
@@ -143,7 +124,7 @@ function userLookup(userInfo) {
 		console.log(`parsedData:\t ${JSON.stringify(parsedData)}`);
 
 		// Find user information by discord_id.
-		const foundUser = parsedData.users.find(user => user.discordId.trim() === String(userInfo.discordId).trim());
+		const foundUser = parsedData.users.find(user => user.discordId.trim() === String(discordId).trim());
 
 		if (foundUser) {
 			console.log('FOUND!');
@@ -187,7 +168,7 @@ function formatTime(milliseconds) {
 }
 
 function writeUserData(newData) {
-	console.log('writeUserData');
+	// console.log('writeUserData');
 	try {
 		// Read the userlog.json file
 		if (!fs.existsSync(userFile)) {

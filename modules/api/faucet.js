@@ -1,27 +1,18 @@
-const axios = require('axios');
-const web3 = require('@theqrl/web3');
+const { signTransaction, TransactionFactory } = require('@theqrl/web3-zond-accounts');
 const config = require('../../config.json');
 const helper = require('../helpers');
 const getNonce = require('./nonceLookup');
+const sendTx = require('./sendtx');
 const getChainId = require('./chainIdLookup');
-// const getPendingBaseFee = require('./pendingBaseFeeLookup');
+const getPendingBaseFee = require('./pendingBaseFeeLookup');
+const getGasEstimate = require('./estimateGas');
 
 async function sendFaucetTx(toAddress, amount) {
-	console.log('sendFaucetTx called');
 	try {
 		const transferAmount = helper.decToHex(amount);
-		const nonce = await getNonce(toAddress);
-		console.log(`nonce:\t${nonce}`);
+		const nonce = await getNonce(config.faucetAddress);
 		const chainId = await getChainId();
-		console.log(`chainId:\t${chainId}`);
-
-
-		const pendingBaseFee = await web3.zond.getBlock('latest');
-		console.log(`pendingBaseFee:\t${pendingBaseFee}`);
-
-		// const pendingBaseFee = await getPendingBaseFee();
-		// const pendingBaseFee = (await axios.get(`${config.zondPubAPI}/pendingBaseFee`)).data.result;
-
+		const pendingBaseFee = await getPendingBaseFee();
 		// around 100 Shor
 		const tip = 0x174876eabc;
 		const txData = {
@@ -33,25 +24,19 @@ async function sendFaucetTx(toAddress, amount) {
 			chainId,
 			nonce,
 		};
-
-		console.log(`txData:\n${txData}\n`);
-		const estimatedGas = (await axios.post(`${config.zondPubAPI}/estimateGas`, txData)).data;
-		console.log(`estimatedGas:\t${estimatedGas}`);
-
-		txData.gas = estimatedGas.result;
+		const estimatedGas = await getGasEstimate(txData);
+		txData.gas = estimatedGas;
 		txData.maxPriorityFeePerGas = `0x${tip.toString(16)}`;
 		txData.maxFeePerGas = `0x${(tip + parseInt(pendingBaseFee, 16) - 1).toString(16)}`;
-		console.log('Transaction data (unsigned):', txData);
-
-		const transaction = web3.TransactionFactory.fromTxData(txData);
-		const signedTx = await web3.signTransaction(transaction, `${HEXSEED.value}`);
-
-		console.log('Signed transaction:', signedTx.rawTransaction);
-		const txHash = (await axios.post(`${config.zondPubAPI}/rawTransaction`, { body: signedTx.rawTransaction })).data;
-		console.log('Result of sending raw transaction:', txHash);
+		const transaction = TransactionFactory.fromTxData(txData);
+		const signedTx = await signTransaction(transaction, `${config.faucetHexseed}`);
+		// console.log('Result of sending raw transaction:', signedTx);
+		return await sendTx(signedTx);
 	}
 	catch (error)	{
-		throw new Error(`Error occurred: ${error.message}`);
+		const errorMessage = `Error occurred while sending the faucet request: ${error.message}`;
+		console.error(errorMessage);
+		return new Error(errorMessage);
 	}
 }
 

@@ -1,23 +1,41 @@
 const config = require('../../config.json');
 const axios = require('axios');
-
+const helper = require('../helpers');
 
 async function getNonce(address) {
 	try {
-		const nonce = await axios.post(`http://${config.zondPubAPI}`, {
+		// get the nonce from the chain
+		const nonceCount = await axios.post(`http://${config.zondPubAPI}`, {
 			jsonrpc: '2.0',
 			method: 'zond_getTransactionCount',
-			params: [`0x${address}`, 'latest'],
+			params: [address, 'latest'],
 			id: 1,
 		}, {
 			headers: {
 				'Content-Type': 'application/json',
 			},
 		});
-		return nonce.data.result;
+		const nonce = parseInt(helper.hexToDec(nonceCount.data.result, 'wei'));
+		// get a count of any pending transactions in the que
+		const pendingTxns = await axios.post(`http://${config.zondPubAPI}`, {
+			jsonrpc: '2.0',
+			method: 'zond_pendingTransactions',
+			params: [],
+			id: 1,
+		}, {
+			headers: {
+				'Content-Type': 'application/json',
+			},
+		});
+		const txCount = pendingTxns.data.result.length;
+		// nextNonce is sum of found pending and the on-chain nonce
+		const nextNonce = nonce + txCount;
+		return nextNonce;
 	}
 	catch (error) {
-		console.log(`error caught: ${error}`);
+		const errorMessage = `Error occurred while fetching the next nonce: ${error.message}`;
+		console.error(errorMessage);
+		return new Error(errorMessage);
 	}
 }
 

@@ -17,7 +17,9 @@ async function block() {
 		return parseInt(response.data.result, 16);
 	}
 	catch (error)	{
-		throw new Error('Error occurred:', error);
+		const errorMessage = `Error occurred while fetching the latest block: ${error.message}`;
+		console.error(errorMessage);
+		return new Error(errorMessage);
 	}
 }
 

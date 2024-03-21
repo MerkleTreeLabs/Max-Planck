@@ -21,8 +21,9 @@ async function getBalanceSub(interaction) {
 		}
 	}
 	catch (error) {
-		console.error('An error occurred during balance retrieval:', error);
-		await interaction.reply('Looks like I\'m struggling to complete that right now...');
+		const errorMessage = `An error occurred during balance retrieval: ${error.message}`;
+		console.error(errorMessage);
+		return await interaction.reply(`Looks like I'm struggling to complete that right now...\n${errorMessage}`);
 	}
 }
 

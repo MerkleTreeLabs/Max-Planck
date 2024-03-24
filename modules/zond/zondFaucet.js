@@ -48,13 +48,13 @@ async function getFaucetSub(interaction) {
 			if (parseInt(faucetTimeout) > timeElapsed) {
 				// console.lgo(`timeout ${faucetTimeout} > ${timeElapsed}`);
 				txDetails = { userInTimeout: true, timeElapsed };
-			}
-			// check if the request is allotted based on last request and maxDrip
-			const dripLeftAmount = helper.quantaToShor(parseInt(maxDrip)) - parseInt(userDiscovery.data.dripAmount);
-			if (dripLeftAmount > 0) {
-				// they can have that much more
-				// console.log(`Partial Drip: ${dripLeftAmount}`);
-				txDetails = { partialDrip: true, amount: dripLeftAmount };
+				// check if the request is allotted based on last request and maxDrip
+				const dripLeftAmount = helper.quantaToShor(parseInt(maxDrip)) - parseInt(userDiscovery.data.dripAmount);
+				if (dripLeftAmount > 0) {
+					// they can have that much more
+					// console.log(`Partial Drip: ${dripLeftAmount}`);
+					txDetails = { partialDrip: true, amount: dripLeftAmount };
+				}
 			}
 		}
 		else {

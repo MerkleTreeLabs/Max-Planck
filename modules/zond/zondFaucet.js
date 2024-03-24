@@ -35,25 +35,25 @@ async function getFaucetSub(interaction) {
 
 		// lookup the user in the file we keep if found matching discord ID
 		const userDiscovery = helper.userLookup(interaction.user.id);
-		console.log(`userDiscovery:\t${JSON.stringify(userDiscovery)}`);
+		// console.log(`userDiscovery:\t${JSON.stringify(userDiscovery)}`);
 
 		// is user found in file already?
 		if (userDiscovery.isFound) {
-			console.log(`user has been found? ${userDiscovery.isFound}`);
+			// console.log(`user has been found? ${userDiscovery.isFound}`);
 			txDetails = { userFound: true };
 
 			// User found, check if faucet timeout has passed
 			const timeElapsed = timestamp - userDiscovery.data.lastSeen;
 			// if timeout is greater than time elapsed user in timeout
 			if (parseInt(faucetTimeout) > timeElapsed) {
-				console.lgo(`timeout ${faucetTimeout} > ${timeElapsed}`);
+				// console.lgo(`timeout ${faucetTimeout} > ${timeElapsed}`);
 				txDetails = { userInTimeout: true, timeElapsed };
 			}
 			// check if the request is allotted based on last request and maxDrip
 			const dripLeftAmount = helper.quantaToShor(parseInt(maxDrip)) - parseInt(userDiscovery.data.dripAmount);
 			if (dripLeftAmount > 0) {
 				// they can have that much more
-				console.log(`Partial Drip: ${dripLeftAmount}`);
+				// console.log(`Partial Drip: ${dripLeftAmount}`);
 				txDetails = { partialDrip: true, amount: dripLeftAmount };
 			}
 		}
@@ -97,7 +97,7 @@ async function getFaucetSub(interaction) {
 				// send public message
 				await interaction.editReply('Partial drip sent. More available after the timeout is done. Thanks for supporting the QRL Zond Testnet!');
 				// send user ephemeral message with details
-				return await interaction.reply({ content: `**Faucet Drip Details:**\n*Address To:*\t${validatedAddress}\n*Transaction Hash:*\t\`${transactionHash.result}\`\n*Amount:*\t\`${userInfo.dripAmount}\`\nCome back in \`${helper.formatTime(parseInt(faucetTimeout) - parseInt(txDetails.timeElapsed))}\` for more!`, ephemeral: true });
+				return await interaction.followUp({ content: `**Faucet Drip Details:**\n*Address To:*\t${validatedAddress}\n*Transaction Hash:*\t\`${transactionHash.result}\`\n*Amount:*\t\`${userInfo.dripAmount}\`\nCome back in \`${helper.formatTime(parseInt(faucetTimeout) - parseInt(txDetails.timeElapsed))}\` for more!`, ephemeral: true });
 			}
 			else {
 				// they waited long enough, update info and message
@@ -107,7 +107,7 @@ async function getFaucetSub(interaction) {
 				// send public message
 				await interaction.editReply('Drip sent. Thanks for supporting the QRL Zond Testnet!');
 				// send user ephemeral message with details
-				return await interaction.reply({ content: `**Faucet Drip Details:**\n*Address To:*\t${validatedAddress}\n*Transaction Hash:*\t\`${transactionHash.result}\`\n*Amount:*\t\`${userInfo.dripAmount}\`\nCome back in \`${helper.formatTime(faucetTimeout)}\` for more!`, ephemeral: true });
+				return await interaction.followUp({ content: `**Faucet Drip Details:**\n*Address To:*\t${validatedAddress}\n*Transaction Hash:*\t\`${transactionHash.result}\`\n*Amount:*\t\`${userInfo.dripAmount}\`\nCome back in \`${helper.formatTime(faucetTimeout)}\` for more!`, ephemeral: true });
 			}
 		}
 		else {
@@ -119,14 +119,14 @@ async function getFaucetSub(interaction) {
 			// send public message
 			await interaction.editReply('Drip sent. Thanks for supporting the QRL Zond Testnet!');
 			// send user ephemeral message with details
-			return await interaction.reply({ content: `**Faucet Drip Details:**\n*Address To:*\t${validatedAddress}\n*Transaction Hash:*\t\`${transactionHash.result}\`\n*Amount:*\t\`${userInfo.dripAmount}\`\nCome back in \`${helper.formatTime(faucetTimeout)}\` for more!`, ephemeral: true });
+			return await interaction.followUp({ content: `**Faucet Drip Details:**\n*Address To:*\t${validatedAddress}\n*Transaction Hash:*\t\`${transactionHash.result}\`\n*Amount:*\t\`${userInfo.dripAmount}\`\nCome back in \`${helper.formatTime(faucetTimeout)}\` for more!`, ephemeral: true });
 		}
 	}
 	catch (error) {
 		// there is an error sending the command
 		const errorMessage = `Error occurred while attempting faucet drip: ${error.message}`;
 		console.error(errorMessage);
-		return await interaction.reply(`Looks like I'm struggling to complete that right now...\n${errorMessage}`);
+		return await interaction.editReply(`Looks like I'm struggling to complete that right now...\n${errorMessage}`);
 	}
 }
 

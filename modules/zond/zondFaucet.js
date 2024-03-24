@@ -97,7 +97,7 @@ async function getFaucetSub(interaction) {
 				// send public message
 				await interaction.editReply('Partial drip sent. More available after the timeout is done. Thanks for supporting the QRL Zond Testnet!');
 				// send user ephemeral message with details
-				return await interaction.followUp({ content: `**Faucet Drip Details:**\n*Address To:*\t${validatedAddress}\n*Transaction Hash:*\t\`${transactionHash.result}\`\n*Amount:*\t\`${userInfo.dripAmount}\`\nCome back in \`${helper.formatTime(parseInt(faucetTimeout) - parseInt(txDetails.timeElapsed))}\` for more!`, ephemeral: true });
+				return await interaction.followUp({ content: `**Faucet Drip Details:**\n*Address To:*\t${validatedAddress}\n*Transaction Hash:*\t\`${transactionHash.result}\`\n*Amount:*\t\`${helper.shorToQuanta(userInfo.dripAmount)}\`\nCome back in \`${helper.formatTime(parseInt(faucetTimeout) - parseInt(txDetails.timeElapsed))}\` for more!`, ephemeral: true });
 			}
 			else {
 				// they waited long enough, update info and message
@@ -107,7 +107,7 @@ async function getFaucetSub(interaction) {
 				// send public message
 				await interaction.editReply('Drip sent. Thanks for supporting the QRL Zond Testnet!');
 				// send user ephemeral message with details
-				return await interaction.followUp({ content: `**Faucet Drip Details:**\n*Address To:*\t\`${validatedAddress}\`\n*Transaction Hash:*\t\`${transactionHash.result}\`\n*Amount:*\t\`${userInfo.dripAmount}\`\nCome back in \`${helper.formatTime(faucetTimeout)}\` for more!`, ephemeral: true });
+				return await interaction.followUp({ content: `**Faucet Drip Details:**\n*Address To:*\t\`${validatedAddress}\`\n*Transaction Hash:*\t\`${transactionHash.result}\`\n*Amount:*\t\`${helper.shorToQuanta(userInfo.dripAmount)}\`\nCome back in \`${helper.formatTime(faucetTimeout)}\` for more!`, ephemeral: true });
 			}
 		}
 		else {
@@ -119,7 +119,7 @@ async function getFaucetSub(interaction) {
 			// send public message
 			await interaction.editReply('Drip sent. Thanks for supporting the QRL Zond Testnet!');
 			// send user ephemeral message with details
-			return await interaction.followUp({ content: `**Faucet Drip Details:**\n*Address To:*\t${validatedAddress}\n*Transaction Hash:*\t\`${transactionHash.result}\`\n*Amount:*\t\`${userInfo.dripAmount}\`\nCome back in \`${helper.formatTime(faucetTimeout)}\` for more!`, ephemeral: true });
+			return await interaction.followUp({ content: `**Faucet Drip Details:**\n*Address To:*\t${validatedAddress}\n*Transaction Hash:*\t\`${transactionHash.result}\`\n*Amount:*\t\`${helper.shorToQuanta(userInfo.dripAmount)}\`\nCome back in \`${helper.formatTime(faucetTimeout)}\` for more!`, ephemeral: true });
 		}
 	}
 	catch (error) {

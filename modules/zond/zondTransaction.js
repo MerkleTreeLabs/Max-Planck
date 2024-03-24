@@ -24,7 +24,7 @@ async function getTransactionSub(interaction) {
 				}
 			});
 			// public message
-			await interaction.editReply('Transaction Found!');
+			await interaction.editReply(`Transaction Found in Block: ${txHashData.blockNumber}!`);
 			// send user ephemeral message with details
 			return await interaction.followUp({ content: `Transaction Data:\n\`\`\`json\n${JSON.stringify(txHashData, null, 4)}\n\`\`\``, ephemeral: true });
 

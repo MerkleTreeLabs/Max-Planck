@@ -3,6 +3,7 @@ const getTransaction = require('../api/transactionLookup');
 
 async function getTransactionSub(interaction) {
 	const userTxHash = interaction.options.getString('hash');
+	await interaction.deferReply();
 	try {
 		const validationResults = await helper.validateTxHash(userTxHash);
 		if (validationResults.isValid) {
@@ -22,18 +23,20 @@ async function getTransactionSub(interaction) {
 					txHashData[key] = helper.hexToDec(txHashData[key]);
 				}
 			});
+			// public message
+			await interaction.editReply('Transaction Found!');
+			// send user ephemeral message with details
+			return await interaction.followUp({ content: `Transaction Data:\n\`\`\`json\n${JSON.stringify(txHashData, null, 4)}\n\`\`\``, ephemeral: true });
 
-
-			await interaction.reply({ content: `Transaction Data:\n\`\`\`json\n${JSON.stringify(txHashData, null, 4)}\n\`\`\``, ephemeral: true });
 		}
 		else {
-			await interaction.reply(`Invalid txHash:\t${validationResults.error}`);
+			await interaction.editReply(`Invalid txHash:\t${validationResults.error}`);
 		}
 	}
 	catch (error) {
 		const errorMessage = `An error occurred during Transaction retrieval: ${error.message}`;
 		console.error(errorMessage);
-		return await interaction.reply(`Looks like I'm struggling to complete that right now...\n${errorMessage}`);
+		return await interaction.editReply(`Looks like I'm struggling to complete that right now...\n${errorMessage}`);
 	}
 }
 

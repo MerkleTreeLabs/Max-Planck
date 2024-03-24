@@ -107,7 +107,7 @@ async function getFaucetSub(interaction) {
 				// send public message
 				await interaction.editReply('Drip sent. Thanks for supporting the QRL Zond Testnet!');
 				// send user ephemeral message with details
-				return await interaction.followUp({ content: `**Faucet Drip Details:**\n*Address To:*\t${validatedAddress}\n*Transaction Hash:*\t\`${transactionHash.result}\`\n*Amount:*\t\`${userInfo.dripAmount}\`\nCome back in \`${helper.formatTime(faucetTimeout)}\` for more!`, ephemeral: true });
+				return await interaction.followUp({ content: `**Faucet Drip Details:**\n*Address To:*\t\`${validatedAddress}\`\n*Transaction Hash:*\t\`${transactionHash.result}\`\n*Amount:*\t\`${userInfo.dripAmount}\`\nCome back in \`${helper.formatTime(faucetTimeout)}\` for more!`, ephemeral: true });
 			}
 		}
 		else {

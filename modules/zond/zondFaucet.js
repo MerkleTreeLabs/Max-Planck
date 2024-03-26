@@ -1,9 +1,8 @@
 const helper = require('../../modules/helpers');
 const sendFaucetTx = require('../api/faucet');
-const timestamp = new Date().getTime();
-const { faucetTimeout, maxDrip } = require('../../config.json');
+// const timestamp = new Date().getTime();
+const { maxDrip } = require('../../config.json');
 // const BigNumber = require('bignumber.js');
-
 
 async function getFaucetSub(interaction) {
 	const userAddress = interaction.options.getString('address');
@@ -25,22 +24,43 @@ async function getFaucetSub(interaction) {
 			// amount requested is more than allowed
 			return await interaction.reply(`The amount requested *{${userAmount} quanta}* is more than allowed *{${maxDrip} quanta}*.\n${addressValidationResults.error}`);
 		}
+
 		// convert quanta to Shor
 		const amountShor = await helper.quantaToShor(userAmount);
 
+		// send the transaction
+		// start the bot reply while the tx sends
+		await interaction.deferReply();
+		const transactionHash = await sendFaucetTx(validatedAddress, amountShor);
+
+		await interaction.editReply('Drip sent. Thanks for supporting the QRL Zond Testnet!');
+		// send user ephemeral message with details
+		return await interaction.followUp({ content: `**Faucet Drip Details:**\n*Address To:*\t\`${validatedAddress}\`\n*Transaction Hash:*\t\`${transactionHash.result}\`\n*Amount:*\t\`${userAmount} quanta`, ephemeral: true });
+	}
+	catch (error) {
+		// there is an error sending the command
+		const errorMessage = `Error occurred while attempting faucet drip: ${error.message}`;
+		console.error(errorMessage);
+		return await interaction.editReply(`Looks like I'm struggling to complete that right now...\n${errorMessage}`);
+	}
+}
+
+module.exports = getFaucetSub;
+
+
+/*
+		// ------------------------------------
 
 		// user lookup details variable
-		// txDetails{userFound: boolean, userTimeout: boolean, }
 		let txDetails = { userFound: false, userInTimeout: false, partialDrip: false, timeElapsed: 0, amount: 0 };
 
 		// lookup the user in the file we keep if found matching discord ID
 		const userDiscovery = helper.userLookup(interaction.user.id);
-		// console.log(`userDiscovery:\t${JSON.stringify(userDiscovery)}`);
 
 		// is user found in file already?
 		if (userDiscovery.isFound) {
-			// console.log(`user has been found? ${userDiscovery.isFound}`);
-			txDetails = { userFound: true };
+			console.log(`user has been found: ${JSON.strinigfy(userDiscovery)}`);
+			txDetails = { userFound: userDiscovery.isFound };
 
 			// User found, check if faucet timeout has passed
 			const timeElapsed = timestamp - userDiscovery.data.lastSeen;
@@ -48,11 +68,14 @@ async function getFaucetSub(interaction) {
 			if (parseInt(faucetTimeout) > timeElapsed) {
 				// console.lgo(`timeout ${faucetTimeout} > ${timeElapsed}`);
 				txDetails = { userInTimeout: true, timeElapsed };
+
 				// check if the request is allotted based on last request and maxDrip
 				const dripLeftAmount = helper.quantaToShor(parseInt(maxDrip)) - parseInt(userDiscovery.data.dripAmount);
+
+				console.log(`Partial Drip: ${dripLeftAmount}`);
+
 				if (dripLeftAmount > 0) {
 					// they can have that much more
-					// console.log(`Partial Drip: ${dripLeftAmount}`);
 					txDetails = { partialDrip: true, amount: dripLeftAmount };
 				}
 			}
@@ -70,6 +93,7 @@ async function getFaucetSub(interaction) {
 				return await interaction.reply(`Sorry, you will need to wait for the timeout to finish to request more.\nAnother ${helper.formatTime(parseInt(faucetTimeout) - parseInt(txDetails.timeElapsed))} for more.\nIf you need more than what I can give out, please email info@theqrl.org with some info on your needs!`);
 			}
 		}
+
 		// send the transaction
 		// start the bot reply while the tx sends
 		await interaction.deferReply();
@@ -121,6 +145,7 @@ async function getFaucetSub(interaction) {
 			// send user ephemeral message with details
 			return await interaction.followUp({ content: `**Faucet Drip Details:**\n*Address To:*\t${validatedAddress}\n*Transaction Hash:*\t\`${transactionHash.result}\`\n*Amount:*\t\`${helper.shorToQuanta(userInfo.dripAmount)}\`\nCome back in \`${helper.formatTime(faucetTimeout)}\` for more!`, ephemeral: true });
 		}
+
 	}
 	catch (error) {
 		// there is an error sending the command
@@ -131,3 +156,5 @@ async function getFaucetSub(interaction) {
 }
 
 module.exports = getFaucetSub;
+
+*/

@@ -7,11 +7,13 @@ module.exports = {
 		.setName('zond')
 		.setDescription('Zond testnet info!')
 		// add sub-commands for various zond things here.
+
 		// block returns the latest block from the node
 		.addSubcommand(subcommand =>
 			subcommand
 				.setName('block')
 				.setDescription('Get the current Zond block number'))
+
 		// balance takes zond address and returns the balance in ephemeral response
 		.addSubcommand(subcommand =>
 			subcommand
@@ -29,8 +31,8 @@ module.exports = {
 					.addChoices(
 						{ name: 'Wei', value: 'wei' },
 						{ name: 'quanta', value: 'quanta' }),
-				),
-		)
+				))
+
 		// tx takes a transaction hash and returns some information to the user 0xc50e891a34eacedf2b3e6e7f4b245da2a2c6f5128f5de7419da41e1c54134040
 		.addSubcommand(subcommand =>
 			subcommand
@@ -43,6 +45,7 @@ module.exports = {
 					.setMaxLength(66)
 					.setMinLength(66)),
 		)
+
 		// faucet gives the requested amount to user
 		.addSubcommand(subcommand =>
 			subcommand
@@ -58,21 +61,23 @@ module.exports = {
 					.setName('amount')
 					.setDescription('Amount of testnet quanta to receive')
 					.setRequired(true)
-					.setMaxValue(parseInt(maxDrip))),
-		),
+					.setMaxValue(parseInt(maxDrip)))),
 
 	async execute(interaction) {
 		if (!interaction.isCommand()) return;
+
 		// subcommand "block" entered
 		if (interaction.options.getSubcommand() === 'block') {
 			const blockLookup = require('../../modules/zond/zondBlock');
 			blockLookup(interaction);
 		}
+
 		// balance subcommand given
 		else if (interaction.options.getSubcommand() === 'balance') {
 			const balanceLookup = require('../../modules/zond/zondBalance');
 			balanceLookup(interaction);
 		}
+
 		// transaction subcommand
 		else if (interaction.options.getSubcommand() === 'transaction') {
 			const transactionLookup = require('../../modules/zond/zondTransaction');

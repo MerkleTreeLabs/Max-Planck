@@ -2,11 +2,10 @@
 Description=fond-faucet
 
 [Service]
-ExecStart=/home/fr1t2/zond-faucet/index.js
+ExecStart=/path/to/node /home/fr1t2/zond-faucet/index.js
 Restart=always
-User=nobody
-# Note Debian/Ubuntu uses 'nogroup', RHEL/Fedora uses 'nobody'
-Group=nogroup
+User=fr1t2
+Group=fr1t2
 Environment=PATH=/usr/bin:/usr/local/bin
 Environment=NODE_ENV=production
 WorkingDirectory=/home/fr1t2/zond-faucet

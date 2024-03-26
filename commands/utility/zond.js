@@ -27,9 +27,9 @@ module.exports = {
 					.setMinLength(42))
 				.addStringOption(option => option
 					.setName('denomination')
-					.setDescription('Whether or not the balance should be in quanta or Wei (default quanta)')
+					.setDescription('Whether or not the balance should be in quanta or Shor (default quanta)')
 					.addChoices(
-						{ name: 'Wei', value: 'wei' },
+						{ name: 'Shor', value: 'shor' },
 						{ name: 'quanta', value: 'quanta' }),
 				))
 

@@ -1,3 +1,4 @@
+const BigNumber = require('bignumber.js');
 const helper = require('../../modules/helpers');
 const sendFaucetTx = require('../api/faucet');
 const timestamp = new Date().getTime();
@@ -45,10 +46,12 @@ async function getFaucetSub(interaction) {
 			console.log(`error attempting to write to the userlog:\t${error}`);
 		}
 
+		let formattedAmount = new BigNumber(userAmount).toFixed();
+
 
 		await interaction.editReply('Drip sent. Thanks for supporting the QRL Zond Testnet!');
 		// send user ephemeral message with details
-		return await interaction.followUp({ content: `**Faucet Drip Details:**\n*Address To:*\t\`0x${validatedAddress}\`\n*Transaction Hash:*\t\`${transactionHash.result}\`\n*Amount:*\t\`${userAmount} quanta\``, ephemeral: true });
+		return await interaction.followUp({ content: `**Faucet Drip Details:**\n*Address To:*\t\`0x${validatedAddress}\`\n*Transaction Hash:*\t\`${transactionHash.result}\`\n*Amount:*\t\`${formattedAmount} quanta\``, ephemeral: true });
 	}
 	catch (error) {
 		// there is an error sending the command

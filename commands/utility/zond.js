@@ -65,27 +65,37 @@ module.exports = {
 
 	async execute(interaction) {
 		if (!interaction.isCommand()) return;
+		const timestamp = new Date().getTime();
+
+		const userData = {
+			discordId: interaction.user.id,
+			discordName: interaction.user.username,
+			timestamp,
+		};
+		const subCommand = interaction.options.getSubcommand();
+
+		console.log(`Discord user ${userData.discordName} called subcommand ${subCommand}.\n${JSON.stringify(userData)}`);
 
 		// subcommand "block" entered
-		if (interaction.options.getSubcommand() === 'block') {
+		if (subCommand === 'block') {
 			const blockLookup = require('../../modules/zond/zondBlock');
 			blockLookup(interaction);
 		}
 
 		// balance subcommand given
-		else if (interaction.options.getSubcommand() === 'balance') {
+		else if (subCommand === 'balance') {
 			const balanceLookup = require('../../modules/zond/zondBalance');
 			balanceLookup(interaction);
 		}
 
 		// transaction subcommand
-		else if (interaction.options.getSubcommand() === 'transaction') {
+		else if (subCommand === 'transaction') {
 			const transactionLookup = require('../../modules/zond/zondTransaction');
 			transactionLookup(interaction);
 		}
 
 		// faucet called
-		else if (interaction.options.getSubcommand() === 'faucet') {
+		else if (subCommand === 'faucet') {
 			const faucetRequest = require('../../modules/zond/zondFaucet');
 			faucetRequest(interaction);
 		}

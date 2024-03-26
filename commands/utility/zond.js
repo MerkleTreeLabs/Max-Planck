@@ -74,7 +74,7 @@ module.exports = {
 		};
 		const subCommand = interaction.options.getSubcommand();
 
-		console.log(`Discord user ${userData.discordName} called subcommand ${subCommand}.\n${JSON.stringify(userData)}`);
+		console.log(`User ${userData.discordName} called subcommand ${subCommand}. ${JSON.stringify(userData)}/nData: ${JSON.stringify(interaction)}`);
 
 		// subcommand "block" entered
 		if (subCommand === 'block') {

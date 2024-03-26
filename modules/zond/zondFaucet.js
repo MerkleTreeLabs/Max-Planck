@@ -35,7 +35,7 @@ async function getFaucetSub(interaction) {
 
 		await interaction.editReply('Drip sent. Thanks for supporting the QRL Zond Testnet!');
 		// send user ephemeral message with details
-		return await interaction.followUp({ content: `**Faucet Drip Details:**\n*Address To:*\t\`${validatedAddress}\`\n*Transaction Hash:*\t\`${transactionHash.result}\`\n*Amount:*\t\`${userAmount} quanta`, ephemeral: true });
+		return await interaction.followUp({ content: `**Faucet Drip Details:**\n*Address To:*\t\`${validatedAddress}\`\n*Transaction Hash:*\t\`${transactionHash.result}\`\n*Amount:*\t\`${userAmount} quanta\``, ephemeral: true });
 	}
 	catch (error) {
 		// there is an error sending the command

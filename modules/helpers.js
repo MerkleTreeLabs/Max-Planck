@@ -103,28 +103,6 @@ function shorToQuanta(number) {
 }
 
 
-function formatTime(milliseconds) {
-	// Convert milliseconds to seconds
-	const totalSeconds = Math.floor(milliseconds / 1000);
-
-	// Calculate hours, minutes, and seconds
-	const hours = Math.floor(totalSeconds / 3600);
-	const minutes = Math.floor((totalSeconds % 3600) / 60);
-	const seconds = totalSeconds % 60;
-
-	// Build the formatted time string
-	let formattedTime = '';
-	if (hours > 0) {
-		formattedTime += `${hours} hour${hours > 1 ? 's' : ''} `;
-	}
-	if (minutes > 0 || hours > 0) {
-		formattedTime += `${minutes} min `;
-	}
-	formattedTime += `${seconds} sec${seconds !== 1 ? 's' : ''}`;
-
-	return formattedTime;
-}
-
 function writeUserData(newData) {
 	try {
 		// Read the userlog.json file
@@ -149,7 +127,6 @@ function writeUserData(newData) {
 
 exports.decToHex = decToHex;
 exports.writeUserData = writeUserData;
-exports.formatTime = formatTime;
 exports.shorToQuanta = shorToQuanta;
 exports.quantaToShor = quantaToShor;
 exports.validateAddress = validateAddress;

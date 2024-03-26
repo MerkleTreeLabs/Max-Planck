@@ -18,13 +18,13 @@ async function getBalanceSub(interaction) {
             // Convert the balance value to BigNumber
             userBalance = new BigNumber(balanceValue);
 
-            // If the denomination is not wei, divide the balance by 1e18
-            if (interaction.options.getString('denomination') !== 'wei') {
+            // If the denomination is not shor, divide the balance by 1e18
+            if (interaction.options.getString('denomination') !== 'shor') {
                 userBalance = userBalance.dividedBy('1e18').toFixed();
             }
 
             // Reply with the balance information
-            await interaction.reply(`Balance info:\nAddress:\t\`${userAddress}\`\nBalance:\t\`${userBalance}\``);
+            await interaction.reply(`Balance info:\nAddress:\t\`${userAddress}\`\nBalance:\t\`${userBalance} quanta\``);
         } else {
             await interaction.reply(`Invalid address given:\t${validationResults.error}`);
         }

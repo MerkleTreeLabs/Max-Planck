@@ -6,11 +6,11 @@ module.exports = {
 	once: true,
 	execute(client) {
 		// set username from config
-//		client.user.setUsername(config.userName);
-//		console.log(`username set to:\t${config.userName}`);
+		// client.user.setUsername(config.userName);
+		// console.log(`username set to:\t${config.userName}`);
 		// set avatar to config value
-//		client.user.setAvatar(config.avatarImgLocation);
-//		console.log(`Avatar set to:\t${config.avatarImgLocation}`);
+		// client.user.setAvatar(config.avatarImgLocation);
+		// console.log(`Avatar set to:\t${config.avatarImgLocation}`);
 
 		// set activity and string
 		const activityType = config.activityType;

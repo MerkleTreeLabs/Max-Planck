@@ -46,9 +46,7 @@ async function getFaucetSub(interaction) {
 			console.log(`error attempting to write to the userlog:\t${error}`);
 		}
 
-		let formattedAmount = new BigNumber(userAmount).toFixed();
-
-
+		const formattedAmount = new BigNumber(userAmount).toFixed();
 		await interaction.editReply('Drip sent. Thanks for supporting the QRL Zond Testnet!');
 		// send user ephemeral message with details
 		return await interaction.followUp({ content: `**Faucet Drip Details:**\n*Address To:*\t\`0x${validatedAddress}\`\n*Transaction Hash:*\t\`${transactionHash.result}\`\n*Amount:*\t\`${formattedAmount} quanta\``, ephemeral: true });

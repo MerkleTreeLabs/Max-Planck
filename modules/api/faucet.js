@@ -30,7 +30,6 @@ async function sendFaucetTx(toAddress, amount) {
 		txData.maxFeePerGas = `0x${(tip + parseInt(pendingBaseFee, 16) - 1).toString(16)}`;
 		const transaction = TransactionFactory.fromTxData(txData);
 		const signedTx = await signTransaction(transaction, `${config.faucetHexseed}`);
-		// console.log('Result of sending raw transaction:', signedTx);
 		return await sendTx(signedTx);
 	}
 	catch (error)	{

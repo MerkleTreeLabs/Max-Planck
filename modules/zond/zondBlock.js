@@ -6,7 +6,7 @@ async function getBlockSub(interaction) {
         const blockNumber = await getBlock();
         // return the block number
         if (blockNumber) {
-            return await interaction.reply(`Latest Zond Block:\t\`#${blockNumber}\``);
+            return await interaction.reply(`Latest Zond Block:\t\`${blockNumber}\``);
         } else {
             return await interaction.reply(`Cannot retrieve the BlockNumber at this time...\n\`${blockNumber}\``);
         }

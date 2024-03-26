@@ -13,7 +13,6 @@ function validateAddress(address) {
 			// sanitize the info
 			const sanitizedAddress = withoutPrefix.replace(/[^0-9a-fA-F]/g, '');
 			const lowercaseAddress = sanitizedAddress.toLowerCase();
-			// console.log(`validateAddress:\t${lowercaseAddress}`);
 			return { isValid: true, address: lowercaseAddress };
 		}
 		else {
@@ -81,7 +80,6 @@ function quantaToShor(number) {
 		const multiplied = bigNumber.multipliedBy('1e18');
 		const resultString = multiplied.toFixed(0);
 		const result = resultString.replace('.', '');
-		console.log(`quanta value:\t${bigNumber}\nquantaToShor:\t${result}`);
 		return result;
 	}
 	catch (error) {
@@ -105,37 +103,7 @@ function shorToQuanta(number) {
 }
 
 
-function userLookup(discordId) {
-	console.log(`userLookup:\t${JSON.stringify(discordId)}`);
-	try {
-		// read and parse the userlog.json file
-		const userData = fs.readFileSync(userFile);
-		const parsedData = JSON.parse(userData);
-		console.log(`parsedData:\t ${JSON.stringify(parsedData)}`);
-
-		// Find user information by discord_id.
-		const foundUser = parsedData.users.find(user => user.discordId.trim() === String(discordId).trim());
-
-		if (foundUser) {
-			console.log('FOUND!');
-			// User is found
-			return { isFound: true, data: foundUser };
-		}
-		else {
-			console.log('NOT FOUND!');
-			// User not found, return error
-			return { isFound: false, error: 'User not found' };
-		}
-	}
-	catch (error) {
-		// Handle errors
-		return { isFound: false, error: error.message };
-	}
-}
-
-
 function formatTime(milliseconds) {
-	console.log(`formatTime:\t${milliseconds}`);
 	// Convert milliseconds to seconds
 	const totalSeconds = Math.floor(milliseconds / 1000);
 
@@ -158,7 +126,6 @@ function formatTime(milliseconds) {
 }
 
 function writeUserData(newData) {
-	// console.log('writeUserData');
 	try {
 		// Read the userlog.json file
 		if (!fs.existsSync(userFile)) {
@@ -166,18 +133,8 @@ function writeUserData(newData) {
 		}
 		const userData = fs.readFileSync(userFile);
 		const parsedData = JSON.parse(userData);
-
-		// Find user information by discord_id
-		const userIndex = parsedData.users.findIndex(user => user.discordId === newData.discordId);
-
-		if (userIndex !== -1) {
-			// Update existing user data
-			parsedData.users[userIndex] = newData;
-		}
-		else {
-			// Append new user data
-			parsedData.users.push(newData);
-		}
+		// Append new user data
+		parsedData.users.push(newData);
 
 		// Write the updated data back to the file
 		fs.writeFileSync(userFile, JSON.stringify(parsedData, null, 2));
@@ -193,7 +150,6 @@ function writeUserData(newData) {
 exports.decToHex = decToHex;
 exports.writeUserData = writeUserData;
 exports.formatTime = formatTime;
-exports.userLookup = userLookup;
 exports.shorToQuanta = shorToQuanta;
 exports.quantaToShor = quantaToShor;
 exports.validateAddress = validateAddress;

@@ -37,7 +37,7 @@ async function getFaucetSub(interaction) {
 		const userData = {
 			discordId: interaction.user.id,
 			discordName: interaction.user.username,
-			timestamp: helper.formatTime(timestamp),
+			timestamp,
 		};
 		try {
 			helper.writeUserData(userData);

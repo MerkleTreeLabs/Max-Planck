@@ -1,0 +1,15 @@
+[Unit]
+Description=fond-faucet
+
+[Service]
+ExecStart=/home/fr1t2/zond-faucet/index.js
+Restart=always
+User=nobody
+# Note Debian/Ubuntu uses 'nogroup', RHEL/Fedora uses 'nobody'
+Group=nogroup
+Environment=PATH=/usr/bin:/usr/local/bin
+Environment=NODE_ENV=production
+WorkingDirectory=/home/fr1t2/zond-faucet
+
+[Install]
+WantedBy=multi-user.target

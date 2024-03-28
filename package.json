@@ -1,9 +1,11 @@
 {
   "name": "zond-faucet",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "Zond testnet faucet bot for Discord",
   "main": "index.js",
   "scripts": {
+    "start": "node .",
+    "lint": "eslint .", 
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

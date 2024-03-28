@@ -1,29 +1,28 @@
 const express = require('express');
-// const axios = require('axios');
-const app = express();
 const { apiPort } = require('../../config.json');
+const { block } = require('../zond/api/blockLookup');
+const { balance } = require('../zond/api/balanceLookup');
 
+const app = express();
 const PORT = apiPort || 3000;
 
 // Middleware to parse JSON requests
 app.use(express.json());
 
-// Endpoint to handle GET request to /block
-app.get('/block', async (req, res) => {
+// Endpoint to handle GET request to /zond-block
+app.get('/zond-block', async (req, res) => {
 	try {
 		// fetch the current block
-		const { block } = require('../zond/api/blockLookup');
-		const curentBlock = await block();
-		res.json({ currentBlock: curentBlock });
-	}
-	catch (error) {
+		const currentBlock = await block();
+		res.json({ currentBlock });
+	} catch (error) {
 		// Handle any errors
-		res.status(500).json({ error: 'Failed to fetch time' });
+		res.status(500).json({ error: 'Failed to fetch block' });
 	}
 });
 
-// Endpoint to handle GET request to /balance
-app.get('/balance', (req, res) => {
+// Endpoint to handle GET request to /zond-balance
+app.get('/zond-balance', async (req, res) => {
 	try {
 		const address = req.query.address;
 
@@ -31,14 +30,12 @@ app.get('/balance', (req, res) => {
 			return res.status(400).json({ error: 'Address is required' });
 		}
 
-		// Process the address and denomination
-		const { balance } = require('../zond/api/balanceLookup');
-		const curentBalance = balance(address);
-		res.json({ balance: curentBalance });
-	}
-	catch (error) {
+		// Process the address and get the balance
+		const currentBalance = await balance(address);
+		res.json({ balance: currentBalance });
+	} catch (error) {
 		// Handle any errors
-		res.status(500).json({ error: 'Failed to process balance' });
+		res.status(500).json({ error: 'Failed to fetch balance' });
 	}
 });
 

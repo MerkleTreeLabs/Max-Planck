@@ -40,7 +40,6 @@ else if (args[0] === 'client') {
 	rest.put(Routes.applicationCommands(clientIdSelected), { body: [] })
 		.then(() => console.log('Successfully deleted all application commands.'))
 		.catch(console.error);
-
 }
 else {
 	console.log('User Args:\narg 1:\nclient {ClientID}\t\t- Removes all client commands from all guilds. Provide clientId in config or here.\nguild {GuildID}\t- Removes all commands from the given guild.');

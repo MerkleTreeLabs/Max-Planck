@@ -3,7 +3,7 @@ require('module-alias/register');
 
 const BigNumber = require('bignumber.js');
 
-const getBalance = require('@zond-api/balanceLookup');
+const { balance } = require('@zond-api/balanceLookup');
 const helper = require('@helper');
 
 
@@ -15,9 +15,11 @@ async function getBalanceSub(interaction) {
 			let userBalance;
 
 			// Get the balance from the API
-			const balanceResponse = await getBalance(validationResults.address);
+			const balanceResponse = await balance(validationResults.address);
+			const balanceValue = parseInt(balanceResponse.result, 16)
+
 			// Convert the balance to string
-			const balanceValue = balanceResponse.toString();
+			// const balanceValue = balanceResponse.toString();
 
 			// Convert the balance value to BigNumber
 			userBalance = new BigNumber(balanceValue);

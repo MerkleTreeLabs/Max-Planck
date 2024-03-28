@@ -1,17 +1,17 @@
 require('module-alias/register');
 
-const getBlock = require('@zond-api/blockLookup');
+const { block } = require('@zond-api/blockLookup');
 
 async function getBlockSub(interaction) {
 	try {
 		// get the block data
-		const blockNumber = await getBlock();
+		const blockNumber = await block();
 		// return the block number
 		if (blockNumber) {
-			return await interaction.reply(`Latest Zond Block:\t\`${blockNumber}\``);
+			return await interaction.reply(`Latest Zond Block:\t\`${parseInt(blockNumber.result, 16)}\``);
 		}
 		else {
-			return await interaction.reply(`Cannot retrieve the BlockNumber at this time...\n\`${blockNumber}\``);
+			return await interaction.reply('Cannot retrieve the BlockNumber at this time...');
 		}
 	}
 	catch (error) {

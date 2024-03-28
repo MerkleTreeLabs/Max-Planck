@@ -46,15 +46,16 @@ const router = express.Router();
  *                   type: string
  *                   example: Failed to fetch block
  */
+
 router.get('/zond-block', async (req, res) => {
 	try {
 		// fetch the current block
 		const currentBlock = await block();
-
 		res.status(200).json({ success: true, data: { block: currentBlock } });
 	}
 	catch (error) {
 		// Handle any errors
+		console.error('Error in fetching block:', error);
 		res.status(500).json({ success: false, error: 'Failed to fetch block' });
 	}
 });

@@ -1,7 +1,6 @@
 require('module-alias/register');
 const axios = require('axios');
 
-// const helper = require('@helper');
 const config = require('@config');
 
 async function balance(address) {
@@ -16,11 +15,7 @@ async function balance(address) {
 				'Content-Type': 'application/json',
 			},
 		});
-		// format the balance to human readable
-		// const hexString = response.data.result;
-		// return await helper.hexToDec(hexString);
-
-		return response;
+		return response.data;
 	}
 	catch (error)	{
 		const errorMessage = `Error occurred in BalanceLookup: ${error.message}`;
@@ -29,4 +24,4 @@ async function balance(address) {
 	}
 }
 
-module.exports = balance;
+module.exports = { balance };

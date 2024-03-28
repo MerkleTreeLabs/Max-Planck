@@ -29,7 +29,7 @@
   },
   "_moduleAliases": {
     "@config": "src/config.json",
-    "@helper": "src/modules/helper.js",
+    "@helper": "src/modules/helpers.js",
     "@emoji": "src/modules/emojiCharacters.js",
     "@swaggerConfig": "src/swaggerConfig.js",
     "@zond-modules": "src/modules/zond",

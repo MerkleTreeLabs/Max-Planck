@@ -15,7 +15,8 @@ app.get('/zond-block', async (req, res) => {
 		// fetch the current block
 		const currentBlock = await block();
 		res.json({ currentBlock });
-	} catch (error) {
+	}
+	catch (error) {
 		// Handle any errors
 		res.status(500).json({ error: 'Failed to fetch block' });
 	}
@@ -33,7 +34,8 @@ app.get('/zond-balance', async (req, res) => {
 		// Process the address and get the balance
 		const currentBalance = await balance(address);
 		res.json({ balance: currentBalance });
-	} catch (error) {
+	}
+	catch (error) {
 		// Handle any errors
 		res.status(500).json({ error: 'Failed to fetch balance' });
 	}

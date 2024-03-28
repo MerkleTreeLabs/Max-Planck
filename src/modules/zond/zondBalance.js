@@ -1,32 +1,27 @@
-const BigNumber = require('bignumber.js');
-const getBalance = require('./api/balanceLookup');
-const helper = require('../helpers');
+require('module-alias/register');
 
+const axios = require('axios');
+const BigNumber = require('bignumber.js');
+const { apiPort } = require('@config');
+const helper = require('@helper');
 
 async function getBalanceSub(interaction) {
 	const userAddress = interaction.options.getString('address');
 	try {
 		const validationResults = await helper.validateAddress(userAddress);
+
 		if (validationResults.isValid) {
-			let userBalance;
+			const balanceResponse = await axios.get(`http://localhost:${apiPort}/v1/zond-balance?address=${validationResults.address}`);
+			console.log(`balanceResponse.data: ${JSON.stringify(balanceResponse.data)}`);
+			const balanceValue = parseInt(balanceResponse.data.balance.result, 16);
+			let userBalance = new BigNumber(balanceValue);
 
-			// Get the balance from the API
-			const balanceResponse = await getBalance(validationResults.address);
-			// Convert the balance to string
-			const balanceValue = balanceResponse.toString();
-
-			// Convert the balance value to BigNumber
-			userBalance = new BigNumber(balanceValue);
-
-			// If the denomination is not shor, divide the balance by 1e18
 			if (interaction.options.getString('denomination') !== 'shor') {
 				userBalance = userBalance.dividedBy('1e18').toFixed();
-				// Reply with the balance information in Shor
-				await interaction.reply(`Balance info:\nAddress:\t\`${userAddress}\`\nBalance:\t\`${userBalance} Shor\``);
+				await interaction.reply(`Balance info:\nAddress:\t\`${userAddress}\`\nBalance:\t\`${userBalance} quanta\``);
 			}
 			else {
-				// Reply with the balance information in quanta (whole)
-				await interaction.reply(`Balance info:\nAddress:\t\`${userAddress}\`\nBalance:\t\`${userBalance} quanta\``);
+				await interaction.reply(`Balance info:\nAddress:\t\`${userAddress}\`\nBalance:\t\`${userBalance} Shor\``);
 			}
 		}
 		else {

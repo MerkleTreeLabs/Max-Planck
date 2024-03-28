@@ -1,11 +1,12 @@
+require('module-alias/register');
 const { Events, ActivityType } = require('discord.js');
-const config = require('../config.json');
+const { activityType, activityString, statusUpdate } = require('@config');
 
 module.exports = {
 	name: Events.ClientReady,
 	once: true,
 	execute(client) {
-		// set username from config
+		// set username from config (un-comment to update bot, avoid rate limit)
 		// client.user.setUsername(config.userName);
 		// console.log(`username set to:\t${config.userName}`);
 		// set avatar to config value
@@ -13,9 +14,6 @@ module.exports = {
 		// console.log(`Avatar set to:\t${config.avatarImgLocation}`);
 
 		// set activity and string
-		const activityType = config.activityType;
-		const activityString = config.activityString;
-
 		if (activityType === 'Watching') {
 			client.user.setActivity(activityString, { type: ActivityType.Watching });
 		}
@@ -28,8 +26,8 @@ module.exports = {
 
 		console.log(`Activity set to:\t${activityType} ${activityString}`);
 		// set online status
-		client.user.setStatus(config.statusUpdate);
-		console.log(`Client status:\t${config.statusUpdate}`);
+		client.user.setStatus(statusUpdate);
+		console.log(`Client status:\t${statusUpdate}`);
 
 
 		console.log(`Ready! Logged in as ${client.user.tag}`);

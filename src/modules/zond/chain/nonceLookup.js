@@ -1,6 +1,8 @@
+require('module-alias/register');
+
 const axios = require('axios');
-const config = require('../../../config.json');
-const helper = require('../../helpers');
+const config = require('@config');
+const helper = require('@helper');
 
 async function getNonce(address) {
 	try {

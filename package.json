@@ -4,7 +4,7 @@
   "description": "Zond testnet faucet bot for Discord",
   "main": "src/index.js",
   "scripts": {
-    "start": "node src/index.js",
+    "start": "concurrently \"node src/index.js\" \"node src/modules/server/server.js\"",
     "cm": "npm run prepare && cz",
     "lint": "eslint . --fix",
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -27,11 +27,24 @@
   "bugs": {
     "url": "https://github.com/fr1t2/zond-faucet/issues"
   },
+  "_moduleAliases": {
+    "@config": "src/config.json",
+    "@helper": "src/modules/helpers.js",
+    "@emoji": "src/modules/emojiCharacters.js",
+    "@swaggerConfig": "src/swaggerConfig.js",
+    "@zond-modules": "src/modules/zond",
+    "@zond-chain": "src/modules/zond/chain",
+    "@zond-v1-routes": "src/modules/server/routes/v1/zond",
+    "@qrl-modules": "src/modules/qrl",
+    "@qrl-api": "src/modules/qrl/api",
+    "@commands-utility": "src/commands/utility"
+  },
   "homepage": "https://github.com/fr1t2/zond-faucet#readme",
   "devDependencies": {
     "@commitlint/cli": "^19.2.1",
     "@commitlint/config-conventional": "^19.1.0",
     "commitizen": "^4.3.0",
+    "concurrently": "^8.2.2",
     "conventional-changelog-cli": "^4.1.0",
     "cz-conventional-changelog": "^3.3.0",
     "eslint": "^8.57.0",
@@ -47,7 +60,11 @@
     "@theqrl/web3-zond-accounts": "^0.2.1",
     "axios": "^1.6.7",
     "bignumber.js": "^9.1.2",
-    "discord.js": "^14.14.1"
+    "discord.js": "^14.14.1",
+    "express": "^4.19.2",
+    "module-alias": "^2.2.3",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.0"
   },
   "husky": {
     "hooks": {

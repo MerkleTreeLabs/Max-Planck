@@ -1,5 +1,6 @@
+require('module-alias/register');
 const { SlashCommandBuilder } = require('discord.js');
-const { maxDrip } = require('../../config.json');
+const { maxDrip } = require('@config');
 
 module.exports = {
 	cooldown: 3,

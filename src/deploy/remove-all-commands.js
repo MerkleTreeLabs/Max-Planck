@@ -1,5 +1,7 @@
+require('module-alias/register');
+
 const { REST, Routes } = require('discord.js');
-const { clientId, guildId, token } = require('../config.json');
+const { clientId, guildId, token } = require('@config');
 
 const rest = new REST().setToken(token);
 

@@ -1,11 +1,16 @@
-const getBlock = require('./api/blockLookup');
+require('module-alias/register');
+
+const axios = require('axios');
+const { apiPort } = require('@config');
 
 async function getBlockSub(interaction) {
 	try {
-		// get the block data
-		const blockNumber = await getBlock();
-		// return the block number
-		if (blockNumber) {
+		// Fetch the current block number from the API
+		const response = await axios.get(`http://localhost:${apiPort}/v1/zond-block`);
+		let blockNumber = 0;
+		// Return the block number
+		if (response.data.block.id === 1) {
+			blockNumber = parseInt(response.data.block.result, 16);
 			return await interaction.reply(`Latest Zond Block:\t\`${blockNumber}\``);
 		}
 		else {

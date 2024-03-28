@@ -12,4 +12,5 @@
     "activityString": "developers code", // limited activity text string
     "activityType": "Watching", // one of:{ Watching, Listening. Competing }
     "statusUpdate": "online" // one of: { online, idle, dnd, invisible }
+    "apiPort": 7575, // the api port to run the bot services on
 }

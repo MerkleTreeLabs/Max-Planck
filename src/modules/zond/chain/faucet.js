@@ -1,13 +1,17 @@
-const { signTransaction, TransactionFactory } = require('@theqrl/web3-zond-accounts');
-const getNonce = require('./nonceLookup');
-const sendTx = require('./sendtx');
-const getChainId = require('./chainIdLookup');
-const getPendingBaseFee = require('./pendingBaseFeeLookup');
-const getGasEstimate = require('./estimateGas');
-const config = require('../../../config.json');
-const helper = require('../../helpers');
+require('module-alias/register');
 
-async function sendFaucetTx(toAddress, amount) {
+// const axios = require('axios');
+const { signTransaction, TransactionFactory } = require('@theqrl/web3-zond-accounts');
+
+const config = require('@config');
+const helper = require('@helper');
+const getNonce = require('@zond-chain/nonceLookup');
+const sendTx = require('@zond-chain/sendtx');
+const getChainId = require('@zond-chain/chainIdLookup');
+const getPendingBaseFee = require('@zond-chain/pendingBaseFeeLookup');
+const getGasEstimate = require('@zond-chain/estimateGas');
+
+async function faucet(toAddress, amount) {
 	try {
 		const transferAmount = helper.decToHex(amount);
 		const nonce = await getNonce(config.faucetAddress);
@@ -39,4 +43,4 @@ async function sendFaucetTx(toAddress, amount) {
 	}
 }
 
-module.exports = sendFaucetTx;
+module.exports = { faucet };

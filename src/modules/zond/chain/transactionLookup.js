@@ -1,7 +1,9 @@
-const axios = require('axios');
-const config = require('../../../config.json');
+require('module-alias/register');
 
-async function getTransaction(txHash) {
+const axios = require('axios');
+const config = require('@config');
+
+async function transaction(txHash) {
 	try {
 		const response = await axios.post(`http://${config.zondPubAPI}`, {
 			jsonrpc: '2.0',
@@ -14,7 +16,7 @@ async function getTransaction(txHash) {
 			},
 		});
 
-		return response.data.result;
+		return response.data;
 	}
 	catch (error) {
 		const errorMessage = `Error occurred while fetching the transactionLookup: ${error.message}`;
@@ -23,4 +25,4 @@ async function getTransaction(txHash) {
 	}
 }
 
-module.exports = getTransaction;
+module.exports = { transaction };

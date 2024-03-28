@@ -2,7 +2,7 @@
   "name": "zond-faucet",
   "version": "1.0.0",
   "description": "Zond testnet faucet bot for Discord",
-  "main": "index.js",
+  "main": "src/index.js",
   "scripts": {
     "start": "node index.js",
     "cm": "npm run prepare && cz",

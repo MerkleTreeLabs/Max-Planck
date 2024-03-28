@@ -1,7 +1,8 @@
 require('module-alias/register');
 const express = require('express');
 const { apiPort } = require('@config');
-const zondRoutesV1 = require('@zond-v1-routes/zondRoutes');
+const zondGetRoutesV1 = require('@zond-v1-routes/zondGetRoutes');
+const zondPostRoutesV1 = require('@zond-v1-routes/zondPostRoutes');
 // const qrlRoutesV1 = require('./routes/v1/qrl/qrlRoutes');
 // const zondRoutesV2 = require('./routes/v2/zond/zondRoutesV2');
 // const qrlRoutesV2 = require('./routes/v2/qrl/qrlRoutesV2');
@@ -16,9 +17,12 @@ const PORT = apiPort || 3000;
 // Middleware to parse JSON requests
 app.use(express.json());
 
-// V1 Routes
-app.use('/v1', zondRoutesV1);
+// V1 GET Routes
+app.use('/v1', zondGetRoutesV1);
 // app.use('/v1', qrlRoutesV1);
+
+// V1 POST Routes
+app.use('/v1', zondPostRoutesV1);
 
 // Swagger UI setup
 app.use('/v1/api-docs', swaggerUi.serve, swaggerUi.setup(specs));

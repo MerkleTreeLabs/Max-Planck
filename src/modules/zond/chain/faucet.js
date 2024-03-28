@@ -11,7 +11,7 @@ const getChainId = require('@zond-chain/chainIdLookup');
 const getPendingBaseFee = require('@zond-chain/pendingBaseFeeLookup');
 const getGasEstimate = require('@zond-chain/estimateGas');
 
-async function sendFaucetTx(toAddress, amount) {
+async function faucet(toAddress, amount) {
 	try {
 		const transferAmount = helper.decToHex(amount);
 		const nonce = await getNonce(config.faucetAddress);
@@ -43,4 +43,4 @@ async function sendFaucetTx(toAddress, amount) {
 	}
 }
 
-module.exports = sendFaucetTx;
+module.exports = { faucet };

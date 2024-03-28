@@ -10,7 +10,7 @@ const options = {
 			description: 'API documentation for Zond',
 		},
 	},
-	apis: ['./src/modules/server/routes/v1/zond/zondRoutes.js'],
+	apis: ['./src/modules/server/routes/v1/zond/zondGetRoutes.js', './src/modules/server/routes/v1/zond/zondPostRoutes.js'],
 };
 
 const specs = swaggerJsdoc(options);

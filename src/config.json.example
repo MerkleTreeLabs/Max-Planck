@@ -1,0 +1,15 @@
+{
+	"token": "your-token-goes-here",
+	"clientId": "your-application-id-goes-here", // discord application id found https://discord.com/developers/applications/
+	"guildId": "your-server-id-goes-here", // found in discord as server ID
+	"faucetAddress": "Faucet public address 0x", // public address for the faucet controlled funds. (must be imported into node)
+	"faucetAddressPassword": "Password123",
+	"faucetTimeout": "", // Time between withdraws (in Milliseconds)
+	"maxDrip": "", // max allowed drip for given time. (in quanta)
+	"zondPubAPI": "", // zond api {IP:PORT}
+    "userName": "zond-3",
+    "avatarImgLocation": "./src/zond_3_Circumlunar.jpg",
+    "activityString": "developers code", // limited activity text string
+    "activityType": "Watching", // one of:{ Watching, Listening. Competing }
+    "statusUpdate": "online" // one of: { online, idle, dnd, invisible }
+}

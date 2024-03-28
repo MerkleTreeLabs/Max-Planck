@@ -1,10 +1,16 @@
 {
   "name": "zond-faucet",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "Zond testnet faucet bot for Discord",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node index.js",
+    "cm": "cz",
+    "lint": "eslint .",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s && git add CHANGELOG.md && git commit -m 'chore(changelog): update changelog [skip ci]' && git push origin main",
+    "release": "npm run changelog",
+    "prepare": "husky"
   },
   "repository": {
     "type": "git",
@@ -22,11 +28,15 @@
   },
   "homepage": "https://github.com/fr1t2/zond-faucet#readme",
   "devDependencies": {
+    "commitizen": "^4.3.0",
+    "conventional-changelog-cli": "^4.1.0",
+    "cz-conventional-changelog": "^3.3.0",
     "eslint": "^8.57.0",
     "eslint-config-standard": "^17.1.0",
     "eslint-plugin-import": "^2.29.1",
     "eslint-plugin-n": "^16.6.2",
-    "eslint-plugin-promise": "^6.1.1"
+    "eslint-plugin-promise": "^6.1.1",
+    "husky": "^9.0.11"
   },
   "dependencies": {
     "@keyv/mongo": "^2.2.8",
@@ -35,5 +45,15 @@
     "axios": "^1.6.7",
     "bignumber.js": "^9.1.2",
     "discord.js": "^14.14.1"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  },
+  "husky": {
+    "hooks": {
+      "prepare-commit-msg": "exec < /dev/tty && npx cz --hook || true"
+    }
   }
 }

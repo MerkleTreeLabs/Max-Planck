@@ -4,9 +4,11 @@
   "description": "Zond testnet faucet bot for Discord",
   "main": "index.js",
   "scripts": {
-    "start": "node .",
-    "lint": "eslint .", 
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node index.js",
+    "lint": "eslint .",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s && git add CHANGELOG.md && git commit -m 'chore(changelog): update changelog [skip ci]' && git push origin main",
+    "release": "npm run changelog"
   },
   "repository": {
     "type": "git",
@@ -24,6 +26,7 @@
   },
   "homepage": "https://github.com/fr1t2/zond-faucet#readme",
   "devDependencies": {
+    "conventional-changelog-cli": "^4.1.0",
     "eslint": "^8.57.0",
     "eslint-config-standard": "^17.1.0",
     "eslint-plugin-import": "^2.29.1",

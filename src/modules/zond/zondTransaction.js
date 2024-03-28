@@ -1,15 +1,17 @@
 require('module-alias/register');
 
-const helper = require('@helper');
-const getTransaction = require('@zond-api/transactionLookup');
+const axios = require('axios');
+const { apiPort } = require('@config');
+const { validateTxHash, hexToDec } = require('@helper');
 
 async function getTransactionSub(interaction) {
 	const userTxHash = interaction.options.getString('hash');
 	await interaction.deferReply();
 	try {
-		const validationResults = await helper.validateTxHash(userTxHash);
+		const validationResults = await validateTxHash(userTxHash);
 		if (validationResults.isValid) {
-			const txHashData = await getTransaction(validationResults.hash);
+			const txHashResponse = await axios.get(`http://localhost:${apiPort}/v1/zond-transaction?hash=${validationResults.hash}`);
+			const txHashData = txHashResponse.data.transaction.result;
 			const keysToConvert = [
 				'blockNumber',
 				'cumulativeGasUsed',
@@ -22,7 +24,7 @@ async function getTransactionSub(interaction) {
 
 			keysToConvert.forEach(key => {
 				if (Object.prototype.hasOwnProperty.call(txHashData, key)) {
-					txHashData[key] = helper.hexToDec(txHashData[key]);
+					txHashData[key] = hexToDec(txHashData[key]);
 				}
 			});
 			// public message

@@ -5,11 +5,11 @@ const { signTransaction, TransactionFactory } = require('@theqrl/web3-zond-accou
 
 const config = require('@config');
 const helper = require('@helper');
-const getNonce = require('@zond-api/nonceLookup');
-const sendTx = require('@zond-api/sendtx');
-const getChainId = require('@zond-api/chainIdLookup');
-const getPendingBaseFee = require('@zond-api/pendingBaseFeeLookup');
-const getGasEstimate = require('@zond-api/estimateGas');
+const getNonce = require('@zond-chain/nonceLookup');
+const sendTx = require('@zond-chain/sendtx');
+const getChainId = require('@zond-chain/chainIdLookup');
+const getPendingBaseFee = require('@zond-chain/pendingBaseFeeLookup');
+const getGasEstimate = require('@zond-chain/estimateGas');
 
 async function sendFaucetTx(toAddress, amount) {
 	try {

@@ -33,7 +33,7 @@
     "@emoji": "src/modules/emojiCharacters.js",
     "@swaggerConfig": "src/swaggerConfig.js",
     "@zond-modules": "src/modules/zond",
-    "@zond-api": "src/modules/zond/api",
+    "@zond-chain": "src/modules/zond/chain",
     "@zond-v1-routes": "src/modules/server/routes/v1/zond",
     "@qrl-modules": "src/modules/qrl",
     "@qrl-api": "src/modules/qrl/api",

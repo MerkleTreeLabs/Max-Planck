@@ -4,7 +4,7 @@ const BigNumber = require('bignumber.js');
 
 const helper = require('@helper');
 const { maxDrip } = require('@config');
-const sendFaucetTx = require('@zond-api/faucet');
+const sendFaucetTx = require('@zond-chain/faucet');
 
 const timestamp = new Date().getTime();
 

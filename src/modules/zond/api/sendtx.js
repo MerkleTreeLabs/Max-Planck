@@ -1,5 +1,7 @@
+require('module-alias/register');
+
 const axios = require('axios');
-const config = require('../../../config.json');
+const config = require('@config');
 
 
 async function rawTx(signedTx) {

@@ -1,4 +1,6 @@
-const getBlock = require('./api/blockLookup');
+require('module-alias/register');
+
+const getBlock = require('@zond-api/blockLookup');
 
 async function getBlockSub(interaction) {
 	try {

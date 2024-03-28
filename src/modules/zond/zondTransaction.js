@@ -1,5 +1,7 @@
-const helper = require('../helpers');
-const getTransaction = require('./api/transactionLookup');
+require('module-alias/register');
+
+const helper = require('@helper');
+const getTransaction = require('@zond-api/transactionLookup');
 
 async function getTransactionSub(interaction) {
 	const userTxHash = interaction.options.getString('hash');

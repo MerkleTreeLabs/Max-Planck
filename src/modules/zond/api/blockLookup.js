@@ -1,5 +1,8 @@
+require('module-alias/register');
+
 const axios = require('axios');
-const config = require('../../../config.json');
+// const config = require('../../../config.json');
+const config = require('@config');
 
 async function block() {
 	try {
@@ -14,7 +17,9 @@ async function block() {
 			},
 		});
 		// format the block to human readable
-		return parseInt(response.data.result, 16);
+		// return parseInt(response.data.result, 16);
+		console.log(response);
+		return response;
 	}
 	catch (error)	{
 		const errorMessage = `Error occurred while fetching the latest block: ${error.message}`;

@@ -27,6 +27,18 @@
   "bugs": {
     "url": "https://github.com/fr1t2/zond-faucet/issues"
   },
+  "_moduleAliases": {
+    "@config": "src/config.json",
+    "@helper": "src/modules/helper.js",
+    "@emoji": "src/modules/emojiCharacters.js",
+    "@swaggerConfig": "src/swaggerConfig.js",
+    "@zond-modules": "src/modules/zond",
+    "@zond-api": "src/modules/zond/api",
+    "@zond-v1-routes": "src/modules/server/routes/v1/zond",
+    "@qrl-modules": "src/modules/qrl",
+    "@qrl-api": "src/modules/qrl/api",
+    "@commands-utility": "src/commands/utility"
+  },
   "homepage": "https://github.com/fr1t2/zond-faucet#readme",
   "devDependencies": {
     "@commitlint/cli": "^19.2.1",
@@ -49,7 +61,10 @@
     "axios": "^1.6.7",
     "bignumber.js": "^9.1.2",
     "discord.js": "^14.14.1",
-    "express": "^4.19.2"
+    "express": "^4.19.2",
+    "module-alias": "^2.2.3",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.0"
   },
   "husky": {
     "hooks": {

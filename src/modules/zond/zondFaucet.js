@@ -1,8 +1,12 @@
+require('module-alias/register');
+
 const BigNumber = require('bignumber.js');
-const helper = require('../../modules/helpers');
-const sendFaucetTx = require('./api/faucet');
+
+const helper = require('@helper');
+const { maxDrip } = require('@config');
+const sendFaucetTx = require('@zond-api/faucet');
+
 const timestamp = new Date().getTime();
-const { maxDrip } = require('../../config.json');
 
 async function getFaucetSub(interaction) {
 	const userAddress = interaction.options.getString('address');

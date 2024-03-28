@@ -1,11 +1,15 @@
+require('module-alias/register');
+
+// const axios = require('axios');
 const { signTransaction, TransactionFactory } = require('@theqrl/web3-zond-accounts');
-const getNonce = require('./nonceLookup');
-const sendTx = require('./sendtx');
-const getChainId = require('./chainIdLookup');
-const getPendingBaseFee = require('./pendingBaseFeeLookup');
-const getGasEstimate = require('./estimateGas');
-const config = require('../../../config.json');
-const helper = require('../../helpers');
+
+const config = require('@config');
+const helper = require('@helper');
+const getNonce = require('@zond-api/nonceLookup');
+const sendTx = require('@zond-api/sendtx');
+const getChainId = require('@zond-api/chainIdLookup');
+const getPendingBaseFee = require('@zond-api/pendingBaseFeeLookup');
+const getGasEstimate = require('@zond-api/estimateGas');
 
 async function sendFaucetTx(toAddress, amount) {
 	try {

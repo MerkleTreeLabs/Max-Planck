@@ -1,6 +1,10 @@
+require('module-alias/register');
+
+
 const BigNumber = require('bignumber.js');
-const getBalance = require('./api/balanceLookup');
-const helper = require('../helpers');
+
+const getBalance = require('@zond-api/balanceLookup');
+const helper = require('@helper');
 
 
 async function getBalanceSub(interaction) {

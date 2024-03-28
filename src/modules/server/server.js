@@ -21,6 +21,7 @@ app.use(express.json());
 app.use('/v1', zondGetRoutesV1);
 // app.use('/v1', qrlRoutesV1);
 
+
 // V1 POST Routes
 app.use('/v1', zondPostRoutesV1);
 

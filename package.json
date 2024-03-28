@@ -5,10 +5,13 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
+    "commit": "commit",
     "lint": "eslint .",
     "test": "echo \"Error: no test specified\" && exit 1",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s && git add CHANGELOG.md && git commit -m 'chore(changelog): update changelog [skip ci]' && git push origin main",
-    "release": "npm run changelog"
+    "release": "npm run changelog",
+    "prepare": "husky",
+    "commitlint": "commitlint --edit"
   },
   "repository": {
     "type": "git",
@@ -26,12 +29,17 @@
   },
   "homepage": "https://github.com/fr1t2/zond-faucet#readme",
   "devDependencies": {
+    "@commitlint/cli": "^19.2.1",
+    "@commitlint/config-angular": "^19.1.0",
+    "@commitlint/config-conventional": "^19.1.0",
+    "@commitlint/prompt-cli": "^19.2.0",
     "conventional-changelog-cli": "^4.1.0",
     "eslint": "^8.57.0",
     "eslint-config-standard": "^17.1.0",
     "eslint-plugin-import": "^2.29.1",
     "eslint-plugin-n": "^16.6.2",
-    "eslint-plugin-promise": "^6.1.1"
+    "eslint-plugin-promise": "^6.1.1",
+    "husky": "^9.0.11"
   },
   "dependencies": {
     "@keyv/mongo": "^2.2.8",

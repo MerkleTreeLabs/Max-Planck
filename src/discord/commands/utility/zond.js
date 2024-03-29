@@ -97,7 +97,7 @@ module.exports = {
 		console.log(`Interaction Data:\t${JSON.stringify(interaction, replacer)}`);
 
 		// Check if the extracted channelId is in the allowedChannels list
-		if (!allowedChannels.includes(channelId) && !allowedGuilds.includes(interaction.guild.toString()) ) {
+		if (!allowedChannels.includes(channelId) && !allowedGuilds.includes(interaction.guild.toString())) {
 			// for each channel found in the allowedChannels list, append the <# and prepend > to the value
 			const formattedChannels = allowedChannels.map(channel => `<#${channel}>\n`);
 

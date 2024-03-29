@@ -1,6 +1,6 @@
 {
   "name": "zond-faucet",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Zond testnet faucet bot for Discord",
   "main": "discord/index.js",
   "scripts": {

@@ -1,6 +1,13 @@
 require('module-alias/register');
 const { SlashCommandBuilder } = require('discord.js');
-const { maxDrip } = require('@config');
+const { maxDrip, allowedChannels, allowedGuilds } = require('@config');
+
+function replacer(key, value) {
+	if (typeof value === 'bigint') {
+		return value.toString();
+	}
+	return value;
+}
 
 module.exports = {
 	cooldown: 3,
@@ -65,6 +72,7 @@ module.exports = {
 					.setMaxValue(parseInt(maxDrip)))),
 
 	async execute(interaction) {
+		// do nothing if not a command that we know
 		if (!interaction.isCommand()) return;
 		const timestamp = new Date().getTime();
 
@@ -74,8 +82,28 @@ module.exports = {
 			timestamp,
 		};
 		const subCommand = interaction.options.getSubcommand();
+		// Extract the channel ID from the interaction.channel_id
+		const channelId = interaction.channelId.toString();
 
-		console.log(`User ${userData.discordName} called subcommand ${subCommand}. ${JSON.stringify(userData)}\nData: ${interaction}`);
+		// console.log(`interaction channel: ${interaction.channel}`);
+		// console.log(`User ${userData.discordName} called subcommand ${subCommand}. ${JSON.stringify(userData)}\nData: ${interaction}`);
+
+
+		console.log(`Interaction received from User:\t${userData.discordName}`);
+		console.log(`Timestamp:\t${timestamp}`);
+		console.log(`Subcommand:\t${subCommand}`);
+		console.log(`Channel ID:\t${channelId}`);
+		console.log(`Guild Name:\t${interaction.guild ? interaction.guild.name : 'DM'}`);
+		console.log(`Interaction Data:\t${JSON.stringify(interaction, replacer)}`);
+
+		// Check if the extracted channelId is in the allowedChannels list
+		if (!allowedChannels.includes(channelId) && !allowedGuilds.includes(interaction.guild.toString()) ) {
+			// for each channel found in the allowedChannels list, append the <# and prepend > to the value
+			const formattedChannels = allowedChannels.map(channel => `<#${channel}>\n`);
+
+			console.log(`Ignoring command from disallowed channel: ${channelId}`);
+			return await interaction.reply({ content: `Sorry, we cant use this channel to talk...\nPlease try again in an approved channel:\n${formattedChannels}`, ephemeral: true });
+		}
 
 		// subcommand "block" entered
 		if (subCommand === 'block') {

@@ -2,7 +2,7 @@
 Description=fond-faucet
 
 [Service]
-ExecStart=/path/to/node /home/fr1t2/zond-faucet/src/index.js
+ExecStart=/path/to/node /home/fr1t2/zond-faucet/discord/index.js
 Restart=always
 User=fr1t2
 Group=fr1t2

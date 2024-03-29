@@ -10,7 +10,7 @@ async function getTransactionSub(interaction) {
 	try {
 		const validationResults = await validateTxHash(userTxHash);
 		if (validationResults.isValid) {
-			const txHashResponse = await axios.get(`http://localhost:${apiPort}/v1/zond-transaction?hash=${validationResults.hash}`);
+			const txHashResponse = await axios.post(`http://localhost:${apiPort}/v1/zond-transaction`, { hash: validationResults.hash });
 			const txHashData = txHashResponse.data.transaction.result;
 			const keysToConvert = [
 				'blockNumber',

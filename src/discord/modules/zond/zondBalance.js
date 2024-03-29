@@ -9,10 +9,8 @@ async function getBalanceSub(interaction) {
 	const userAddress = interaction.options.getString('address');
 	try {
 		const validationResults = await helper.validateAddress(userAddress);
-
 		if (validationResults.isValid) {
-			const balanceResponse = await axios.get(`http://localhost:${apiPort}/v1/zond-balance?address=${validationResults.address}`);
-			console.log(`balanceResponse.data: ${JSON.stringify(balanceResponse.data)}`);
+			const balanceResponse = await axios.post(`http://localhost:${apiPort}/v1/zond-balance`, { address: validationResults.address });
 			const balanceValue = parseInt(balanceResponse.data.balance.result, 16);
 			let userBalance = new BigNumber(balanceValue);
 

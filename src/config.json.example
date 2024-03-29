@@ -8,9 +8,11 @@
 	"maxDrip": "", // max allowed drip for given time. (in quanta)
 	"zondPubAPI": "", // zond api {IP:PORT}
     "userName": "zond-3",
-    "avatarImgLocation": "./src/zond_3_Circumlunar.jpg",
+    "avatarImgLocation": "./discord/zond_3_Circumlunar.jpg",
     "activityString": "developers code", // limited activity text string
     "activityType": "Watching", // one of:{ Watching, Listening. Competing }
     "statusUpdate": "online" // one of: { online, idle, dnd, invisible }
     "apiPort": 7575, // the api port to run the bot services on
+    "swaggerPort": 4000,
+    "enableSwagger": true    
 }

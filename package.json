@@ -58,7 +58,7 @@
     "@theqrl/web3-zond-accounts": "^0.2.1",
     "axios": "^1.6.7",
     "bignumber.js": "^9.1.2",
-    "discord.js": "^14.14.1",
+    "discord.js": "^14.15.3",
     "express": "^4.19.2",
     "module-alias": "^2.2.3",
     "swagger-jsdoc": "^6.2.8",

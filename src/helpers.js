@@ -4,7 +4,7 @@ const path = require('path');
 
 const userFile = path.resolve(__dirname, '../userlog.json');
 
-function validateAddress(address) {
+function validateZondAddress(address) {
 	try {
 		const zondAddressRegex = /^(0x)?[0-9a-f]{40}$/i;
 		if (zondAddressRegex.test(address)) {
@@ -20,11 +20,46 @@ function validateAddress(address) {
 		}
 	}
 	catch (error) {
-		const errorMessage = `Error occurred while fetching the latest block: ${error.message}`;
+		const errorMessage = `Error occurred while validating this address: ${error.message}`;
 		console.log(errorMessage);
 		return { isValid: false, error: `Error validating given address: ${errorMessage}` };
 	}
 }
+
+
+function validateQRLAddress(address) {
+/*
+   // test the address to the regex pattern``
+    function isQRLAddress(addy) {
+      let test = false;
+      if(/^(Q|q)[0-9a-fA-f]{78}$/.test(addy)) {
+        test = true;
+      }
+      return test;
+    }
+*/
+
+	try {
+		const qrlAddressRegex = /^(Q|q)[0-9a-fA-f]{78}$/i;
+		if (qrlAddressRegex.test(address)) {
+			// strip prefix
+			const withoutPrefix = address.startsWith('Q') ? address.slice(1) : address;
+			// sanitize the info
+			const sanitizedAddress = withoutPrefix.replace(/[^0-9a-fA-F]/g, '');
+			const lowercaseAddress = sanitizedAddress.toLowerCase();
+			return { isValid: true, address: lowercaseAddress };
+		}
+		else {
+			return { isValid: false, error: 'Invalid address' };
+		}
+	}
+	catch (error) {
+		const errorMessage = `Error occurred while validating this address: ${error.message}`;
+		console.log(errorMessage);
+		return { isValid: false, error: `Error validating given address: ${errorMessage}` };
+	}
+}
+
 
 function validateTxHash(hash) {
 	try {
@@ -77,7 +112,7 @@ function decToHex(value) {
 function quantaToShor(number) {
 	try {
 		const bigNumber = new BigNumber(number);
-		const multiplied = bigNumber.multipliedBy('1e18');
+		const multiplied = bigNumber.multipliedBy('1e9');
 		const resultString = multiplied.toFixed(0);
 		const result = resultString.replace('.', '');
 		return result;
@@ -90,6 +125,35 @@ function quantaToShor(number) {
 
 
 function shorToQuanta(number) {
+	try {
+		const bigNumber = new BigNumber(number);
+		const divided = bigNumber.dividedBy('1e9');
+		const result = divided.toFixed();
+		return result;
+	}
+	catch (error) {
+		console.error('Error occurred during conversion:', error);
+		return null;
+	}
+}
+
+
+function qToPlanck(number) {
+	try {
+		const bigNumber = new BigNumber(number);
+		const multiplied = bigNumber.multipliedBy('1e18');
+		const resultString = multiplied.toFixed(0);
+		const result = resultString.replace('.', '');
+		return result;
+	}
+	catch (error) {
+		console.error('Error occurred during conversion:', error);
+		return null;
+	}
+}
+
+
+function planckToQ(number) {
 	try {
 		const bigNumber = new BigNumber(number);
 		const divided = bigNumber.dividedBy('1e18');
@@ -129,6 +193,10 @@ exports.decToHex = decToHex;
 exports.writeUserData = writeUserData;
 exports.shorToQuanta = shorToQuanta;
 exports.quantaToShor = quantaToShor;
-exports.validateAddress = validateAddress;
+exports.qToPlanck = qToPlanck;
+exports.planckToQ = planckToQ;
+exports.validateZondAddress = validateZondAddress;
+exports.validateQRLAddress = validateQRLAddress;
 exports.validateTxHash = validateTxHash;
 exports.hexToDec = hexToDec;
+

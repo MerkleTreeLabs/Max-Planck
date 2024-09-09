@@ -3,8 +3,8 @@ const express = require('express');
 const { apiPort, swaggerPort, enableSwagger } = require('@config');
 const zondGetRoutesV1 = require('@zond-v1-routes/zondGetRoutes');
 const zondPostRoutesV1 = require('@zond-v1-routes/zondPostRoutes');
-// const qrlGetRoutesV1 = require('./routes/v1/qrl/qrlGetRoutes');
-// const qrlPostRoutesV1 = require('./routes/v1/qrl/qrlPostRoutes');
+const qrlGetRoutesV1 = require('@qrl-v1-routes/qrlGetRoutes');
+const qrlPostRoutesV1 = require('@qrl-v1-routes/qrlPostRoutes');
 // const zondRoutesV2 = require('./routes/v2/zond/zondRoutesV2');
 // const qrlRoutesV2 = require('./routes/v2/qrl/qrlRoutesV2');
 
@@ -17,11 +17,11 @@ app.use(express.json());
 
 // V1 GET Routes
 app.use('/v1', zondGetRoutesV1);
-// app.use('/v1', qrlGetRoutesV1);
+app.use('/v1', qrlGetRoutesV1);
 
 // V1 POST Routes
 app.use('/v1', zondPostRoutesV1);
-// app.use('/v1', qrlPostRoutesV1);
+app.use('/v1', qrlPostRoutesV1);
 
 // Conditionally start Swagger UI based on enableSwagger value
 if (enableSwagger) {

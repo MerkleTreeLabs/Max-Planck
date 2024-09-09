@@ -8,12 +8,12 @@
 	"faucetAddressPassword": "Password123",
 	"faucetTimeout": "", // Time between withdraws (in Milliseconds)
 	"maxDrip": "", // max allowed drip for given time. (in quanta)
-	"zondPubAPI": "", // zond api {IP:PORT}
+	"zondPubAPI": "", // zond api {IP:PORT} 192.168.1.40:30303
     "userName": "zond-3",
     "avatarImgLocation": "./discord/zond_3_Circumlunar.jpg",
     "activityString": "developers code", // limited activity text string
     "activityType": "Watching", // one of:{ Watching, Listening. Competing }
-    "statusUpdate": "online" // one of: { online, idle, dnd, invisible }
+    "statusUpdate": "online", // one of: { online, idle, dnd, invisible }
     "apiPort": 7575, // the api port to run the bot services on
     "swaggerPort": 4000,
     "enableSwagger": true    

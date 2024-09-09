@@ -18,10 +18,13 @@ More info in the chat
 Please use the following steps to setup your development environment:
 
 1. Clone the repository
-2. Install the dependencies with `npm install`
-3. Copy the config.json.example	 file to config.json and fill in the required fields
-4. Install and sync a [local Zond node](https://test-zond.theqrl.org/linux.html)
-5. Run the bot with `npm start`
+2. `nvm use` or ensure your node version matches the version in the `.nvmrc` file.
+3. Install the dependencies with `npm install`
+4. Copy the config.json.example	 file to config.json and fill in the required fields
+5. Install and sync a [local Zond node](https://test-zond.theqrl.org/linux.html)
+6. Run the bot with `npm start`
+
+
 
 --- 
 
@@ -32,6 +35,7 @@ Use the npm scripts to ensure consistent commit messaging:
 ```bash
 npm run cm
 ```
+
 
 --- 
 

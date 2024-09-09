@@ -15,7 +15,7 @@ async function getFaucetSub(interaction) {
 	const userAmount = interaction.options.getNumber('amount');
 	try {
 		// check if user address is valid
-		const addressValidationResults = await helper.validateAddress(userAddress);
+		const addressValidationResults = await helper.validateZondAddress(userAddress);
 
 		// check submitted address format is valid
 		if (!addressValidationResults.isValid) {
@@ -32,7 +32,7 @@ async function getFaucetSub(interaction) {
 		}
 
 		// convert quanta to Shor
-		const amountShor = await helper.quantaToShor(userAmount);
+		const amountShor = await helper.qToPlanck(userAmount);
 		console.log(`amountShor: ${amountShor}`);
 		// send the transaction
 		// start the bot reply while the tx sends

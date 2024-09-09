@@ -1,6 +1,6 @@
 require('module-alias/register');
 const { SlashCommandBuilder } = require('discord.js');
-const { maxDrip, allowedChannels, allowedGuilds } = require('@config');
+const { allowedChannels, allowedGuilds } = require('@config');
 
 function replacer(key, value) {
 	if (typeof value === 'bigint') {
@@ -12,35 +12,37 @@ function replacer(key, value) {
 module.exports = {
 	cooldown: 3,
 	data: new SlashCommandBuilder()
-		.setName('zond')
-		.setDescription('Zond testnet info!')
+		.setName('qrl')
+		.setDescription('QRL Discord Bot!')
 		// add sub-commands for various zond things here.
 
 		// block returns the latest block from the node
 		.addSubcommand(subcommand =>
 			subcommand
-				.setName('block')
-				.setDescription('Get the current Zond block number'))
+				.setName('height')
+				.setDescription('Get the current QRL block height'))
 
-		// balance takes zond address and returns the balance in ephemeral response
+
+		// balance takes qrl address and returns the balance in ephemeral response
 		.addSubcommand(subcommand =>
 			subcommand
 				.setName('balance')
-				.setDescription('Zond address balance')
+				.setDescription('QRL address balance')
 				.addStringOption(option => option
 					.setName('address')
-					.setDescription('Zond dilithium address (0x)')
+					.setDescription('QRL XMSS Public Address (Q..)')
 					.setRequired(true)
-					.setMaxLength(42)
-					.setMinLength(42))
+					.setMaxLength(79)
+					.setMinLength(79))
 				.addStringOption(option => option
 					.setName('denomination')
 					.setDescription('Whether or not the balance should be in quanta or Shor (default quanta)')
 					.addChoices(
-						{ name: 'Planck', value: 'planck' },
-						{ name: 'Q', value: 'q' }),
-				))
+						{ name: 'Shor', value: 'shor' },
+						{ name: 'quanta', value: 'quanta' }),
+				)),
 
+	/*
 		// tx takes a transaction hash and returns some information to the user 0xc50e891a34eacedf2b3e6e7f4b245da2a2c6f5128f5de7419da41e1c54134040
 		.addSubcommand(subcommand =>
 			subcommand
@@ -70,7 +72,7 @@ module.exports = {
 					.setDescription('Amount of testnet quanta to receive')
 					.setRequired(true)
 					.setMaxValue(parseInt(maxDrip)))),
-
+*/
 	async execute(interaction) {
 		// do nothing if not a command that we know
 		//
@@ -109,18 +111,18 @@ module.exports = {
 			return await interaction.reply({ content: `Sorry, we cant use this channel to talk...\nPlease try again in an approved channel:\n${formattedChannels}`, ephemeral: true });
 		}
 
-		// subcommand "block" entered
-		if (subCommand === 'block') {
-			const blockLookup = require('../../modules/zond/zondBlock');
+		// subcommand "height" entered
+		if (subCommand === 'height') {
+			const blockLookup = require('../../modules/qrl/qrlHeight');
 			blockLookup(interaction);
 		}
-
 		// balance subcommand given
 		else if (subCommand === 'balance') {
-			const balanceLookup = require('../../modules/zond/zondBalance');
+			const balanceLookup = require('../../modules/qrl/qrlBalance');
 			balanceLookup(interaction);
 		}
 
+		/*
 		// transaction subcommand
 		else if (subCommand === 'transaction') {
 			const transactionLookup = require('../../modules/zond/zondTransaction');
@@ -132,6 +134,7 @@ module.exports = {
 			const faucetRequest = require('../../modules/zond/zondFaucet');
 			faucetRequest(interaction);
 		}
+		*/
 	},
 
 };

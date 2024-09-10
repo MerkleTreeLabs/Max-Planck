@@ -1,6 +1,8 @@
 const BigNumber = require('bignumber.js');
 const fs = require('fs');
 const path = require('path');
+const axios = require('axios');
+const config = require('@config');
 
 const userFile = path.resolve(__dirname, '../userlog.json');
 
@@ -27,16 +29,16 @@ function validateZondAddress(address) {
 }
 
 
-function validateQRLAddress(address) {
+async function validateQRLAddress(address) {
 /*
-   // test the address to the regex pattern``
-    function isQRLAddress(addy) {
-      let test = false;
-      if(/^(Q|q)[0-9a-fA-f]{78}$/.test(addy)) {
-        test = true;
-      }
-      return test;
-    }
+	 // test the address to the regex pattern``
+		function isQRLAddress(addy) {
+			let test = false;
+			if(/^(Q|q)[0-9a-fA-f]{78}$/.test(addy)) {
+				test = true;
+			}
+			return test;
+		}
 */
 
 	try {
@@ -47,10 +49,19 @@ function validateQRLAddress(address) {
 			// sanitize the info
 			const sanitizedAddress = withoutPrefix.replace(/[^0-9a-fA-F]/g, '');
 			const lowercaseAddress = sanitizedAddress.toLowerCase();
-			return { isValid: true, address: lowercaseAddress };
+
+			const isValidAddress = await axios.post(`http://localhost:${config.apiPort}/v1/qrl-is-valid-address`, { address: `Q${lowercaseAddress}` });
+			if (isValidAddress.data.data.valid) {
+				// the sanitized address passed the validation check
+				console.log(`is-valid-address: ${JSON.stringify(isValidAddress.data)}`)
+				return { isValid: true, address: lowercaseAddress };
+			}
+			else {
+				return { isValid: false, error: 'Invalid address' };
+			}
 		}
 		else {
-			return { isValid: false, error: 'Invalid address' };
+			return { isValid: false, error: 'qrlAddressRegex error' };
 		}
 	}
 	catch (error) {
@@ -190,17 +201,20 @@ function writeUserData(newData) {
 }
 
 function truncateHash(hash, startLength = 8, endLength = 8) {
-	// Ensure the string is long enough to truncate
-	if (hash.length > startLength + endLength) {
-		const start = hash.substring(0, startLength);
-		const end = hash.substring(hash.length - endLength);
-		return `${start}...${end}`;
-	}
-	else {
-		// If the string is too short, return it as is
-		return hash;
-	}
+		// Ensure hash is a valid string and long enough to truncate
+		if (typeof hash === 'string' && hash.length > startLength + endLength) {
+				const start = hash.substring(0, startLength);
+				const end = hash.substring(hash.length - endLength);
+				return `${start}...${end}`;
+		} else if (typeof hash === 'string') {
+				// If the string is too short, return it as is
+				return hash;
+		} else {
+				// If hash is undefined or not a string, return an empty string or handle it gracefully
+				return '0';
+		}
 }
+
 
 
 exports.decToHex = decToHex;

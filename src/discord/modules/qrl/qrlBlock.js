@@ -60,7 +60,7 @@ async function getBlockSub(interaction) {
 
 		// send the reply to the channel
 		await interaction.reply(`
-			Here's the block data:\n> __**block_number:**__ \`${blockResponse.data.block.header.block_number}\`
+			Here's the QRL block data:\n> __**block_number:**__ \`${blockResponse.data.block.header.block_number}\`
 				> **hash_header:** \`${helper.truncateHash(blockResponse.data.block.header.hash_header)}\`
 				> **timestamp_seconds:** \`${blockResponse.data.block.header.timestamp_seconds}\`
 				> **hash_header_prev:** \`${helper.truncateHash(blockResponse.data.block.header.hash_header_prev)}\`

@@ -1,6 +1,7 @@
 const express = require('express');
 const { faucet } = require('@zond-chain/faucet');
 const { balance } = require('@zond-chain/balanceLookup');
+const { blockByNumber } = require('@zond-chain/blockLookup');
 const { transaction } = require('@zond-chain/transactionLookup');
 
 const router = express.Router();
@@ -160,6 +161,87 @@ router.post('/zond-transaction', async (req, res) => {
 		// Handle any errors
 		console.error(`Error in fetching transaction details: ${error}`);
 		res.status(500).json({ success: false, error: 'Failed to fetch transaction details' });
+	}
+});
+
+/**
+ * @swagger
+ * /v1/zond-block-by-number:
+ *   post:
+ *     summary: Get block details by block number
+ *     tags:
+ *       - Zond
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - block
+ *             properties:
+ *               block:
+ *                 type: string
+ *                 description: The block number to fetch the details for
+ *     responses:
+ *       200:
+ *         description: Successful response with the block details
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: true
+ *                 block:
+ *                   type: object
+ *                   description: The block details for the given block number
+ *       400:
+ *         description: Bad request, block number is missing
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: false
+ *                 error:
+ *                   type: string
+ *                   example: Block number is required
+ *       500:
+ *         description: Internal server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: false
+ *                 error:
+ *                   type: string
+ *                   example: Failed to fetch block
+ */
+
+// GetBlockByNumber
+router.post('/zond-block-by-number', async (req, res) => {
+	try {
+		const block = req.body.block;
+
+		if (!block) {
+			return res.status(400).json({ success: false, error: 'Block number is required' });
+		}
+
+		// Process the block and get the data
+		const blockData = await blockByNumber(block);
+
+		res.status(200).json({ success: true, block: blockData });
+	}
+	catch (error) {
+		// Handle any errors
+		res.status(500).json({ success: false, error: 'Failed to fetch block' });
 	}
 });
 

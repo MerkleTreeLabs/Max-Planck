@@ -54,6 +54,26 @@ module.exports = {
 					.setMinLength(66)),
 		)
 
+
+
+		// block takes a qrl block number or hash and returns block data
+		//
+		.addSubcommand(subcommand =>
+			subcommand
+				.setName('block')
+				.setDescription('Zond block lookup')
+				.addNumberOption(option => option
+					.setName('number')
+					.setDescription('Zond Block Number (15)')
+					.setRequired(false)
+					.setMaxValue(13276769)
+					.setMinValue(1)),
+		)
+
+
+
+
+// FIX-ME: This function is only for testnet with funds in a predetermined wallet. Need a final solution for mainnet
 		// faucet gives the requested amount to user
 		.addSubcommand(subcommand =>
 			subcommand
@@ -125,6 +145,12 @@ module.exports = {
 		else if (subCommand === 'transaction') {
 			const transactionLookup = require('../../modules/zond/zondTransaction');
 			transactionLookup(interaction);
+		}
+
+		// block subcommand given
+		else if (subCommand === 'block') {
+			const blockLookup = require('../../modules/zond/zondBlock');
+			blockLookup(interaction);
 		}
 
 		// faucet called

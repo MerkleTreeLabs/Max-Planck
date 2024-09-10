@@ -7,13 +7,13 @@ const router = express.Router();
 
 /**
  * @swagger
- * /v1/zond-block:
+ * /v1/zond-height:
  *   get:
- *     summary: Get the current Zond block
+ *     summary: Get the current Zond block height
  *     tags: [Zond]
  *     responses:
  *       200:
- *         description: Successful response with the current Zond block
+ *         description: Successful response with the current Zond block height
  *         content:
  *           application/json:
  *             schema:
@@ -33,6 +33,7 @@ const router = express.Router();
  *                       example: 1
  *                     result:
  *                       type: string
+ *                       description: The current Zond block height in hexadecimal format
  *                       example: "0x17a64"
  *       500:
  *         description: Internal server error
@@ -46,8 +47,9 @@ const router = express.Router();
  *                   example: false
  *                 error:
  *                   type: string
- *                   example: Failed to fetch block
+ *                   example: Failed to fetch block height
  */
+
 router.get('/zond-height', async (req, res) => {
 	try {
 		// fetch the current block height

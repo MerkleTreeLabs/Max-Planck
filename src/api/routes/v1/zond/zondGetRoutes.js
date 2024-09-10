@@ -1,7 +1,7 @@
 require('module-alias/register');
 const express = require('express');
 
-const { block } = require('@zond-chain/blockLookup');
+const { height } = require('@zond-chain/heightLookup');
 
 const router = express.Router();
 
@@ -48,16 +48,16 @@ const router = express.Router();
  *                   type: string
  *                   example: Failed to fetch block
  */
-router.get('/zond-block', async (req, res) => {
+router.get('/zond-height', async (req, res) => {
 	try {
-		// fetch the current block
-		const currentBlock = await block();
+		// fetch the current block height
+		const currentBlock = await height();
 		res.status(200).json({ success: true, block: currentBlock });
 	}
 	catch (error) {
 		// Handle any errors
-		console.error('Error in fetching block:', error);
-		res.status(500).json({ success: false, error: 'Failed to fetch block' });
+		console.error('Error in fetching block height:', error);
+		res.status(500).json({ success: false, error: 'Failed to fetch block height' });
 	}
 });
 

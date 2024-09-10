@@ -11,6 +11,7 @@
     "prepare": "husky",
     "release": "npm run changelog",
     "start": "concurrently \"node src/discord/index.js\" \"node src/api/server.js\"",
+    "live": "concurrently \"nodemon src/discord/index.js\" \"nodemon src/api/server.js\"", 
     "test": "echo \"Error: no test specified\" && exit 1",
     "deploy": "node src/discord/deploy/deploy-commands.js"
   },

@@ -189,6 +189,20 @@ function writeUserData(newData) {
 	}
 }
 
+function truncateHash(hash, startLength = 8, endLength = 8) {
+	// Ensure the string is long enough to truncate
+	if (hash.length > startLength + endLength) {
+		const start = hash.substring(0, startLength);
+		const end = hash.substring(hash.length - endLength);
+		return `${start}...${end}`;
+	}
+	else {
+		// If the string is too short, return it as is
+		return hash;
+	}
+}
+
+
 exports.decToHex = decToHex;
 exports.writeUserData = writeUserData;
 exports.shorToQuanta = shorToQuanta;
@@ -199,4 +213,4 @@ exports.validateZondAddress = validateZondAddress;
 exports.validateQRLAddress = validateQRLAddress;
 exports.validateTxHash = validateTxHash;
 exports.hexToDec = hexToDec;
-
+exports.truncateHash = truncateHash;

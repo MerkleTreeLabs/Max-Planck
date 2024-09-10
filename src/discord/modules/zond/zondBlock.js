@@ -6,64 +6,63 @@ const helper = require('@helper');
 const { hideLinkEmbed } = require('discord.js');
 
 async function getBlockSub(interaction) {
-    try {
-        let lookupBlock = 0;
-        const currentHeight = await axios.get(`http://localhost:${apiPort}/v1/zond-height`);
-        const userBlock = interaction.options.getNumber('number');
+	try {
+		let lookupBlock = 0;
+		const currentHeight = await axios.get(`http://localhost:${apiPort}/v1/zond-height`);
+		const userBlock = interaction.options.getNumber('number');
 
-        // no block given or undefined, use the current block
-        if (userBlock == null) {
-            if (!currentHeight.data.success) {
-                return await interaction.reply('There is an issue looking up the Block Height at this time...');
-            }
-            // set the lookup block to the current block
-            lookupBlock = currentHeight.data.block.result;
-        } else {
-            // use the user-given block
-            if (parseInt(helper.hexToDec(currentHeight.data.block.result)) < parseInt(userBlock)) {
-                return await interaction.reply(`Sorry, I can't do that... The block requested is in the future!\nLatest: ${helper.hexToDec(currentHeight.data.block.result)} Request: ${userBlock}`);
-            }
-            lookupBlock = `0x${helper.decToHex(parseInt(userBlock))}`;
-        }
+		// no block given or undefined, use the current block
+		if (userBlock == null) {
+			if (!currentHeight.data.success) {
+				return await interaction.reply('There is an issue looking up the Block Height at this time...');
+			}
+			// set the lookup block to the current block
+			lookupBlock = currentHeight.data.block.result;
+		}
+		else {
+			// use the user-given block
+			if (parseInt(helper.hexToDec(currentHeight.data.block.result)) < parseInt(userBlock)) {
+				return await interaction.reply(`Sorry, I can't do that... The block requested is in the future!\nLatest: ${helper.hexToDec(currentHeight.data.block.result)} Request: ${userBlock}`);
+			}
+			lookupBlock = `0x${helper.decToHex(parseInt(userBlock))}`;
+		}
 
-        // lookup the block data
-        const blockResponse = await axios.post(`http://localhost:${apiPort}/v1/zond-block-by-number`, { block: lookupBlock });
+		// lookup the block data
+		const blockResponse = await axios.post(`http://localhost:${apiPort}/v1/zond-block-by-number`, { block: lookupBlock });
 
-        let transactionCount = 0;
-        let unclesCount = 0;
-        let withdrawalsCount = 0;
+		let transactionCount = 0;
+		let unclesCount = 0;
+		let withdrawalsCount = 0;
 
-        // Check if block.result exists safely
-        const blockResult = blockResponse?.data?.block?.result;
-        if (blockResult) {
+		// Check if block.result exists safely
+		const blockResult = blockResponse?.data?.block?.result;
+		if (blockResult) {
+			// Check for transactions array
+			if (Array.isArray(blockResult.transactions)) {
+				transactionCount = blockResult.transactions.length;
+			}
 
-            // Check for transactions array
-            if (Array.isArray(blockResult.transactions)) {
-                transactionCount = blockResult.transactions.length;
-            }
+			// Check for uncles array
+			if (Array.isArray(blockResult.uncles)) {
+				unclesCount = blockResult.uncles.length;
+			}
 
-            // Check for uncles array
-            if (Array.isArray(blockResult.uncles)) {
-                unclesCount = blockResult.uncles.length;
-            }
+			// Check for withdrawals array
+			if (Array.isArray(blockResult.withdrawals)) {
+				withdrawalsCount = blockResult.withdrawals.length;
+			}
 
-            // Check for withdrawals array
-            if (Array.isArray(blockResult.withdrawals)) {
-                withdrawalsCount = blockResult.withdrawals.length;
-            }
+			// Safely access blockResult properties
+			const url = `https://zond-explorer.theqrl.org/block/${helper.hexToDec(blockResult.number)}`;
+			const explorerLink = hideLinkEmbed(url);
 
-            // Safely access blockResult properties
-            const url = `https://zond-explorer.theqrl.org/block/${helper.hexToDec(blockResult.number)}`;
-            const explorerLink = hideLinkEmbed(url);
-
-//                    > **blobGasUsed** \`${blockResult.blobGasUsed ? helper.hexToDec(blockResult.blobGasUsed) : 'N/A'}\`
-//                    > **excessBlobGas** \`${blockResult.excessBlobGas ? helper.hexToDec(blockResult.excessBlobGas) : 'N/A'}\`
-//                    > **parentBeaconBlockRoot** \`${blockResult.parentBeaconBlockRoot ? helper.truncateHash(blockResult.parentBeaconBlockRoot) : 'N/A'}\`
-
+			//                    > **blobGasUsed** \`${blockResult.blobGasUsed ? helper.hexToDec(blockResult.blobGasUsed) : 'N/A'}\`
+			//                    > **excessBlobGas** \`${blockResult.excessBlobGas ? helper.hexToDec(blockResult.excessBlobGas) : 'N/A'}\`
+			//                    > **parentBeaconBlockRoot** \`${blockResult.parentBeaconBlockRoot ? helper.truncateHash(blockResult.parentBeaconBlockRoot) : 'N/A'}\`
 
 
-            // Send the reply to the channel
-            await interaction.reply(`
+			// Send the reply to the channel
+			await interaction.reply(`
                 Here's the Zond block data:\n> **baseFeePerGas** \`${blockResult.baseFeePerGas ? helper.hexToDec(blockResult.baseFeePerGas) : 'N/A'}\`
                     > __**block_number**__ \`${blockResult.number ? helper.hexToDec(blockResult.number) : 'N/A'}\`
                     > **difficulty** \`${blockResult.difficulty ? helper.hexToDec(blockResult.difficulty) : 'N/A'}\`
@@ -87,18 +86,18 @@ async function getBlockSub(interaction) {
                     > **uncles *count* ** \`${unclesCount}\`
                     > **withdrawals *count* ** \`${withdrawalsCount}\`
                     > **withdrawalsRoot** \`${blockResult.withdrawalsRoot ? helper.truncateHash(blockResult.withdrawalsRoot) : 'N/A'}\`\nMore info ${explorerLink}`,
-            );
-
-        } else {
-            console.log('Block result is not available.');
-            throw new Error('Block result is undefined or invalid.');
-        }
-
-    } catch (error) {
-        const errorMessage = `An error occurred during block retrieval: ${error.message}`;
-        console.error(errorMessage);
-        await interaction.reply(`Looks like I'm struggling to complete that block request right now...${errorMessage}`);
-    }
+			);
+		}
+		else {
+			console.log('Block result is not available.');
+			throw new Error('Block result is undefined or invalid.');
+		}
+	}
+	catch (error) {
+		const errorMessage = `An error occurred during block retrieval: ${error.message}`;
+		console.error(errorMessage);
+		await interaction.reply(`Looks like I'm struggling to complete that block request right now...${errorMessage}`);
+	}
 }
 
 module.exports = getBlockSub;

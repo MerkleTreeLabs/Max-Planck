@@ -55,7 +55,6 @@ module.exports = {
 		)
 
 
-
 		// block takes a qrl block number or hash and returns block data
 		//
 		.addSubcommand(subcommand =>
@@ -71,9 +70,7 @@ module.exports = {
 		)
 
 
-
-
-// FIX-ME: This function is only for testnet with funds in a predetermined wallet. Need a final solution for mainnet
+	// FIX-ME: This function is only for testnet with funds in a predetermined wallet. Need a final solution for mainnet
 		// faucet gives the requested amount to user
 		.addSubcommand(subcommand =>
 			subcommand

@@ -224,7 +224,6 @@ router.post('/zond-transaction', async (req, res) => {
  *                   type: string
  *                   example: Failed to fetch block
  */
-
 // GetBlockByNumber
 router.post('/zond-block-by-number', async (req, res) => {
 	try {

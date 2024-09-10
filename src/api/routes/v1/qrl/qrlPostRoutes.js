@@ -2,6 +2,7 @@ const express = require('express');
 // Import QRL API functions here
 const { balance } = require('@qrl-chain/balanceLookup');
 const { blockByNumber } = require('@qrl-chain/blockLookup');
+const { otsIndex } = require('@qrl-chain/otsLookup');
 
 const router = express.Router();
 
@@ -47,5 +48,23 @@ router.post('/qrl-block-by-number', async (req, res) => {
 	}
 });
 
+
+// qrl balance
+router.post('/qrl-ots', async (req, res) => {
+	try {
+		const address = req.body.address;
+
+		if (!address) {
+			return res.status(400).json({ success: false, error: 'Address is required' });
+		}
+		// Process the address and get the balance
+		const otsInfo = await otsIndex(address);
+		res.status(200).json({ success: true, data: otsInfo });
+	}
+	catch (error) {
+		// Handle any errors
+		res.status(500).json({ success: false, error: 'Failed to fetch balance' });
+	}
+});
 
 module.exports = router;

@@ -55,8 +55,22 @@ module.exports = {
 					.setRequired(false)
 					.setMaxValue(13276769)
 					.setMinValue(1)),
-		),
+		)
 
+
+		// address takes a qrl address and returns summary data
+		//
+		.addSubcommand(subcommand =>
+			subcommand
+				.setName('address')
+				.setDescription('QRL address Information')
+				.addStringOption(option => option
+					.setName('address')
+					.setDescription('QRL XMSS Public Address (Q..)')
+					.setRequired(true)
+					.setMaxLength(79)
+					.setMinLength(79)),
+		),
 
 	/*
 		// tx takes a transaction hash and returns some information to the user 0xc50e891a34eacedf2b3e6e7f4b245da2a2c6f5128f5de7419da41e1c54134040
@@ -138,10 +152,16 @@ module.exports = {
 			balanceLookup(interaction);
 		}
 
-		// balance subcommand given
+		// block subcommand given
 		else if (subCommand === 'block') {
 			const blockLookup = require('../../modules/qrl/qrlBlock');
 			blockLookup(interaction);
+		}
+
+		// address subcommand given
+		else if (subCommand === 'address') {
+			const addressLookup = require('../../modules/qrl/qrlAddress');
+			addressLookup(interaction);
 		}
 		/*
 		// transaction subcommand

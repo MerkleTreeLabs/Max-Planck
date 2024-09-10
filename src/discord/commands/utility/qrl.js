@@ -40,7 +40,23 @@ module.exports = {
 					.addChoices(
 						{ name: 'Shor', value: 'shor' },
 						{ name: 'quanta', value: 'quanta' }),
-				)),
+				))
+
+
+		// block takes a qrl block number or hash and returns block data
+		//
+		.addSubcommand(subcommand =>
+			subcommand
+				.setName('block')
+				.setDescription('QRL block lookup')
+				.addNumberOption(option => option
+					.setName('number')
+					.setDescription('QRL Block Number (15)')
+					.setRequired(false)
+					.setMaxValue(13276769)
+					.setMinValue(1)),
+		),
+
 
 	/*
 		// tx takes a transaction hash and returns some information to the user 0xc50e891a34eacedf2b3e6e7f4b245da2a2c6f5128f5de7419da41e1c54134040
@@ -113,8 +129,8 @@ module.exports = {
 
 		// subcommand "height" entered
 		if (subCommand === 'height') {
-			const blockLookup = require('../../modules/qrl/qrlHeight');
-			blockLookup(interaction);
+			const heightLookup = require('../../modules/qrl/qrlHeight');
+			heightLookup(interaction);
 		}
 		// balance subcommand given
 		else if (subCommand === 'balance') {
@@ -122,6 +138,11 @@ module.exports = {
 			balanceLookup(interaction);
 		}
 
+		// balance subcommand given
+		else if (subCommand === 'block') {
+			const blockLookup = require('../../modules/qrl/qrlBlock');
+			blockLookup(interaction);
+		}
 		/*
 		// transaction subcommand
 		else if (subCommand === 'transaction') {

@@ -8,26 +8,19 @@ const helper = require('@helper');
 async function getBalanceSub(interaction) {
 	const userAddress = interaction.options.getString('address');
 	try {
-		//
-		// create a qrl address check helper that returns the address as expected for the command
-		//
-		//
-		//
+		// check the address for valid length and format
 		const validationResults = await helper.validateQRLAddress(userAddress);
 		if (validationResults.isValid) {
-			console.log('valid address given');
-
-			// create a qrl-balance file
+			// get the balance from the chain
 			const balanceResponse = await axios.post(`http://localhost:${apiPort}/v1/qrl-balance`, { address: `Q${validationResults.address}` });
-			console.log(`balanceResponse: ${JSON.stringify(balanceResponse.data)}`);
-
 			const balanceValue = parseInt(balanceResponse.data.balance.balance);
 			let userBalance = new BigNumber(balanceValue);
-
+			// if they want it in shor
 			if (interaction.options.getString('denomination') !== 'shor') {
 				userBalance = userBalance.dividedBy('1e9').toFixed();
 				await interaction.reply(`Balance info:\nAddress:\t\`${userAddress}\`\nBalance:\t\`${userBalance} quanta\``);
 			}
+			// default returns quanta
 			else {
 				await interaction.reply(`Balance info:\nAddress:\t\`${userAddress}\`\nBalance:\t\`${userBalance} Shor\``);
 			}

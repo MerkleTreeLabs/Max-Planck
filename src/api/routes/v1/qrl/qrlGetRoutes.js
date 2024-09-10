@@ -4,7 +4,6 @@ const express = require('express');
 
 const { height } = require('@qrl-chain/heightLookup');
 
-
 const router = express.Router();
 
 // Define QRL endpoints here

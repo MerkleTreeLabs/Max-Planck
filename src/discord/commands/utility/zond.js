@@ -16,11 +16,11 @@ module.exports = {
 		.setDescription('Zond testnet info!')
 		// add sub-commands for various zond things here.
 
-		// block returns the latest block from the node
+		// height returns the latest block heightfrom the node
 		.addSubcommand(subcommand =>
 			subcommand
-				.setName('block')
-				.setDescription('Get the current Zond block number'))
+				.setName('height')
+				.setDescription('Get the current Zond block height'))
 
 		// balance takes zond address and returns the balance in ephemeral response
 		.addSubcommand(subcommand =>
@@ -109,9 +109,9 @@ module.exports = {
 			return await interaction.reply({ content: `Sorry, we cant use this channel to talk...\nPlease try again in an approved channel:\n${formattedChannels}`, ephemeral: true });
 		}
 
-		// subcommand "block" entered
-		if (subCommand === 'block') {
-			const blockLookup = require('../../modules/zond/zondBlock');
+		// subcommand "height" entered
+		if (subCommand === 'height') {
+			const blockLookup = require('../../modules/zond/zondHeight');
 			blockLookup(interaction);
 		}
 

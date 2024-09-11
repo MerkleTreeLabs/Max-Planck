@@ -21,8 +21,6 @@ async function faucet(toAddress, amount) {
 		if (!isConnected) {
 			throw new Error('Web3 is not connected to the node.');
 		}
-		console.log('Web3 connected to the node.');
-
 		const transferAmount = helper.decToHex(amount);
 		const nonce = await getNonce(config.faucetAddress);
 		const chainId = await getChainId();
@@ -50,8 +48,6 @@ async function faucet(toAddress, amount) {
 		};
 
 		const receipt = await web3.zond.sendTransaction(txData);
-		console.log('Transaction Receipt:', JSON.stringify(receipt, null, 2));
-
 		return receipt;
 	}
 	catch (error) {

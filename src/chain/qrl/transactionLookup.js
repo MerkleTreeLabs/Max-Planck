@@ -10,7 +10,6 @@ async function getTransaction(tx_hash) {
 			tx_hash,
 		});
 
-
 		const response = await axios.post(`http://${config.qrlPubAPI}/api/GetTransaction`, data, {
 			jsonrpc: '2.0',
 			headers: {

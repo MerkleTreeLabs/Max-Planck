@@ -5,7 +5,6 @@ const config = require('@config');
 
 async function blockByNumber(blockNumber) {
 	try {
-		console.log(`helper.decToHex(blockNumber): ${helper.decToHex(blockNumber)}`);
 		const blockResponse = await axios.post(`http://${config.zondPubAPI}`, {
 			jsonrpc: '2.0',
 			method: 'zond_getBlockByNumber',

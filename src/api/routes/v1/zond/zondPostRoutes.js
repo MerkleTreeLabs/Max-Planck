@@ -154,7 +154,6 @@ router.post('/zond-transaction', async (req, res) => {
 
 		// Process the txHash and get the transaction details
 		const transactionLookup = await transaction(txHash);
-		// console.log(`transactionLookup: ${JSON.stringify(transactionLookup)}`);
 		res.status(200).json({ success: true, transaction: transactionLookup });
 	}
 	catch (error) {

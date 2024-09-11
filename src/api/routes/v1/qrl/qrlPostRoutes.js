@@ -387,15 +387,12 @@ router.post('/qrl-is-valid-address', async (req, res) => {
 router.post('/qrl-get-transaction', async (req, res) => {
 	try {
 		const txHash = req.body.txHash;
-		console.log(`txHash routes: ${txHash} ${typeof (txHash)}`);
-
 		if (!txHash) {
 			return res.status(400).json({ success: false, error: 'TX Hash is required' });
 		}
 
 		// Process the txHash and get the balance
 		const transactionResult = await getTransaction(txHash);
-		console.log(`transactionResult: ${transactionResult}`);
 		res.status(200).json({ success: true, data: transactionResult });
 	}
 	catch (error) {

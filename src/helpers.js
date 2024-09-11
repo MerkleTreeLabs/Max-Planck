@@ -249,17 +249,12 @@ function truncateHash(hash, startLength = 8, endLength = 8) {
 
 function decodeNotarizationMessage(hexMessage) {
 	const notarizationPrefix = 'afafa';
-	console.log(`hexMessage: ${hexMessage}`);
-
 	// Verify that the message starts with the notarization prefix
 	if (!hexMessage.startsWith(notarizationPrefix)) {
 		throw new Error('The provided message is not a notarization message.');
 	}
-
 	// Strip the notarization prefix
 	const encodedMessage = hexMessage.slice(notarizationPrefix.length);
-	console.log(`encodedMessage: ${encodedMessage}`);
-
 	// Find where the actual URL/message begins in hex format
 	const urlStartIndex = encodedMessage.indexOf('687474');
 
@@ -269,8 +264,6 @@ function decodeNotarizationMessage(hexMessage) {
 
 	// Extract the part starting from the URL
 	const messageToDecode = encodedMessage.slice(urlStartIndex);
-	console.log(`messageToDecode: ${messageToDecode}`);
-
 	// Function to convert hex to ASCII
 	function hexToAscii(hex) {
 		let str = '';

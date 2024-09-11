@@ -15,8 +15,6 @@ async function height() {
 				'Content-Type': 'application/json',
 			},
 		});
-		// format the block heightto human readable
-		// return parseInt(response.data.result, 16);
 		return response.data;
 	}
 	catch (error)	{

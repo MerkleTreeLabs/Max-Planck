@@ -4,6 +4,7 @@ const { balance } = require('@qrl-chain/balanceLookup');
 const { blockByNumber } = require('@qrl-chain/blockLookup');
 const { otsIndex } = require('@qrl-chain/otsLookup');
 const { isValidAddress } = require('@qrl-chain/isValidAddressLookup');
+const { getTransaction } = require('@qrl-chain/transactionLookup');
 
 const router = express.Router();
 
@@ -380,5 +381,39 @@ router.post('/qrl-is-valid-address', async (req, res) => {
 		res.status(500).json({ success: false, error: 'Failed to fetch IsValidAddress' });
 	}
 });
+
+// GetTransaction
+
+router.post('/qrl-get-transaction', async (req, res) => {
+	try {
+		const txHash = req.body.txHash;
+		console.log(`txHash routes: ${txHash} ${typeof (txHash)}`);
+
+		if (!txHash) {
+			return res.status(400).json({ success: false, error: 'TX Hash is required' });
+		}
+
+		// Process the txHash and get the balance
+		const transactionResult = await getTransaction(txHash);
+		console.log(`transactionResult: ${transactionResult}`);
+		res.status(200).json({ success: true, data: transactionResult });
+	}
+	catch (error) {
+		// Handle any errors
+		res.status(500).json({ success: false, error: 'Failed to fetch GetTransaction' });
+	}
+});
+
+
+// listAddresses
+
+
+// AddNewAddressWithSlaves
+
+// RelayTransferTxnBySlave
+
+// RelayMessageTxnBySlave
+
+// RelayTransferTokenTxnBySlave
 
 module.exports = router;

@@ -76,15 +76,14 @@ function validateTxHash(hash) {
 	try {
 		const zondTxHashRegex = /^(0x)?[0-9a-f]{64}$/i;
 
-		if (hash.match(zondTxHashRegex)) {
+		if (zondTxHashRegex.test(hash)) {
 			const withoutPrefix = hash.startsWith('0x') ? hash.slice(2) : hash;
-			const sanitizedTxHash = withoutPrefix.replace(/[^0-9a-fA-F]/g, '');
-			const lowercaseTxHash = sanitizedTxHash.toLowerCase();
+			const lowercaseTxHash = withoutPrefix.toLowerCase();
 
 			return { isValid: true, hash: lowercaseTxHash };
 		}
 		else {
-			return { isValid: false, error: 'Invalid TX Hash' };
+			return { isValid: false, error: 'Invalid TX Hash: Must be a 64-character hexadecimal string with optional "0x" prefix.' };
 		}
 	}
 	catch (error) {
@@ -92,6 +91,28 @@ function validateTxHash(hash) {
 		return { isValid: false, error: 'Error validating TX Hash' };
 	}
 }
+
+
+function validateQrlTxHash(hash) {
+	try {
+		// Correct regex to validate that the entire string is a 64-character hexadecimal
+		const qrlTxHashRegex = /^[a-fA-F0-9]{64}$/;
+
+		if (qrlTxHashRegex.test(hash)) {
+			// Convert the hash to lowercase and return the valid result
+			const lowercaseTxHash = hash.toLowerCase();
+			return { isValid: true, hash: lowercaseTxHash };
+		}
+		else {
+			return { isValid: false, error: 'Invalid TX Hash: Must be 64 hexadecimal characters.' };
+		}
+	}
+	catch (error) {
+		console.error('Error occurred during validation:', error);
+		return { isValid: false, error: 'Error validating TX Hash' };
+	}
+}
+
 
 function hexToDec(value) {
 	try {
@@ -179,13 +200,21 @@ function planckToQ(number) {
 
 
 function writeUserData(newData) {
+	console.log(`newData: ${JSON.stringify(newData)}`);
 	try {
 		// Read the userlog.json file
 		if (!fs.existsSync(userFile)) {
 			throw new Error(`File not found: ${userFile}`);
 		}
+
 		const userData = fs.readFileSync(userFile);
 		const parsedData = JSON.parse(userData);
+
+		// Ensure users array exists, otherwise initialize it
+		if (!Array.isArray(parsedData.users)) {
+			parsedData.users = [];
+		}
+
 		// Append new user data
 		parsedData.users.push(newData);
 
@@ -218,6 +247,48 @@ function truncateHash(hash, startLength = 8, endLength = 8) {
 }
 
 
+function decodeNotarizationMessage(hexMessage) {
+	const notarizationPrefix = 'afafa';
+	console.log(`hexMessage: ${hexMessage}`);
+
+	// Verify that the message starts with the notarization prefix
+	if (!hexMessage.startsWith(notarizationPrefix)) {
+		throw new Error('The provided message is not a notarization message.');
+	}
+
+	// Strip the notarization prefix
+	const encodedMessage = hexMessage.slice(notarizationPrefix.length);
+	console.log(`encodedMessage: ${encodedMessage}`);
+
+	// Find where the actual URL/message begins in hex format
+	const urlStartIndex = encodedMessage.indexOf('687474');
+
+	if (urlStartIndex === -1) {
+		throw new Error('No valid URL or plaintext found in the message.');
+	}
+
+	// Extract the part starting from the URL
+	const messageToDecode = encodedMessage.slice(urlStartIndex);
+	console.log(`messageToDecode: ${messageToDecode}`);
+
+	// Function to convert hex to ASCII
+	function hexToAscii(hex) {
+		let str = '';
+		for (let i = 0; i < hex.length; i += 2) {
+			const hexChar = hex.slice(i, i + 2);
+			const charCode = parseInt(hexChar, 16);
+			str += String.fromCharCode(charCode);
+		}
+		return str;
+	}
+
+	// Decode only the readable part (starting from the URL in this case)
+	const decodedMessage = hexToAscii(messageToDecode);
+
+	console.log(`Decoded message: ${decodedMessage}`);
+	return decodedMessage;
+}
+
 exports.decToHex = decToHex;
 exports.writeUserData = writeUserData;
 exports.shorToQuanta = shorToQuanta;
@@ -227,5 +298,7 @@ exports.planckToQ = planckToQ;
 exports.validateZondAddress = validateZondAddress;
 exports.validateQRLAddress = validateQRLAddress;
 exports.validateTxHash = validateTxHash;
+exports.validateQrlTxHash = validateQrlTxHash;
 exports.hexToDec = hexToDec;
 exports.truncateHash = truncateHash;
+exports.decodeNotarizationMessage = decodeNotarizationMessage;

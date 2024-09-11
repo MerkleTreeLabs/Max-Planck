@@ -70,22 +70,22 @@ module.exports = {
 					.setRequired(true)
 					.setMaxLength(79)
 					.setMinLength(79)),
-		),
+		)
 
-	/*
-		// tx takes a transaction hash and returns some information to the user 0xc50e891a34eacedf2b3e6e7f4b245da2a2c6f5128f5de7419da41e1c54134040
+		// tx takes a transaction hash and returns some information to the user
 		.addSubcommand(subcommand =>
 			subcommand
 				.setName('transaction')
-				.setDescription('Zond transaction Lookup')
+				.setDescription('QRL transaction Lookup')
 				.addStringOption(option => option
 					.setName('hash')
-					.setDescription('Zond transaction hash')
+					.setDescription('QRL transaction hash')
 					.setRequired(true)
-					.setMaxLength(66)
-					.setMinLength(66)),
-		)
+					.setMaxLength(64)
+					.setMinLength(64)),
+		),
 
+	/*
 		// faucet gives the requested amount to user
 		.addSubcommand(subcommand =>
 			subcommand
@@ -163,12 +163,12 @@ module.exports = {
 			const addressLookup = require('../../modules/qrl/qrlAddress');
 			addressLookup(interaction);
 		}
-		/*
 		// transaction subcommand
 		else if (subCommand === 'transaction') {
-			const transactionLookup = require('../../modules/zond/zondTransaction');
+			const transactionLookup = require('../../modules/qrl/qrlTransaction');
 			transactionLookup(interaction);
 		}
+		/*
 
 		// faucet called
 		else if (subCommand === 'faucet') {

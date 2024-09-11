@@ -4,6 +4,7 @@ const axios = require('axios');
 const config = require('@config');
 
 async function estimateGas(transaction) {
+	console.log(transaction);
 	try {
 		const response = await axios.post(`http://${config.zondPubAPI}`, {
 			jsonrpc: '2.0',
@@ -15,6 +16,10 @@ async function estimateGas(transaction) {
 				'Content-Type': 'application/json',
 			},
 		});
+
+		// console.log(response.data)
+
+
 		return response.data.result;
 	}
 	catch (error)	{

@@ -43,7 +43,11 @@ async function getFaucetSub(interaction) {
 			amount: amountShor,
 		});
 
-		const transactionHash = transactionHashResp.data.transaction.result;
+
+		console.log(transactionHashResp.data);
+
+		const transactionHash = transactionHashResp.data.transaction.transactionHash;
+
 
 		// write user data to file
 		const userData = {

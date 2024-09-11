@@ -75,7 +75,7 @@ module.exports = {
 		.addSubcommand(subcommand =>
 			subcommand
 				.setName('faucet')
-				.setDescription('Zond transaction Lookup')
+				.setDescription('Zond faucet Request')
 				.addStringOption(option => option
 					.setName('address')
 					.setDescription('Zond dilithium address')
@@ -84,7 +84,7 @@ module.exports = {
 					.setMinLength(42))
 				.addNumberOption(option => option
 					.setName('amount')
-					.setDescription('Amount of testnet quanta to receive')
+					.setDescription('Amount of testnet quanta requested')
 					.setRequired(true)
 					.setMaxValue(parseInt(maxDrip)))),
 

@@ -64,7 +64,7 @@
     "axios": "^1.6.7",
     "bignumber.js": "^9.1.2",
     "discord.js": "^14.16.1",
-    "express": "^4.20.0",
+    "express": "^5.0.0",
     "module-alias": "^2.2.3",
     "swagger-jsdoc": "^6.2.8",
     "swagger-ui-express": "^5.0.0"

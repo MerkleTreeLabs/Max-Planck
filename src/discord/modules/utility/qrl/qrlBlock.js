@@ -3,10 +3,18 @@ require('module-alias/register');
 const axios = require('axios');
 // const BigNumber = require('bignumber.js');
 const { apiPort } = require('@config');
-const helper = require('@helper');
+const { shorToQuanta, truncateHash } = require('@helper');
 const { hideLinkEmbed } = require('discord.js');
 
+		// await interaction.deferReply();
+		// await interaction.deferReply({ ephemeral: true });
+		// await interaction.reply(``)
+		// await interaction.deleteReply();
+		// await interaction.editReply('!');
+		// await interaction.followUp(``);
+		// return await interaction.followUp({ content: ``, ephemeral: true });
 async function getBlockSub(interaction) {
+	await interaction.deferReply();
 	try {
 		let lookupBlock = 0;
 		const currentHeight = await axios.get(`http://localhost:${apiPort}/v1/qrl-height`);
@@ -16,22 +24,23 @@ async function getBlockSub(interaction) {
 		if (userBlock == null) {
 			if (!currentHeight.data.success) {
 				// return a response so the discord API is happy
-				return await interaction.reply('There is an issue looking up the Block Height at this time...');
+				return await interaction.editReply('There is an issue looking up the Block Height at this time...');
 			}
 			// set the lookup block to the current block
-			lookupBlock = parseInt(currentHeight.data.height.height);
+			lookupBlock = parseInt(currentHeight.data.height);
 		}
 		else {
 			// use the user-given block
-			if (parseInt(currentHeight.data.height.height) < parseInt(userBlock)) {
+			if (parseInt(currentHeight.data.height) < parseInt(userBlock)) {
 				// if the current block is less than the user block, return an error
-				return await interaction.reply(`Sorry, I can't do that... The block requested is in the future!\`Latest: ${currentHeight.data.height.height} Request: ${userBlock}\``);
+				return await interaction.editReply(`Sorry, I can't do that... The block requested is in the future!\`Latest: ${currentHeight.data.height} Request: ${userBlock}\``);
 			}
 			lookupBlock = parseInt(userBlock);
 		}
 
 		// lookup the block data
 		const blockResponse = await axios.post(`http://localhost:${apiPort}/v1/qrl-block-by-number`, { block: `${lookupBlock}` });
+
 		const transactionCount = parseInt(blockResponse.data.block.transactions.length) - 1;
 		let totalTransferred = 0;
 		let coinBaseAddress = '';
@@ -59,25 +68,25 @@ async function getBlockSub(interaction) {
 		const explorerLink = hideLinkEmbed(url);
 
 		// send the reply to the channel
-		await interaction.reply(`
+		await interaction.editReply(`
 			Here's the QRL block data:\n> __**block_number:**__ \`${blockResponse.data.block.header.block_number}\`
-				> **hash_header:** \`${helper.truncateHash(blockResponse.data.block.header.hash_header)}\`
+				> **hash_header:** \`${truncateHash(blockResponse.data.block.header.hash_header)}\`
 				> **timestamp_seconds:** \`${blockResponse.data.block.header.timestamp_seconds}\`
-				> **hash_header_prev:** \`${helper.truncateHash(blockResponse.data.block.header.hash_header_prev)}\`
+				> **hash_header_prev:** \`${truncateHash(blockResponse.data.block.header.hash_header_prev)}\`
 				> **reward_block:** \`${blockResponse.data.block.header.reward_block}\`
 				> **reward_fee:** \`${blockResponse.data.block.header.reward_fee}\`
-				> **merkle_root:** \`${helper.truncateHash(blockResponse.data.block.header.merkle_root)}\`
+				> **merkle_root:** \`${truncateHash(blockResponse.data.block.header.merkle_root)}\`
 				> **mining_nonce:** \`${blockResponse.data.block.header.mining_nonce}\`
 				> **transaction_count:** \`${transactionCount}\`
-				> **total_transfered:** \`${helper.shorToQuanta(totalTransferred)}\`
-				> **payout_address:** \`${helper.truncateHash(coinBaseAddress, 6, 6)}\`
-				> **mining_reward:** \`${helper.shorToQuanta(coinBaseAmount)}\`\nMore info ${explorerLink}`,
+				> **total_transfered:** \`${shorToQuanta(totalTransferred)}\`
+				> **payout_address:** \`${truncateHash(coinBaseAddress, 6, 6)}\`
+				> **mining_reward:** \`${shorToQuanta(coinBaseAmount)}\`\nMore info ${explorerLink}`,
 		);
 	}
 	catch (error) {
 		const errorMessage = `An error occurred during block retrieval: ${error.message}`;
 		console.error(errorMessage);
-		await interaction.reply(`Looks like I'm struggling to complete that block request right now...${errorMessage}`);
+		await interaction.editReply(`Looks like I'm struggling to complete that block request right now...${errorMessage}`);
 	}
 }
 

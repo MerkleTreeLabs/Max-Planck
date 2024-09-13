@@ -29,7 +29,7 @@ The zond node is ran in two parts, the validator (qrysm) and the consensus engin
 
 ### gzond
 
-```
+```bash
 /home/fr1t2/zond/gzond --nat=extip:0.0.0.0 \
                         --betanet \
                         --http \
@@ -49,11 +49,16 @@ The zond node is ran in two parts, the validator (qrysm) and the consensus engin
 Address must be imported and allowed insecure-unlock. Also the password file must contain the password that was used to setup during the import.
 
 
+```bash
+./gzond account import --datadir /some-dir ./keyfile
+```
+
+
 ### Beacon
 
 Check the docs for the latest version of this file.
 
-```
+```bash
 /home/fr1t2/zond/beacon-chain \
         --datadir=/home/fr1t2/zond/beacondata \
         --min-sync-peers=1 \

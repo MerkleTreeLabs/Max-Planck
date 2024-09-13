@@ -128,31 +128,31 @@ module.exports = {
 
 		// subcommand "height" entered
 		if (subCommand === 'height') {
-			const blockLookup = require('../../modules/zond/zondHeight');
+			const blockLookup = require('@zond-utility-modules/zondHeight');
 			blockLookup(interaction);
 		}
 
 		// balance subcommand given
 		else if (subCommand === 'balance') {
-			const balanceLookup = require('../../modules/zond/zondBalance');
+			const balanceLookup = require('@zond-utility-modules/zondBalance');
 			balanceLookup(interaction);
 		}
 
 		// transaction subcommand
 		else if (subCommand === 'transaction') {
-			const transactionLookup = require('../../modules/zond/zondTransaction');
+			const transactionLookup = require('@zond-utility-modules/zondTransaction');
 			transactionLookup(interaction);
 		}
 
 		// block subcommand given
 		else if (subCommand === 'block') {
-			const blockLookup = require('../../modules/zond/zondBlock');
+			const blockLookup = require('@zond-utility-modules/zondBlock');
 			blockLookup(interaction);
 		}
 
 		// faucet called
 		else if (subCommand === 'faucet') {
-			const faucetRequest = require('../../modules/zond/zondFaucet');
+			const faucetRequest = require('@zond-utility-modules/zondFaucet');
 			faucetRequest(interaction);
 		}
 	},

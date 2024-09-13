@@ -15,7 +15,7 @@ async function height() {
 				'Content-Type': 'application/json',
 			},
 		});
-		return response.data;
+		return response.data.result;
 	}
 	catch (error)	{
 		const errorMessage = `Error occurred while fetching the latest block height: ${error.message}`;

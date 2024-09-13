@@ -1,20 +1,13 @@
 require('module-alias/register');
 const { SlashCommandBuilder } = require('discord.js');
 const { allowedChannels, allowedGuilds } = require('@config');
-
-function replacer(key, value) {
-	if (typeof value === 'bigint') {
-		return value.toString();
-	}
-	return value;
-}
+const { bigIntToString } = require('@helper')
 
 module.exports = {
 	cooldown: 3,
 	data: new SlashCommandBuilder()
 		.setName('qrl')
 		.setDescription('QRL Discord Bot!')
-		// add sub-commands for various zond things here.
 
 		// block returns the latest block from the node
 		.addSubcommand(subcommand =>
@@ -130,7 +123,7 @@ module.exports = {
 		console.log(`Subcommand:\t${subCommand}`);
 		console.log(`Channel ID:\t${channelId}`);
 		console.log(`Guild Name:\t${interaction.guild ? interaction.guild.name : 'DM'}`);
-		console.log(`Interaction Data:\t${JSON.stringify(interaction, replacer)}`);
+		console.log(`Interaction Data:\t${JSON.stringify(interaction, bigIntToString)}`);
 
 		// Check if the extracted channelId is in the allowedChannels list
 		if (!allowedChannels.includes(channelId) && !allowedGuilds.includes(interaction.guild.toString())) {
@@ -143,29 +136,29 @@ module.exports = {
 
 		// subcommand "height" entered
 		if (subCommand === 'height') {
-			const heightLookup = require('../../modules/qrl/qrlHeight');
+			const heightLookup = require('@qrl-utility-modules/qrlHeight');
 			heightLookup(interaction);
 		}
 		// balance subcommand given
 		else if (subCommand === 'balance') {
-			const balanceLookup = require('../../modules/qrl/qrlBalance');
+			const balanceLookup = require('@qrl-utility-modules/qrlBalance');
 			balanceLookup(interaction);
 		}
 
 		// block subcommand given
 		else if (subCommand === 'block') {
-			const blockLookup = require('../../modules/qrl/qrlBlock');
+			const blockLookup = require('@qrl-utility-modules/qrlBlock');
 			blockLookup(interaction);
 		}
 
 		// address subcommand given
 		else if (subCommand === 'address') {
-			const addressLookup = require('../../modules/qrl/qrlAddress');
+			const addressLookup = require('@qrl-utility-modules/qrlAddress');
 			addressLookup(interaction);
 		}
 		// transaction subcommand
 		else if (subCommand === 'transaction') {
-			const transactionLookup = require('../../modules/qrl/qrlTransaction');
+			const transactionLookup = require('@qrl-utility-modules/qrlTransaction');
 			transactionLookup(interaction);
 		}
 		/*

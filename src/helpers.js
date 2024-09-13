@@ -51,7 +51,7 @@ async function validateQRLAddress(address) {
 			const lowercaseAddress = sanitizedAddress.toLowerCase();
 
 			const isValidAddress = await axios.post(`http://localhost:${config.apiPort}/v1/qrl-is-valid-address`, { address: `Q${lowercaseAddress}` });
-			if (isValidAddress.data.data.valid) {
+			if (isValidAddress.data.valid) {
 				// the sanitized address passed the validation check
 				console.log(`is-valid-address: ${JSON.stringify(isValidAddress.data)}`);
 				return { isValid: true, address: lowercaseAddress };
@@ -282,6 +282,15 @@ function decodeNotarizationMessage(hexMessage) {
 	return decodedMessage;
 }
 
+
+function bigIntToString(key, value) {
+	if (typeof value === 'bigint') {
+		return value.toString();
+	}
+	return value;
+}
+
+
 exports.decToHex = decToHex;
 exports.writeUserData = writeUserData;
 exports.shorToQuanta = shorToQuanta;
@@ -295,3 +304,4 @@ exports.validateQrlTxHash = validateQrlTxHash;
 exports.hexToDec = hexToDec;
 exports.truncateHash = truncateHash;
 exports.decodeNotarizationMessage = decodeNotarizationMessage;
+exports.bigIntToString = bigIntToString;

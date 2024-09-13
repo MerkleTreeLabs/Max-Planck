@@ -16,7 +16,7 @@ async function otsIndex(address) {
 				'Content-Type': 'application/json',
 			},
 		});
-		return response.data;
+		return response.data.next_unused_ots_index;
 	}
 	catch (error)	{
 		const errorMessage = `Error occurred in BalanceLookup: ${error.message}`;

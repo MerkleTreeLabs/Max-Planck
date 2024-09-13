@@ -1,29 +1,20 @@
-# Commands
-
-To add commands to the bot, the following needs to be followed
-
-
-## Command Structure
-
-First some information on the structure
-
-### Discord Bot
+# Discord Bot
 
 This works through the discord bot flow and server configuration. Commands can be added following this logic.
 
-#### `discord/index.js`
+## `discord/index.js`
 
 The discord bot runs from the js file located at `src/discord/index.js`. 
 
 This file calls all JavaScript files located in the `/src/discord/commands` directory.
 
-#### `discord/commands/zond.js`
+## `discord/commands/zond.js`
 
-Here we find the utility directory with the zond.js file. 
+Here we find the utility directory with the zond.js file. There is a similar file for QRL commands in Discord.
 
 This file is a nested slash command using the discord.js SlashCommandBuilder function. This puts all of the zond functions under one slash command `/zond` in Discord.
 
-##### Sub-commands
+### Sub-commands
 
 Sub-commands are located under the `addSubCommand` function
 
@@ -68,7 +59,7 @@ For each sub-command added to the bot, an additional module is required and must
 
 ```
 
-#### Module files
+## Module files
 
 Modules are located in the `/src/discord/modules`
 
@@ -106,3 +97,20 @@ async function getBlockSub(interaction) {
 module.exports = getBlockSub;
 
 ```
+
+the module file calls to an API server with the endpoint identified here as /v1/zond-block. We pass the information needed for the command to the api server. 
+
+We need to create that route and function behind it.
+
+> see the [api server documentation](./api.md)for more information
+
+## API Response data
+
+The API response data from the call will be returned to the `/src/discord/modules/...` file for processing and response to the discord client.
+
+This is where logic and validation happens for the commands for the most part. There is ample error checks throughout the app 
+
+**Important** 
+
+Each command needs to give a response to the discord client, even if the command fails overall, send that back. If not there is an ugly error that prints to the chat.
+

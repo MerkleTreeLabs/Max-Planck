@@ -10,21 +10,7 @@ const options = {
 			title: 'Zond API',
 			version: '1.0.0',
 			description: 'API documentation for Zond',
-		},
-		servers: [
-			{
-				url: 'http://127.0.0.1',
-				description: 'Localhost API',
-			},
-			{
-				url: `http://${config.zondPubAPI}`,
-				description: 'Zond Public API',
-			},
-			{
-				url: `http://${config.qrlPubAPI}`,
-				description: 'QRL Public API',
-			},
-		],
+		}
 	},
 	apis: [
 		'./src/api/routes/v1/zond/*.js',

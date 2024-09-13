@@ -3,7 +3,7 @@ const express = require('express');
 // Import QRL API functions here
 
 const { height } = require('@qrl-chain/heightLookup');
-
+const { listAddresses } = require('@qrl-chain/listAddressesLookup');
 const router = express.Router();
 
 // Define QRL endpoints here
@@ -29,13 +29,9 @@ const router = express.Router();
  *                   description: Indicates if the request was successful
  *                   example: true
  *                 height:
- *                   type: object
- *                   description: An object containing the current block height
- *                   properties:
- *                     height:
- *                       type: number
- *                       description: The current QRL block height
- *                       example: 3278560
+ *                   type: number
+ *                   description: The current QRL block height
+ *                   example: 3278560
  *       400:
  *         description: Invalid request, possibly due to missing or malformed parameters
  *         content:
@@ -65,8 +61,6 @@ const router = express.Router();
  *                   description: Detailed error message explaining the server-side issue
  *                   example: "Failed to fetch QRL block height due to server error"
  */
-
-
 router.get('/qrl-height', async (req, res) => {
 	try {
 		// fetch the current block height
@@ -79,6 +73,49 @@ router.get('/qrl-height', async (req, res) => {
 		res.status(500).json({ success: false, error: 'Failed to fetch QRL height' });
 	}
 });
+
+
+/**
+ * @swagger
+ * /v1/qrl-list-addresses:
+ *   get:
+ *     summary: Basic example GET endpoint
+ *     description: A minimal Swagger configuration for a GET request.
+ *     tags: [QRL]
+ *     parameters:
+ *       - name: param1
+ *         in: query
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: A simple string query parameter
+ *         example: "example_value"
+ *     responses:
+ *       200:
+ *         description: Successful GET response
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: true
+ */
+
+router.get('/qrl-list-addresses', async (req, res) => {
+	try {
+		// fetch the current block height
+		const addyList = await listAddresses();
+		res.status(200).json({ success: true, addresses: addyList });
+	}
+	catch (error) {
+		// Handle any errors
+		console.error('Error in fetching height:', error);
+		res.status(500).json({ success: false, error: 'Failed to fetch QRL height' });
+	}
+});
+
 
 
 module.exports = router;

@@ -15,7 +15,7 @@ async function balance(address) {
 				'Content-Type': 'application/json',
 			},
 		});
-		return response.data;
+		return response.data.balance;
 	}
 	catch (error)	{
 		const errorMessage = `Error occurred in BalanceLookup: ${error.message}`;

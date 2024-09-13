@@ -3,9 +3,9 @@ require('module-alias/register');
 const axios = require('axios');
 const config = require('@config');
 
-async function height() {
+async function listAddresses() {
 	try {
-		const response = await axios.get(`http://${config.qrlPubAPI}/api/GetHeight`, {
+		const response = await axios.get(`http://${config.qrlPubAPI}/api/ListAddresses`, {
 			jsonrpc: '2.0',
 			params: [],
 		}, {
@@ -13,7 +13,7 @@ async function height() {
 				'Content-Type': 'application/json',
 			},
 		});
-		return response.data.height;
+		return response.data.addresses;
 	}
 	catch (error)	{
 		const errorMessage = `Error occurred while fetching the QRL latest height: ${error.message}`;
@@ -22,4 +22,4 @@ async function height() {
 	}
 }
 
-module.exports = { height };
+module.exports = { listAddresses };

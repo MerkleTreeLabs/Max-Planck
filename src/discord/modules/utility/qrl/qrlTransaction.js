@@ -4,8 +4,8 @@ const { decodeNotarizationMessage, truncateHash, validateQrlTxHash, shorToQuanta
 const { hideLinkEmbed } = require('discord.js');
 
 async function getTransactionSub(interaction) {
-	const userTxHash = interaction.options.getString('hash');
 	await interaction.deferReply();
+	const userTxHash = interaction.options.getString('hash');
 	try {
 		const validationResults = await validateQrlTxHash(userTxHash);
 		if (validationResults.isValid) {

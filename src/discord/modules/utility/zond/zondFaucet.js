@@ -1,53 +1,42 @@
 require('module-alias/register');
 const axios = require('axios');
 const { apiPort } = require('@config');
-
 const BigNumber = require('bignumber.js');
-
-const helper = require('@helper');
+const { validateZondAddress, qToPlanck, writeUserData } = require('@helper');
 const { maxDrip } = require('@config');
 // const sendFaucetTx = require('@zond-chain/faucet');
-
 const timestamp = new Date().getTime();
 
 async function getFaucetSub(interaction) {
+	await interaction.deferReply();
 	const userAddress = interaction.options.getString('address');
 	const userAmount = interaction.options.getNumber('amount');
 	try {
 		// check if user address is valid
-		const addressValidationResults = await helper.validateZondAddress(userAddress);
+		const addressValidationResults = await validateZondAddress(userAddress);
 
 		// check submitted address format is valid
 		if (!addressValidationResults.isValid) {
-			return await interaction.reply(`There was an error with the address given\n${addressValidationResults.error}`);
+			return await interaction.editReply(`There was an error with the address given\n${addressValidationResults.error}`);
 		}
 
 		// address is valid and assigned this value
 		const validatedAddress = addressValidationResults.address;
-		console.log(`validatedAddress: ${validatedAddress}`);
 		// check requested amount is not more than allowed
 		if (userAmount > maxDrip) {
 			// amount requested is more than allowed
-			return await interaction.reply(`The amount requested *{${userAmount} quanta}* is more than allowed *{${maxDrip} quanta}*.\n${addressValidationResults.error}`);
+			return await interaction.editReply(`The amount requested *{${userAmount} quanta}* is more than allowed *{${maxDrip} quanta}*.\n${addressValidationResults.error}`);
 		}
 
 		// convert quanta to Shor
-		const amountShor = await helper.qToPlanck(userAmount);
-		console.log(`amountShor: ${amountShor}`);
+		const amountShor = await qToPlanck(userAmount);
 		// send the transaction
-		// start the bot reply while the tx sends
-		await interaction.deferReply();
-
+		// start the bot Reply while the tx sends
 		const transactionHashResp = await axios.post(`http://localhost:${apiPort}/v1/zond-faucet`, {
 			address: validatedAddress,
 			amount: amountShor,
 		});
-
-
-		console.log(transactionHashResp.data);
-
 		const transactionHash = transactionHashResp.data.transaction.transactionHash;
-
 
 		// write user data to file
 		const userData = {
@@ -56,7 +45,7 @@ async function getFaucetSub(interaction) {
 			timestamp,
 		};
 		try {
-			helper.writeUserData(userData);
+			writeUserData(userData);
 		}
 		catch (error) {
 			console.log(`error attempting to write to the userlog:\t${error}`);

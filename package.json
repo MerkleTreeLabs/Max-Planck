@@ -11,7 +11,7 @@
     "prepare": "husky",
     "release": "npm run changelog",
     "start": "concurrently \"node src/discord/index.js\" \"node src/api/server.js\"",
-    "live": "concurrently \"nodemon src/discord/index.js\" \"nodemon src/api/server.js\"", 
+    "live": "concurrently \"nodemon src/discord/index.js\" \"nodemon src/api/server.js\"",
     "test": "echo \"Error: no test specified\" && exit 1",
     "deploy": "node src/discord/deploy/deploy-commands.js"
   },
@@ -34,8 +34,8 @@
     "@helper": "src/helpers.js",
     "@emoji": "src/emojiCharacters.js",
     "@swaggerConfig": "src/swaggerConfig.js",
-    "@zond-modules": "src/discord/modules/zond",
-    "@qrl-modules": "src/discord/modules/qrl",
+    "@zond-utility-modules": "src/discord/modules/utility/zond",
+    "@qrl-utility-modules": "src/discord/modules/utility/qrl",
     "@zond-chain": "src/chain/zond",
     "@qrl-chain": "src/chain/qrl",
     "@zond-v1-routes": "src/api/routes/v1/zond",
@@ -55,7 +55,8 @@
     "eslint-plugin-import": "^2.29.1",
     "eslint-plugin-n": "^16.6.2",
     "eslint-plugin-promise": "^6.1.1",
-    "husky": "^9.0.11"
+    "husky": "^9.0.11",
+    "nodemon": "^3.1.4"
   },
   "dependencies": {
     "@keyv/mongo": "^2.2.8",
@@ -63,6 +64,7 @@
     "@theqrl/web3-zond-accounts": "^0.2.1",
     "axios": "^1.6.7",
     "bignumber.js": "^9.1.2",
+    "cors": "^2.8.5",
     "discord.js": "^14.16.1",
     "express": "^5.0.0",
     "module-alias": "^2.2.3",

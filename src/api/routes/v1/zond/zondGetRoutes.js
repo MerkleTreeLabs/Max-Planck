@@ -23,18 +23,9 @@ const router = express.Router();
  *                   type: boolean
  *                   example: true
  *                 block:
- *                   type: object
- *                   properties:
- *                     jsonrpc:
- *                       type: string
- *                       example: "2.0"
- *                     id:
- *                       type: number
- *                       example: 1
- *                     result:
- *                       type: string
- *                       description: The current Zond block height in hexadecimal format
- *                       example: "0x17a64"
+ *                   type: string
+ *                   description: The current Zond block height in hexadecimal format
+ *                   example: "0x17a64"
  *       500:
  *         description: Internal server error
  *         content:

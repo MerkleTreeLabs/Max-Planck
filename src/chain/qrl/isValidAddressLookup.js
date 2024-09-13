@@ -15,7 +15,7 @@ async function isValidAddress(address) {
 				'Content-Type': 'application/json',
 			},
 		});
-		return response.data;
+		return response.data.valid;
 	}
 	catch (error)	{
 		const errorMessage = `Error occurred in IsValidAddressLookup: ${error.message}`;

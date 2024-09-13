@@ -5,8 +5,8 @@ const { truncateHash, validateTxHash, hexToDec } = require('@helper');
 const { hideLinkEmbed } = require('discord.js');
 
 async function getTransactionSub(interaction) {
-	const userTxHash = interaction.options.getString('hash');
 	await interaction.deferReply();
+	const userTxHash = interaction.options.getString('hash');
 	try {
 		const validationResults = await validateTxHash(userTxHash);
 		if (validationResults.isValid) {

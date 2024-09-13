@@ -10,10 +10,10 @@
     "lint": "eslint . --fix",
     "prepare": "husky",
     "release": "npm run changelog",
-    "start": "concurrently \"node src/discord/index.js\" \"node src/api/server.js\"",
-    "live": "concurrently \"nodemon src/discord/index.js\" \"nodemon src/api/server.js\"",
+    "start": "concurrently \"node src/bots/discord/index.js\" \"node src/api/server.js\"",
+    "live": "concurrently \"nodemon src/bots/discord/index.js\" \"nodemon src/api/server.js\"",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "deploy": "node src/discord/deploy/deploy-commands.js"
+    "deploy": "node src/bots/discord/deploy/deploy-commands.js"
   },
   "repository": {
     "type": "git",
@@ -34,13 +34,14 @@
     "@helper": "src/helpers.js",
     "@emoji": "src/emojiCharacters.js",
     "@swaggerConfig": "src/swaggerConfig.js",
-    "@zond-utility-modules": "src/discord/modules/utility/zond",
-    "@qrl-utility-modules": "src/discord/modules/utility/qrl",
-    "@zond-chain": "src/chain/zond",
-    "@qrl-chain": "src/chain/qrl",
+    "@zond-utility-modules": "src/bots/discord/modules/utility/zond",
+    "@qrl-utility-modules": "src/bots/discord/modules/utility/qrl",
+    "@zond-chain": "src/services/chain/zond",
+    "@qrl-chain": "src/services/chain/qrl",
+    "@database": "src/services/database",
     "@zond-v1-routes": "src/api/routes/v1/zond",
     "@qrl-v1-routes": "src/api/routes/v1/qrl",
-    "@commands-utility": "src/discord/commands/utility"
+    "@commands-utility": "src/bots/discord/commands/utility"
   },
   "homepage": "https://github.com/fr1t2/zond-faucet#readme",
   "devDependencies": {

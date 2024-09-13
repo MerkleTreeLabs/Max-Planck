@@ -4,9 +4,9 @@ This works through the discord bot flow and server configuration. Commands can b
 
 ## `discord/index.js`
 
-The discord bot runs from the js file located at `src/discord/index.js`. 
+The discord bot runs from the js file located at `src/bots/discord/index.js`. 
 
-This file calls all JavaScript files located in the `/src/discord/commands` directory.
+This file calls all JavaScript files located in the `/src/bots/discord/commands` directory.
 
 ## `discord/commands/zond.js`
 
@@ -61,7 +61,7 @@ For each sub-command added to the bot, an additional module is required and must
 
 ## Module files
 
-Modules are located in the `/src/discord/modules`
+Modules are located in the `/src/bots/discord/modules`
 
 
 Here is the block file as an example. This file calls the API determined in the config file. This API is managed in the `/src/api` folder and is documented in the [API docs](./api.md)
@@ -106,7 +106,7 @@ We need to create that route and function behind it.
 
 ## API Response data
 
-The API response data from the call will be returned to the `/src/discord/modules/...` file for processing and response to the discord client.
+The API response data from the call will be returned to the `/src/bots/discord/modules/...` file for processing and response to the discord client.
 
 This is where logic and validation happens for the commands for the most part. There is ample error checks throughout the app 
 

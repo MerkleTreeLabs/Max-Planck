@@ -84,24 +84,24 @@ const router = express.Router();
 const addressPattern = /^Q[0-9a-fA-F]{78}$/;
 
 router.post('/qrl-balance', async (req, res) => {
-    const address = req.body.address;
+	const address = req.body.address;
 
-    if (!address) {
-        return res.status(400).json({ success: false, error: 'Address is required' });
-    }
+	if (!address) {
+		return res.status(400).json({ success: false, error: 'Address is required' });
+	}
 
-    // Validate the QRL address format
-    if (!addressPattern.test(address)) {
-        return res.status(400).json({ success: false, error: 'Invalid QRL address format' });
-    }
+	// Validate the QRL address format
+	if (!addressPattern.test(address)) {
+		return res.status(400).json({ success: false, error: 'Invalid QRL address format' });
+	}
 
-    try {
-        const currentBalance = await balance(address);
-        res.status(200).json({ success: true, balance: currentBalance });
-    }
-    catch (error) {
-        res.status(500).json({ success: false, error: `Failed to fetch balance ${error.message}` });
-    }
+	try {
+		const currentBalance = await balance(address);
+		res.status(200).json({ success: true, balance: currentBalance });
+	}
+	catch (error) {
+		res.status(500).json({ success: false, error: `Failed to fetch balance ${error.message}` });
+	}
 });
 
 // GetBlockByNumber
@@ -530,7 +530,7 @@ router.post('/qrl-is-valid-address', async (req, res) => {
  *                                 type: string
  *                               example:
  *                                 - "Q0105003c368cb2d481fae0e025e3725e7c458b40cc3a403469e8eb9398a10528a720e8f5918ddb"
- *                
+ *
  */
 
 router.post('/qrl-get-transaction', async (req, res) => {
@@ -603,22 +603,22 @@ qrlPubSlavesAPI
 */
 router.post('/qrl-add-addresses-with-slave', async (req, res) => {
 	try {
-		console.log('AddNewAddress called')
+		console.log('AddNewAddress called');
 		// either use the values provided or what we have in the configuration file
 		const qrlWalletHeight = req.body.height ? req.body.height : config.qrl_wallet_height;
 		const qrlWalletNumberOfSlaves = req.body.number_of_slaves ? req.body.number_of_slaves : config.qrl_wallet_number_of_slaves;
 		const qrlWalletHashFunction = req.body.hash_function ? req.body.hash_function : config.qrl_wallet_hash_function;
-		console.log(`values: ${qrlWalletHeight} ${qrlWalletNumberOfSlaves} ${qrlWalletHashFunction}`)
+		console.log(`values: ${qrlWalletHeight} ${qrlWalletNumberOfSlaves} ${qrlWalletHashFunction}`);
 		if (!qrlWalletHeight || !qrlWalletNumberOfSlaves || !qrlWalletHashFunction) {
-		  return res.status(400).json({
-		    success: false,
-		    error: 'Valid wallet details are required: {height, number_of_slaves, hash_function}'
-		  });
+			return res.status(400).json({
+				success: false,
+				error: 'Valid wallet details are required: {height, number_of_slaves, hash_function}',
+			});
 		}
 
 		// Process the address addition and return the pubkey
-		const addAddressResponse = await addAddressesWithSlave(qrlWalletHeight, qrlWalletNumberOfSlaves, qrlWalletHashFunction)
-		
+		const addAddressResponse = await addAddressesWithSlave(qrlWalletHeight, qrlWalletNumberOfSlaves, qrlWalletHashFunction);
+
 		res.status(200).json({ success: true, address: addAddressResponse });
 	}
 	catch (error) {

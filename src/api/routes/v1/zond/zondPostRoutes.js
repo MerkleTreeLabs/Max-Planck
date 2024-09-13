@@ -142,7 +142,7 @@ router.post('/zond-balance', async (req, res) => {
  *               hash:
  *                 type: string
  *                 description: The transaction hash to look up (must be a valid 64-character hexadecimal string)
- *                 example: "6f0298b744156582bc5d47b126956c5b504ec4eacf5df6dd5faeeac95486fc00" 
+ *                 example: "6f0298b744156582bc5d47b126956c5b504ec4eacf5df6dd5faeeac95486fc00"
  *     responses:
  *       200:
  *         description: Successful response with the transaction details

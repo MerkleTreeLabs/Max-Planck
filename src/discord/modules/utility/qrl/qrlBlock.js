@@ -6,13 +6,13 @@ const { apiPort } = require('@config');
 const { shorToQuanta, truncateHash } = require('@helper');
 const { hideLinkEmbed } = require('discord.js');
 
-		// await interaction.deferReply();
-		// await interaction.deferReply({ ephemeral: true });
-		// await interaction.reply(``)
-		// await interaction.deleteReply();
-		// await interaction.editReply('!');
-		// await interaction.followUp(``);
-		// return await interaction.followUp({ content: ``, ephemeral: true });
+// await interaction.deferReply();
+// await interaction.deferReply({ ephemeral: true });
+// await interaction.reply(``)
+// await interaction.deleteReply();
+// await interaction.editReply('!');
+// await interaction.followUp(``);
+// return await interaction.followUp({ content: ``, ephemeral: true });
 async function getBlockSub(interaction) {
 	await interaction.deferReply();
 	try {

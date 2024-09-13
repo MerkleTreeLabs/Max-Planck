@@ -1,6 +1,6 @@
 require('module-alias/register');
 const express = require('express');
-const { apiInterface, apiPort, swaggerPort, enableSwagger } = require('@config');
+const { swaggerInterface, apiInterface, apiPort, swaggerPort, enableSwagger } = require('@config');
 const zondGetRoutesV1 = require('@zond-v1-routes/zondGetRoutes');
 const zondPostRoutesV1 = require('@zond-v1-routes/zondPostRoutes');
 const qrlGetRoutesV1 = require('@qrl-v1-routes/qrlGetRoutes');
@@ -17,7 +17,8 @@ app.use(express.json());
 
 const cors = require('cors');
 app.use(cors({
-    origin: '*', // Or specify specific origins if needed, e.g., 'http://localhost:8080'
+	// Or specify specific origins if needed, e.g., 'http://localhost:8080'
+	origin: '*',
 }));
 
 
@@ -35,7 +36,7 @@ if (enableSwagger) {
 
 	// Start Swagger UI
 	app.listen(swaggerPort, swaggerInterface, () => {
-		console.log(`Swagger UI is running on ${apiInterface}:${swaggerPort}`);
+		console.log(`Swagger UI is running on ${swaggerInterface}:${swaggerPort}`);
 	});
 }
 

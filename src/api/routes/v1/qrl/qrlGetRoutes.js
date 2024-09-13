@@ -117,5 +117,4 @@ router.get('/qrl-list-addresses', async (req, res) => {
 });
 
 
-
 module.exports = router;

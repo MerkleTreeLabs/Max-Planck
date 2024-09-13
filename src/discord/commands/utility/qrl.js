@@ -1,7 +1,7 @@
 require('module-alias/register');
 const { SlashCommandBuilder } = require('discord.js');
 const { allowedChannels, allowedGuilds } = require('@config');
-const { bigIntToString } = require('@helper')
+const { bigIntToString } = require('@helper');
 
 module.exports = {
 	cooldown: 3,

@@ -1,5 +1,5 @@
 require('module-alias/register');
-const config = require('@config');
+// const config = require('@config');
 const swaggerJsdoc = require('swagger-jsdoc');
 const swaggerUi = require('swagger-ui-express');
 
@@ -9,12 +9,12 @@ const options = {
 		info: {
 			title: 'Zond API',
 			version: '1.0.0',
-			description: 'API documentation for Zond',
-		}
+			description: 'API documentation for Zond-faucet',
+		},
 	},
 	apis: [
-		'./src/api/routes/v1/zond/*.js',
-		'./src/api/routes/v1/qrl/*.js',
+		'@zond-v1-routes/*.js',
+		'@qrl-v1-routes/*.js',
 	],
 };
 

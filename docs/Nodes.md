@@ -46,6 +46,12 @@ The zond node is ran in two parts, the validator (qrysm) and the consensus engin
                         --gcmode=archive
 ```
 
+With clef enabled
+
+```bash
+./gzond --nat=extip:0.0.0.0 --betanet --http --http.api "web3,net,personal,zond,engine, debug" --datadir=gzonddata console --syncmode=full --snapshot=false  --gcmode=archive --signer=gzonddata/clef.ipc
+```
+
 Address must be imported and allowed insecure-unlock. Also the password file must contain the password that was used to setup during the import.
 
 

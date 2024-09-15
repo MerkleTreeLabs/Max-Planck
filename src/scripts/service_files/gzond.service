@@ -1,0 +1,15 @@
+[Unit]
+Description=gzond node
+
+[Service]
+ExecStart=/home/fr1t2/script/start-gzond.sh
+WorkingDirectory=/home/fr1t2/zond/
+
+Type=simple
+Restart=always
+User=fr1t2
+Group=fr1t2
+RestartSec=60
+
+[Install]
+WantedBy=multi-user.target

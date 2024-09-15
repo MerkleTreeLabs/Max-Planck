@@ -1,0 +1,15 @@
+[Unit]
+Description=beacon node
+
+[Service]
+ExecStart=/home/fr1t2/zond-bot/src/scripts/startup/start-beacon.sh
+WorkingDirectory=/home/fr1t2/ZOND/
+
+Type=simple
+Restart=always
+User=fr1t2
+Group=fr1t2
+RestartSec=60
+
+[Install]
+WantedBy=multi-user.target

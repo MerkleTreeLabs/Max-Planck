@@ -7,12 +7,10 @@ This guide assumes that these are available on either a `localhost` or through a
 ## Requirements
 
 - Node v20.17.0
-- nvm (recommended)
+- nvm (*recommended*)
 - MySQL
-- Zond Node API Access (port:8454)
-- QRL Node
-- The Zond Faucet requires access to a Zond address with funds to send to users.
-- The QRL Faucet requres access to the walletd and wallet_proxy to control POW addresses
+- Zond Node API Access (*port:8454*)
+- QRL Node with wallet-proxy (*port:5359*)
 
 
 ## Setup
@@ -62,29 +60,3 @@ Please follow each step here as they are all required.
 
 
 
-### Node Wallet Unlock
-
-To use the Zond faucet there must be a wallet unlocked and authorized plus indicated in the configuration
- 
-#### Import a Private Keyfile
-
-Using the following command to unlock the faucet wallet using the secret key.
-
-> This all needs to be moved to `CLEF`
-
-```bash
-./gzond account import --datadir /some-dir ./keyfile
-```
-
-#### Unlock using Password File
-
-When `gzond` launches you can include a password file and an authorized wallet. This file should include a simple password for the address
-
-The Node must also be allowed to use the wallet
-
-These variables should be included in the command to launch gzond with an allowed address.
-```
---allow-insecure-unlock \
---password "/home/fr1t2/zond/passwords.txt" \
---unlock="0x20d20b8026b8f02540246f58120ddaaf35aecd9b" \
-```

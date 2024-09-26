@@ -10,7 +10,31 @@ const { otsIndex } = require('@qrl-chain/otsLookup');
 
 const router = express.Router();
 
-// Define QRL endpoints here
+const addressPattern = /^Q[0-9a-fA-F]{78}$/;
+
+/* 
+QRL endpoints
+
+Complete:
+- /qrl-balance
+- /qrl-block-by-number
+- /qrl-ots
+- /qrl-is-valid-address
+- /qrl-get-transaction
+- /qrl-add-addresses-with-slave
+
+In Progress:
+- GetRecoverySeeds
+- GetWalletInfo
+- GetTotalBalance
+- RelayTransferTxnBySlave
+- RelayMessageTxnBySlave
+- RelayTokenTxnBySlave
+- RelayTransferTokenTxnBySlave
+- GetTransactionsByAddress
+- GetNodeInfo
+
+*/
 
 // qrl balance
 /**
@@ -81,7 +105,6 @@ const router = express.Router();
  */
 
 
-const addressPattern = /^Q[0-9a-fA-F]{78}$/;
 
 router.post('/qrl-balance', async (req, res) => {
 	const address = req.body.address;
@@ -594,7 +617,7 @@ router.post('/qrl-get-transaction', async (req, res) => {
 
 
 /*
-pings on a different port from the main functions
+pings on a different port from the main functions {THIS DID NOT WORK, STILL BOTTLENECK AT THE DAEMON}
 qrlPubSlavesAPI
 {
   "success": true,
@@ -628,10 +651,14 @@ router.post('/qrl-add-addresses-with-slave', async (req, res) => {
 });
 
 
+// GetRecoverySeeds
+// GetWalletInfo
+// GetTotalBalance
 // RelayTransferTxnBySlave
-
 // RelayMessageTxnBySlave
-
+// RelayTokenTxnBySlave
 // RelayTransferTokenTxnBySlave
+// GetTransactionsByAddress
+// GetNodeInfo
 
 module.exports = router;

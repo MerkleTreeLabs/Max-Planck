@@ -1,12 +1,10 @@
 [Unit]
 Description=qrl-grpc-proxy
 
-Requires=qrl-walletd.service
-After=qrl-walletd.service
+After=qrl.service
 
 [Service]
-EnvironmentFile=/home/fr1t2/script/qrl_grpc_proxy.conf
-#ExecStart=/home/fr1t2/walletd-rest-proxy -serverIPPort 127.0.0.1:5359 -wal>ExecStart=/home/fr1t2/walletd-rest-proxy -serverIPPort ${serverIPPort} -wal>Type=simple
+ExecStart=/home/fr1t2/zond-bot/src/scripts/startup/start-qrl-walletd.sh
 Restart=always
 User=fr1t2
 Group=fr1t2

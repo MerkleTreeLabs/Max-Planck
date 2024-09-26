@@ -1,9 +1,12 @@
 [Unit]
 Description=gzond node
+Requires=clef.service
+After=clef.service
+#Before=beacon.service
 
 [Service]
-ExecStart=/home/fr1t2/script/start-gzond.sh
-WorkingDirectory=/home/fr1t2/zond/
+ExecStart=/home/fr1t2/zond-bot/src/scripts/startup/start-gzond.sh
+WorkingDirectory=/home/fr1t2/ZOND/gzond/
 
 Type=simple
 Restart=always

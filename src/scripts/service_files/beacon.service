@@ -1,6 +1,9 @@
 [Unit]
 Description=beacon node
 
+Requires=gzond.service
+After=gzond.service
+
 [Service]
 ExecStart=/home/fr1t2/zond-bot/src/scripts/startup/start-beacon.sh
 WorkingDirectory=/home/fr1t2/ZOND/

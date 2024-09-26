@@ -1,7 +1,7 @@
 {
-  "name": "zond-faucet",
+  "name": "zond-bot",
   "version": "1.0.3",
-  "description": "Zond testnet faucet bot for Discord",
+  "description": "Zond bot for Discord",
   "main": "discord/index.js",
   "scripts": {
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s && git add CHANGELOG.md && git commit -m 'chore(changelog): update changelog [skip ci]' && git push origin main",
@@ -22,7 +22,8 @@
   "keywords": [
     "Zond",
     "QRL",
-    "Faucet"
+    "Faucet",
+    "Bot"
   ],
   "author": "fr1t2",
   "license": "MIT",

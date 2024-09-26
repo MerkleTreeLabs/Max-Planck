@@ -6,7 +6,13 @@ const { height } = require('@qrl-chain/heightLookup');
 const { listAddresses } = require('@qrl-chain/listAddressesLookup');
 const router = express.Router();
 
-// Define QRL endpoints here
+/* 
+QRL GET endpoints
+
+- /qrl-height
+- /qrl-list-addresses
+
+*/
 
 
 /**

@@ -1,7 +1,8 @@
-# Zond Faucet Discord Bot
+# Max Plank - A Social Bot
 
 [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
 
+> WIP creating an interactive bot for the ZOND and QRL Blockchains.
 
 Distribution of testnet Zond funds through [Discord](https://theqrl.org/discord)!
 

@@ -207,6 +207,40 @@ async function createTables() {
                 FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
                 FOREIGN KEY (web3_wallet_id) REFERENCES web3_wallets(id) ON DELETE CASCADE
             );`,
+            `CREATE TABLE IF NOT EXISTS user_2fa (
+                id INT AUTO_INCREMENT PRIMARY KEY,
+                user_id INT NOT NULL,
+                is_2fa_enabled BOOLEAN DEFAULT FALSE,
+                secret_key VARCHAR(255),
+                backup_codes TEXT,
+                otp_verified BOOLEAN DEFAULT FALSE,
+                created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+                updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+                FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+            );`,
+            `CREATE TABLE IF NOT EXISTS jwt_refresh_tokens (
+                id INT AUTO_INCREMENT PRIMARY KEY,
+                user_id INT NOT NULL,
+                refresh_token VARCHAR(255) NOT NULL,
+                issued_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+                expires_at DATETIME NOT NULL,
+                revoked_at DATETIME,
+                created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+                updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+                FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+                UNIQUE (refresh_token)
+            );`,
+            `CREATE TABLE IF NOT EXISTS passwordless_tokens (
+                id INT AUTO_INCREMENT PRIMARY KEY,
+                user_id INT NOT NULL,
+                token VARCHAR(255) NOT NULL,
+                is_used BOOLEAN DEFAULT FALSE,
+                expires_at DATETIME NOT NULL,
+                created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+                updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+                FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+                UNIQUE (token)
+            );`
 		];
 
 		for (const query of queries) {

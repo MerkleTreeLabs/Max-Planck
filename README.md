@@ -1,5 +1,14 @@
 # Max Plank - A Social Bot
 
+<br>
+
+<div align = center>
+
+[![Badge License]][License]   
+[![Badge Likes]][#]
+
+<br>
+
 [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
 
 > WIP creating an interactive bot for the ZOND and QRL Blockchains.

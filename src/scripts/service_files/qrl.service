@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 [Unit]
 Description=qrlnode
 
@@ -15,3 +16,23 @@ WorkingDirectory=/home/fr1t2/QRL/
 
 [Install]
 WantedBy=multi-user.target
+=======
+[Unit]
+Description=qrlnode
+
+Before=qrl-walletd.service
+Before=qrl-grpc-proxy.service
+
+[Service]
+#ExecStart=/home/fr1t2/.local/bin/start_qrl
+ExecStart=/home/fr1t2/zond-bot/src/scripts/startup/start-qrl.sh
+Type=simple
+Restart=always
+User=fr1t2
+Group=fr1t2
+RestartSec=60
+WorkingDirectory=/home/fr1t2/QRL/
+
+[Install]
+WantedBy=multi-user.target
+>>>>>>> Stashed changes

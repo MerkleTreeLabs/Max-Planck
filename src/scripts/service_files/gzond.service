@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 [Unit]
 Description=gzond node
 Requires=clef.service
@@ -16,3 +17,23 @@ RestartSec=60
 
 [Install]
 WantedBy=multi-user.target
+=======
+[Unit]
+Description=gzond node
+Requires=clef.service
+After=clef.service
+Before=beacon.service
+
+[Service]
+ExecStart=/home/fr1t2/zond-bot/src/scripts/startup/start-gzond.sh
+WorkingDirectory=/home/fr1t2/ZOND/gzond/
+
+Type=simple
+Restart=always
+User=fr1t2
+Group=fr1t2
+RestartSec=60
+
+[Install]
+WantedBy=multi-user.target
+>>>>>>> Stashed changes

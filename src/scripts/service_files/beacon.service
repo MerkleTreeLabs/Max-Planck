@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 [Unit]
 Description=beacon node
 
@@ -16,3 +17,23 @@ RestartSec=60
 
 [Install]
 WantedBy=multi-user.target
+=======
+[Unit]
+Description=beacon node
+
+Requires=gzond.service
+After=gzond.service
+
+[Service]
+ExecStart=/home/fr1t2/zond-bot/src/scripts/startup/start-beacon.sh
+WorkingDirectory=/home/fr1t2/ZOND/beacon
+
+Type=simple
+Restart=always
+User=fr1t2
+Group=fr1t2
+RestartSec=60
+
+[Install]
+WantedBy=multi-user.target
+>>>>>>> Stashed changes

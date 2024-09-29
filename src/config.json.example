@@ -22,5 +22,13 @@
 			"address": "Q010300284cc14642e9b2978218f70fcf76274d67d82f3cf7d9038d0e3e43bacfe293773f803931",
 			"owner": "Faucet"
 		}
-	]
+	],
+    "dbConfig": {
+            "host": "localhost",
+            "user": "max",
+            "password": "your_password",
+            "database": "your_database_name",
+            "rootUser": "root",
+            "rootPassword": "root_password"
+    }
 }

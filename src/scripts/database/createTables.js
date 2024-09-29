@@ -21,7 +21,6 @@ async function createTables() {
 			`CREATE TABLE IF NOT EXISTS users (
                 id INT AUTO_INCREMENT PRIMARY KEY,
                 username VARCHAR(50) NOT NULL UNIQUE,
-                email VARCHAR(255),
                 password_hash VARCHAR(255),
                 created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
                 updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
@@ -33,6 +32,20 @@ async function createTables() {
 			`CREATE TABLE IF NOT EXISTS auth_types (
                 id INT AUTO_INCREMENT PRIMARY KEY,
                 name VARCHAR(50) NOT NULL UNIQUE
+            );`,
+			`CREATE TABLE IF NOT EXISTS user_emails (
+                id INT AUTO_INCREMENT PRIMARY KEY,
+                user_id INT NOT NULL,
+                email VARCHAR(255) NOT NULL,
+                is_primary BOOLEAN DEFAULT FALSE,
+                is_valid BOOLEAN DEFAULT TRUE,
+                is_subscribed BOOLEAN DEFAULT FALSE,
+                validation_token VARCHAR(255),
+                validated_at DATETIME,
+                created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+                updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+                FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+                UNIQUE KEY (user_id, email)
             );`,
 			`CREATE TABLE IF NOT EXISTS currencies (
                 code VARCHAR(10) PRIMARY KEY,

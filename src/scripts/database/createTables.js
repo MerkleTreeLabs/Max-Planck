@@ -207,7 +207,7 @@ async function createTables() {
                 FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
                 FOREIGN KEY (web3_wallet_id) REFERENCES web3_wallets(id) ON DELETE CASCADE
             );`,
-            `CREATE TABLE IF NOT EXISTS user_2fa (
+			`CREATE TABLE IF NOT EXISTS user_2fa (
                 id INT AUTO_INCREMENT PRIMARY KEY,
                 user_id INT NOT NULL,
                 is_2fa_enabled BOOLEAN DEFAULT FALSE,
@@ -218,7 +218,7 @@ async function createTables() {
                 updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
                 FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
             );`,
-            `CREATE TABLE IF NOT EXISTS jwt_refresh_tokens (
+			`CREATE TABLE IF NOT EXISTS jwt_refresh_tokens (
                 id INT AUTO_INCREMENT PRIMARY KEY,
                 user_id INT NOT NULL,
                 refresh_token VARCHAR(255) NOT NULL,
@@ -230,7 +230,7 @@ async function createTables() {
                 FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
                 UNIQUE (refresh_token)
             );`,
-            `CREATE TABLE IF NOT EXISTS passwordless_tokens (
+			`CREATE TABLE IF NOT EXISTS passwordless_tokens (
                 id INT AUTO_INCREMENT PRIMARY KEY,
                 user_id INT NOT NULL,
                 token VARCHAR(255) NOT NULL,
@@ -240,7 +240,219 @@ async function createTables() {
                 updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
                 FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
                 UNIQUE (token)
-            );`
+            );`,
+			`CREATE TABLE IF NOT EXISTS guilds (
+                guild_id BIGINT PRIMARY KEY,
+                is_allowed BOOLEAN DEFAULT FALSE,
+                announcement_channel BIGINT,
+                mod_channel BIGINT,
+                command_prefix VARCHAR(5) DEFAULT '!',
+                allow_all_channels BOOLEAN DEFAULT FALSE,
+                bot_join_date DATETIME DEFAULT CURRENT_TIMESTAMP
+            );`,
+			`CREATE TABLE IF NOT EXISTS guild_features (
+                id INT AUTO_INCREMENT PRIMARY KEY,
+                guild_id BIGINT NOT NULL,
+                feature_name VARCHAR(50),
+                is_enabled BOOLEAN DEFAULT TRUE,
+                FOREIGN KEY (guild_id) REFERENCES guilds(guild_id) ON DELETE CASCADE
+            );`,
+			`CREATE TABLE IF NOT EXISTS guild_roles (
+                guild_id BIGINT NOT NULL,
+                role_id INT NOT NULL,  -- Links to the global 'roles' table
+                mod_role BIGINT,
+                admin_role BIGINT,
+                PRIMARY KEY (guild_id, role_id),
+                FOREIGN KEY (guild_id) REFERENCES guilds(guild_id) ON DELETE CASCADE,
+                FOREIGN KEY (role_id) REFERENCES roles(id) ON DELETE CASCADE
+            );`,
+			`CREATE TABLE IF NOT EXISTS guild_mod_users (
+                id INT AUTO_INCREMENT PRIMARY KEY,
+                guild_id BIGINT NOT NULL,
+                user_id BIGINT NOT NULL,
+                FOREIGN KEY (guild_id) REFERENCES guilds(guild_id) ON DELETE CASCADE
+            );`,
+			`CREATE TABLE IF NOT EXISTS guild_admin_users (
+                id INT AUTO_INCREMENT PRIMARY KEY,
+                guild_id BIGINT NOT NULL,
+                user_id BIGINT NOT NULL,
+                FOREIGN KEY (guild_id) REFERENCES guilds(guild_id) ON DELETE CASCADE
+            );`,
+			`CREATE TABLE IF NOT EXISTS allowed_channels (
+                id INT AUTO_INCREMENT PRIMARY KEY,
+                guild_id BIGINT NOT NULL,
+                channel_id BIGINT NOT NULL,
+                FOREIGN KEY (guild_id) REFERENCES guilds(guild_id) ON DELETE CASCADE
+            );`,
+			`CREATE TABLE IF NOT EXISTS faucet_channels (
+                id INT AUTO_INCREMENT PRIMARY KEY,
+                guild_id BIGINT NOT NULL,
+                channel_id BIGINT NOT NULL,
+                FOREIGN KEY (guild_id) REFERENCES guilds(guild_id) ON DELETE CASCADE
+            );`,
+			`CREATE TABLE IF NOT EXISTS user_settings (
+                id INT AUTO_INCREMENT PRIMARY KEY,
+                user_id INT NOT NULL,
+                setting_key VARCHAR(50) NOT NULL,
+                setting_value VARCHAR(255),
+                FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+            );`,
+			`CREATE TABLE IF NOT EXISTS user_analytics (
+                id INT AUTO_INCREMENT PRIMARY KEY,
+                user_id INT NOT NULL,
+                action VARCHAR(50) NOT NULL,
+                transaction_size DECIMAL(24,9) DEFAULT NULL,
+                faucet_request_count INT DEFAULT 0,
+                tip_count INT DEFAULT 0,
+                response_time_ms INT NOT NULL,
+                action_timestamp DATETIME DEFAULT CURRENT_TIMESTAMP,
+                user_ip VARCHAR(45),
+                FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+            );`,
+			`CREATE TABLE IF NOT EXISTS balance_snapshots (
+                id INT AUTO_INCREMENT PRIMARY KEY,
+                user_id INT NOT NULL,
+                currency_code VARCHAR(10) NOT NULL,
+                balance DECIMAL(24,9) NOT NULL,
+                snapshot_time DATETIME DEFAULT CURRENT_TIMESTAMP,
+                FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+                FOREIGN KEY (currency_code) REFERENCES currencies(code)
+            );`,
+			`CREATE TABLE IF NOT EXISTS security_logs (
+                id INT AUTO_INCREMENT PRIMARY KEY,
+                user_id INT,
+                event_type VARCHAR(50) NOT NULL,
+                event_details TEXT,
+                event_timestamp DATETIME DEFAULT CURRENT_TIMESTAMP,
+                severity_level ENUM('low', 'medium', 'high', 'critical') DEFAULT 'low',
+                user_ip VARCHAR(45),
+                FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+            );`,
+			`CREATE TABLE IF NOT EXISTS data_access_logs (
+                id INT AUTO_INCREMENT PRIMARY KEY,
+                user_id INT NOT NULL,
+                access_type ENUM('data_export', 'data_deletion') NOT NULL,
+                request_timestamp DATETIME DEFAULT CURRENT_TIMESTAMP,
+                completed_timestamp DATETIME,
+                FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+            );`,
+			`CREATE TABLE IF NOT EXISTS notification_types (
+                id INT AUTO_INCREMENT PRIMARY KEY,
+                type_name VARCHAR(50) NOT NULL,
+                description VARCHAR(255)
+            );`,
+			`CREATE TABLE IF NOT EXISTS notifications (
+                id INT AUTO_INCREMENT PRIMARY KEY,
+                type_id INT NOT NULL,
+                content TEXT NOT NULL,
+                created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+                FOREIGN KEY (type_id) REFERENCES notification_types(id) ON DELETE CASCADE
+            );`,
+			`CREATE TABLE IF NOT EXISTS user_notifications (
+                id INT AUTO_INCREMENT PRIMARY KEY,
+                user_id INT NOT NULL,
+                notification_id INT NOT NULL,
+                is_read BOOLEAN DEFAULT FALSE,
+                delivered_at DATETIME,
+                read_at DATETIME,
+                FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+                FOREIGN KEY (notification_id) REFERENCES notifications(id) ON DELETE CASCADE
+            );`,
+			`CREATE TABLE IF NOT EXISTS user_notification_preferences (
+                user_id INT NOT NULL,
+                notify_by_email BOOLEAN DEFAULT TRUE,
+                notify_by_sms BOOLEAN DEFAULT FALSE,
+                notify_in_app BOOLEAN DEFAULT TRUE,
+                FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+            );`,
+			`CREATE TABLE IF NOT EXISTS guild_notifications (
+                id INT AUTO_INCREMENT PRIMARY KEY,
+                guild_id BIGINT NOT NULL,
+                type_id INT NOT NULL,
+                content TEXT NOT NULL,
+                created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+                created_by BIGINT NOT NULL,
+                FOREIGN KEY (guild_id) REFERENCES guilds(guild_id) ON DELETE CASCADE,
+                FOREIGN KEY (type_id) REFERENCES notification_types(id) ON DELETE CASCADE
+            );`,
+			`CREATE TABLE IF NOT EXISTS user_guild_notifications (
+                id INT AUTO_INCREMENT PRIMARY KEY,
+                guild_notification_id INT NOT NULL,
+                user_id INT NOT NULL,
+                is_read BOOLEAN DEFAULT FALSE,
+                delivered_at DATETIME,
+                read_at DATETIME,
+                FOREIGN KEY (guild_notification_id) REFERENCES guild_notifications(id) ON DELETE CASCADE,
+                FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+            );`,
+			`CREATE TABLE IF NOT EXISTS guild_notification_queue (
+                id INT AUTO_INCREMENT PRIMARY KEY,
+                guild_notification_id INT NOT NULL,
+                scheduled_for DATETIME NOT NULL,
+                status ENUM('pending', 'sent', 'failed') DEFAULT 'pending',
+                attempts INT DEFAULT 0,
+                FOREIGN KEY (guild_notification_id) REFERENCES guild_notifications(id) ON DELETE CASCADE
+            );`,
+			`CREATE TABLE IF NOT EXISTS api_keys (
+                id INT AUTO_INCREMENT PRIMARY KEY,
+                user_id INT NOT NULL,
+                api_key VARCHAR(255) NOT NULL,
+                created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+                expires_at DATETIME NOT NULL,
+                is_revoked BOOLEAN DEFAULT FALSE,
+                last_used_at DATETIME,
+                FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+            );`,
+			`CREATE TABLE IF NOT EXISTS api_rate_limits (
+                id INT AUTO_INCREMENT PRIMARY KEY,
+                api_key_id INT NOT NULL,
+                request_count INT DEFAULT 0,
+                period_start DATETIME DEFAULT CURRENT_TIMESTAMP,
+                period_end DATETIME NOT NULL,
+                FOREIGN KEY (api_key_id) REFERENCES api_keys(id) ON DELETE CASCADE
+            );`,
+			`CREATE TABLE IF NOT EXISTS api_key_rotations (
+                id INT AUTO_INCREMENT PRIMARY KEY,
+                old_api_key VARCHAR(255),
+                new_api_key VARCHAR(255),
+                rotated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+                user_id INT NOT NULL,
+                FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+            );`,
+			`CREATE TABLE IF NOT EXISTS roles (
+                id INT AUTO_INCREMENT PRIMARY KEY,
+                role_name VARCHAR(50) NOT NULL UNIQUE,
+                description VARCHAR(255)
+            );`,
+			`CREATE TABLE IF NOT EXISTS permissions (
+                id INT AUTO_INCREMENT PRIMARY KEY,
+                permission_name VARCHAR(50) NOT NULL UNIQUE,
+                description VARCHAR(255)
+            );`,
+			`CREATE TABLE IF NOT EXISTS role_permissions (
+                role_id INT NOT NULL,
+                permission_id INT NOT NULL,
+                PRIMARY KEY (role_id, permission_id),
+                FOREIGN KEY (role_id) REFERENCES roles(id) ON DELETE CASCADE,
+                FOREIGN KEY (permission_id) REFERENCES permissions(id) ON DELETE CASCADE
+            );`,
+			`CREATE TABLE IF NOT EXISTS user_roles (
+                user_id INT NOT NULL,
+                role_id INT NOT NULL,
+                PRIMARY KEY (user_id, role_id),
+                FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+                FOREIGN KEY (role_id) REFERENCES roles(id) ON DELETE CASCADE
+            );`,
+			`CREATE TABLE IF NOT EXISTS guild_permissions (
+                guild_id BIGINT NOT NULL,
+                role_id INT NOT NULL,
+                permission_id INT NOT NULL,
+                PRIMARY KEY (guild_id, role_id, permission_id),
+                FOREIGN KEY (guild_id) REFERENCES guilds(guild_id) ON DELETE CASCADE,
+                FOREIGN KEY (role_id) REFERENCES roles(id) ON DELETE CASCADE,
+                FOREIGN KEY (permission_id) REFERENCES permissions(id) ON DELETE CASCADE
+            );`,
+
 		];
 
 		for (const query of queries) {

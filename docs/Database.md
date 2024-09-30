@@ -34,9 +34,10 @@ General layout of the tables in the DB.
 
 See the install doc for more info on the install process
 
-[<kbd> <br> Database Install Docs <br> </kbd>][./Database_Instructions.md]
-
+[<kbd> <br> Database Install Docs <br> </kbd>][Instructions]
+[Instructions]: ./Database_Instructions.md 'Link with example title.'
 
 ## Schema
 
-[<kbd> <br> Database Schema <br> </kbd>][./Database_Schema.md]
+[<kbd> <br> Database Schema <br> </kbd>][Schema]
+[Schema]: ./Database_Schema.md 'Link with example title.'

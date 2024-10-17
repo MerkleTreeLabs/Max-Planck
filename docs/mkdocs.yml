@@ -1,0 +1,82 @@
+site_name: MaxPlanck_Docs
+extra:
+  version: 1.0
+theme:
+  #name: bootstrap386
+  #name: mkdocs
+  #name: bootstrap
+  name: material
+
+  locale: en
+#  custom_dir: my_theme_customizations/
+  static_templates:
+    - sitemap.html
+  include_sidebar: false
+  color_mode: auto
+  user_color_mode_toggle: true
+  navigation_depth: 3
+  shortcuts:
+    help: 191    # ?
+    next: 78     # n
+    previous: 80 # p
+    search: 83   # s
+
+
+
+
+markdown_extensions:
+  - smarty
+  - tables
+  - toc:
+      permalink: true
+      separator: "_"
+  - sane_lists
+
+plugins:
+  - search
+  - mermaid2
+  #- with-pdf
+  - spellcheck:
+      backends:  # the backends you want to use
+      - symspellpy  # as strings
+      - codespell:  # or nested configs
+          dictionaries: [clear, rare, code]
+
+      # known_words can also be a list of words
+      #known_words: known_words.txt
+      # ignore words in <code> tags
+      ignore_code: yes
+      # minimum length of words to consider
+      min_length: 2
+      # maximum number of capital letters in a word
+      max_capital: 1
+      # keep unicode characters
+      allow_unicode: no
+      # skip files entirely (supports Unix shell-style wildcards)
+      #skip_files:
+      #- credits.md
+      #- coverage.md
+      #- reference/* 
+      # whether to only check in strict mode
+      strict_only: yes
+
+repo_url: https://github.com/MerkleTreeLabs/Max-planck/
+edit_uri: blob/main/docs/
+site_description:
+site_author: 'fr1t2'
+copyright: 'MerkleTree Labs 2024'
+validation:
+  nav:
+    omitted_files: info
+    not_found: warn
+    absolute_links: info
+  links:
+    not_found: warn
+    absolute_links: relative_to_docs
+    anchors: warn
+    unrecognized_links: warn
+
+nav:
+    - Home: README.md
+#not_in_nav: |
+#  /private.md

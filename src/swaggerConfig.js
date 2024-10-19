@@ -9,7 +9,7 @@ const options = {
 		info: {
 			title: 'Zond API',
 			version: '1.0.0',
-			description: 'API documentation for Zond-faucet',
+			description: 'API documentation for Max-Planck',
 		},
 	},
 	apis: [

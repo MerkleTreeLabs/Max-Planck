@@ -1,0 +1,187 @@
+site_name: 'Max Planck Docs'
+site_url:
+repo_name: 'MerkleTreeLabs/Max-Planck'
+repo_url: https://github.com/MerkleTreeLabs/Max-planck/
+edit_uri: blob/main/docs/
+site_description: 'Documentation for the Max Planck Bot'
+site_author: 'James Gordon'
+copyright: 'MerkleTree Labs 2024'
+#remote:branch:
+#remote_name:
+
+nav:
+    - Home: index.md
+    - Bot Install:
+      - Requirements: Install/Requirements.md
+      - Server Setup: Install/Server-Setup.md
+      - Discord: Install/Discord.md
+      - Nodes: Install/Nodes.md
+    
+    - API:
+      - Information: API/api.md
+      - Routes: 
+        - Database: API/Database-Routes.md
+        - QRL: API/QRL-Routes.md
+        - Zond: API/Zond-Routes.md
+
+
+    - Application:
+        - Commands: Application/Commands.md
+        - Scripting:
+          - Crontab: Scripting/Crontab.md
+          - Database: Scripting/Database.md
+          - Services: Scripting/Services.md
+          - Startup: Scripting/Startup.md
+#        - User Flow:
+#          - Signup:
+#          - Tipping:
+#          - Withdraw:
+#          - Migration:
+#          - User Settings:
+#        - Guild Flow:
+#          - New Guild:
+#          - Guild Configure:
+#          - Guild Admin:
+#    - Dashboard:
+#      - Oauth2: 
+#      - Interface:
+#
+#
+#
+    - Database:
+      - Database Info: Database/README.md
+      - Instructions: Database/Database_Instructions.md
+      - Schema: Database/Database_Schema.md
+    - Blockchain:
+      - Nodes:
+        - QRL: QRL/README.md
+        - Zond: Zond/README.md
+      - Wallets:
+          - Zond Wallet: Zond/ZondWallets.md
+    - Contributions: Contribution.md
+    - License: License.md
+#not_in_nav: |
+#  /private.md
+
+
+#exclude_docs: |
+#  *.conf
+
+draft_docs: |
+  _draft.md
+  drafts/
+
+
+
+validation:
+  nav:
+    omitted_files: info
+    not_found: warn
+    absolute_links: info
+  links:
+    not_found: warn
+    anchors: warn
+    absolute_links: relative_to_docs
+    unrecognized_links: warn
+
+theme:
+  name: material
+  locale: en
+  logo: assets/img/logo/logo.png
+  favicon: assets/img/favicon/favicon.png
+
+#  custom_dir: my_theme_customizations/
+  static_templates:
+    - sitemap.html
+  include_sidebar: false
+  color_mode: auto
+  user_color_mode_toggle: true
+  navigation_depth: 3
+  shortcuts:
+    help: 191    # ?
+    next: 78     # n
+    previous: 80 # p
+    search: 83   # s
+
+
+extra:
+  version:
+    provider: 'manual'
+    version: 1.0.0
+  use_edit_url: false
+  repo_icon: 'github'
+
+
+
+#dev_addr: '0.0.0.0:8000'
+
+
+
+#google_analytics:
+#  - 'UA-XXXXXXXX-X'
+#  - 'auto'
+
+markdown_extensions:
+  - admonition
+  - nl2br
+  - smarty
+  - tables
+  - sane_lists
+
+  - codehilite:
+      guess_lang: true
+      linenums: true
+  - toc:
+      permalink: true
+      separator: "_"
+  - footnotes
+  - pymdownx.details
+  - pymdownx.superfences:
+        custom_fences:
+          - name: mermaid
+            class: mermaid
+            format: !!python/name:pymdownx.superfences.fence_div_format
+#  - pymdownx.critic
+#  - pymdownx.emoji
+#  - pymdownx.keys
+#  - pymdownx.mark
+#  - pymdownx.smartsymbols
+  - pymdownx.tasklist
+#  - pymdownx.tabbed
+#  - pymdownx.tilde  
+
+plugins:
+  #- privacy
+
+  - search:
+      prebuild_index: true
+      indexing: 'full'
+
+  - callouts
+  - mermaid2
+  #- with-pdf
+  - spellcheck:
+      backends:  # the backends you want to use
+      - symspellpy  # as strings
+      - codespell:  # or nested configs
+          dictionaries: [clear, rare, code]
+
+      # known_words can also be a list of words
+      #known_words: known_words.txt
+      # ignore words in <code> tags
+      ignore_code: yes
+      # minimum length of words to consider
+      min_length: 2
+      # maximum number of capital letters in a word
+      max_capital: 1
+      # keep unicode characters
+      allow_unicode: no
+      # skip files entirely (supports Unix shell-style wildcards)
+      #skip_files:
+      #- credits.md
+      #- coverage.md
+      #- reference/* 
+      # whether to only check in strict mode
+      strict_only: yes
+
+

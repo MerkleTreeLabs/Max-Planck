@@ -1,8 +1,8 @@
 # Zond Wallets
 
-Zond tipbot wallets are handeld by `clef`
+Zond tipbot wallets ~~are~~ ==will be== handled by `clef`
 
-This tool handels all of the encryption and decryption as well as storing secrets for the wallets.
+This tool handles all of the encryption and decryption as well as storing secrets for the wallets.
 
 build with make all in the go-zond directory. The executable will be located in `go-zond/build/bin/` with a bunch of other tools 
 

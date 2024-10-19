@@ -1,8 +1,4 @@
-# Zond Bot Setup
 
-The Zond bot requires access to a few dependencies and privileged access to both a QRL Node and a Zond node in order to send transactions.
-
-This guide assumes that these are available on either a `localhost` or through a secure connection to these privileged ports.
 
 ## Requirements
 
@@ -15,9 +11,6 @@ This guide assumes that these are available on either a `localhost` or through a
 
 ## Setup
 
-Setting up the bot is complex and multifaceted. We have broken these into multiple documents to make this a little easier. 
-
-Please follow each step here as they are all required.
 
 
 ### Discord Bot Setup
@@ -29,8 +22,6 @@ Please follow each step here as they are all required.
 4. Copy the config.json.example	 file to config.json and fill in the required fields. ([see the definitions below](#botconfig))
 5. Install and sync a [local Zond node](https://test-zond.theqrl.org/linux.html)
 6. Run the bot with `npm start`
-
-
 
 
 

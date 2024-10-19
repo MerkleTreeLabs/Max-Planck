@@ -1,13 +1,95 @@
-site_name: MaxPlanck_Docs
-extra:
-  version: 1.0
-theme:
-  #name: bootstrap386
-  #name: mkdocs
-  #name: bootstrap
-  name: material
+site_name: 'Max Planck Docs'
+site_url:
+repo_name: 'MerkleTreeLabs/Max-Planck'
+repo_url: https://github.com/MerkleTreeLabs/Max-planck/
+edit_uri: blob/main/docs/
+site_description: 'Documentation for the Max Planck Bot'
+site_author: 'James Gordon'
+copyright: 'MerkleTree Labs 2024'
+#remote:branch:
+#remote_name:
 
+nav:
+    - Home: index.md
+    - Bot Install:
+      - Requirements: Install/Requirements.md
+      - Server Setup: Install/Server-Setup.md
+      - Discord: Install/Discord.md
+      - Nodes: Install/Nodes.md
+    
+    - API:
+      - Information: API/api.md
+      - Routes: 
+        - Database: API/Database-Routes.md
+        - QRL: API/QRL-Routes.md
+        - Zond: API/Zond-Routes.md
+
+
+    - Application:
+        - Commands: Application/Commands.md
+        - Scripting:
+          - Crontab: Scripting/Crontab.md
+          - Database: Scripting/Database.md
+          - Services: Scripting/Services.md
+          - Startup: Scripting/Startup.md
+#        - User Flow:
+#          - Signup:
+#          - Tipping:
+#          - Withdraw:
+#          - Migration:
+#          - User Settings:
+#        - Guild Flow:
+#          - New Guild:
+#          - Guild Configure:
+#          - Guild Admin:
+#    - Dashboard:
+#      - Oauth2: 
+#      - Interface:
+#
+#
+#
+    - Database:
+      - Database Info: Database/README.md
+      - Instructions: Database/Database_Instructions.md
+      - Schema: Database/Database_Schema.md
+    - Blockchain:
+      - Nodes:
+        - QRL: QRL/README.md
+        - Zond: Zond/README.md
+      - Wallets:
+          - Zond Wallet: Zond/ZondWallets.md
+    - Contributions: Contribution.md
+    - License: License.md
+#not_in_nav: |
+#  /private.md
+
+
+#exclude_docs: |
+#  *.conf
+
+draft_docs: |
+  _draft.md
+  drafts/
+
+
+
+validation:
+  nav:
+    omitted_files: info
+    not_found: warn
+    absolute_links: info
+  links:
+    not_found: warn
+    anchors: warn
+    absolute_links: relative_to_docs
+    unrecognized_links: warn
+
+theme:
+  name: material
   locale: en
+  logo: assets/img/logo/logo.png
+  favicon: assets/img/favicon/favicon.png
+
 #  custom_dir: my_theme_customizations/
   static_templates:
     - sitemap.html
@@ -22,18 +104,60 @@ theme:
     search: 83   # s
 
 
+extra:
+  version:
+    provider: 'manual'
+    version: 1.0.0
+  use_edit_url: false
+  repo_icon: 'github'
 
+
+
+#dev_addr: '0.0.0.0:8000'
+
+
+
+#google_analytics:
+#  - 'UA-XXXXXXXX-X'
+#  - 'auto'
 
 markdown_extensions:
+  - admonition
+  - nl2br
   - smarty
   - tables
+  - sane_lists
+
+  - codehilite:
+      guess_lang: true
+      linenums: true
   - toc:
       permalink: true
       separator: "_"
-  - sane_lists
+  - footnotes
+  - pymdownx.details
+  - pymdownx.superfences:
+        custom_fences:
+          - name: mermaid
+            class: mermaid
+            format: !!python/name:pymdownx.superfences.fence_div_format
+#  - pymdownx.critic
+#  - pymdownx.emoji
+#  - pymdownx.keys
+#  - pymdownx.mark
+#  - pymdownx.smartsymbols
+  - pymdownx.tasklist
+#  - pymdownx.tabbed
+#  - pymdownx.tilde  
 
 plugins:
-  - search
+  #- privacy
+
+  - search:
+      prebuild_index: true
+      indexing: 'full'
+
+  - callouts
   - mermaid2
   #- with-pdf
   - spellcheck:
@@ -60,23 +184,4 @@ plugins:
       # whether to only check in strict mode
       strict_only: yes
 
-repo_url: https://github.com/MerkleTreeLabs/Max-planck/
-edit_uri: blob/main/docs/
-site_description:
-site_author: 'fr1t2'
-copyright: 'MerkleTree Labs 2024'
-validation:
-  nav:
-    omitted_files: info
-    not_found: warn
-    absolute_links: info
-  links:
-    not_found: warn
-    absolute_links: relative_to_docs
-    anchors: warn
-    unrecognized_links: warn
 
-nav:
-    - Home: README.md
-#not_in_nav: |
-#  /private.md

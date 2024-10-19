@@ -140,3 +140,6 @@ dist
 # mkdocs
 site/
 venv
+
+# obsidian
+.obsidian/

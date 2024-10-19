@@ -5,38 +5,6 @@
 ## Config
 
 - [ ] Rework the config functions related to guilds/channels/roles and admin users
-	- add database tables and fields to track the following data
-		"guilds":[
-			{
-				"guild_id": "GUILD_ID",
-				"is_allowed":"BOOLEAN",
-				"announcement_channel": "CHANNEL_ID",
-				"mod_channel": "CHANNEL_ID",
-				"command_prefix": "!",
-				"features_enabled": { "feature_name": true }
-				"mod_role": "ROLE_ID",
-				"mod_users": [
-					"USER_ID",
-					"USER_ID"
-				],
-				"admin_role": "ROLE_ID",
-				"admin_users": [
-					"USER_ID",
-					"USER_ID"
-				],
-				"allowed_channels": [
-					"CHANNEL_ID",
-					"CHANNEL_ID",
-					"CHANNEL_ID"
-				],
-				"faucet_channels": [
-					"CHANNEL_ID",
-					"CHANNEL_ID",
-					"CHANNEL_ID"
-				],
-				"bot_join_date": "TIMESTAMP"
-			}, 
-		] 
 
 ## General Bot Functions
 
@@ -85,17 +53,6 @@
 - [ ] assign role
 	- sort the addition of roles that only the bot and *server admin* can edit.
 	- create a clown/bad-bot role to assign any bot that interacts
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -155,6 +112,7 @@ Complete:
 	- 
 
 In Progress:
+
 - [ ] GetRecoverySeeds
 - [ ] GetWalletInfo
 - [ ] GetTotalBalance
